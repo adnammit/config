@@ -1,0 +1,25 @@
+
+autodetach on
+vbell on
+defscrollback 10000
+vbell on
+startup_message off
+shelltitle "$ |bash"
+
+
+#HARDSTATUS:
+hardstatus on
+hardstatus string "%w%=%m/%d %c"
+hardstatus alwayslastline "%{wk}%H%{wk}|%?%-Lw%?%{wb}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
+
+
+
+#BINDINGS:
+#bind 'R' screen ssh aryman@linuxlab.cs.pdx.edu
+
+
+#WINDOWS:
+screen 0 vim -O[2] /Users/adnammit/Documents/hw/cs202/hw/01/map.h /Users/adnammit/Documents/hw/cs202/hw01/map.cpp
+screen 1 vim -O[2] /Users/adnammit/Documents/hw/cs202/hw/01/object.h /Users/adnammit/Documents/hw/cs202/hw01/object.cpp
+screen 2 vim -O[2] /Users/adnammit/Documents/hw/cs202/hw/01/player.h /Users/adnammit/Documents/hw/cs202/hw01/player.cpp
+screen 3 vim /Users/adnammit/Documents/hw/cs202/hw/01/main.cpp 

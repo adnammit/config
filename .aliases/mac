@@ -1,0 +1,28 @@
+
+#RANDOM SHIT:
+#alias emacs="/usr/local/Cellar/emacs/24.5/Emacs.app/Contents/MacOS/Emacs -nw"
+alias readgit='vim ~/Dropbox/nerdz/git.txt'
+alias starwars='telnet towel.blinkenlights.nl'
+alias horseeBooks='curl -s horseebooksipsum.com/api/v1/ | say'
+alias baconIpsum='curl -s https://baconipsum.com/api/?type=all-meat |say'
+
+#DIRECTORY SHORTCUTS:
+# alias cs='cd ~/Documents/hw/cs202/'
+alias nerdz='cd ~/Dropbox/nerdz/'
+# alias sites='cd ~/Dropbox/codefolio/sites'
+# alias labs='cd ~/Documents/hw/cs201/labs/'
+# alias hw='cd ~/Dropbox/current\ hw/cs300/final\ project'
+# alias react='cd ~/Dropbox/codefolio/sites/react/'
+# alias sandbox='cd ~/Dropbox/codefolio/sandbox/'
+# alias sites='cd ~/Dropbox/nerdz/codefolio/sites'
+
+#SSH SHORTCUTS
+alias website='ssh amandary@amandaryman.com -p 18765'
+# alias sg='ssh rymana@stargate.cat.pdx.edu'
+# alias unix='ssh aryman@cs.pdx.edu'
+# alias linux='ssh aryman@linux.cs.pdx.edu'
+# alias linuxlab='ssh aryman@linuxlab.cs.pdx.edu'
+# alias king='ssh aryman@king.cs.pdx.edu'
+# alias rita='ssh rymana@rita.cat.pdx.edu' 
+# #alias ruby='ssh rymana@ruby.cat.pdx.edu'
+# alias quizor='ssh aryman@quizor2.cs.pdx.edu'

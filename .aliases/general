@@ -1,0 +1,40 @@
+
+
+#GENERAL ALIASES:
+
+if [[ "$OSTYPE" == "darwin15" ]]; then
+    alias ls='ls -laG'
+else
+    alias ls='ls -la --color=always'
+fi
+
+
+alias grep='grep -n --color=auto'
+alias rm='rm -i'
+alias mv='mv -i'
+alias sphp='php -S localhost:8000'
+
+# BC SPELLIGN IS HARD
+alias emacss='emacs'
+alias eamcs='emacs'
+alias emcas='emacs'
+alias meacs='emacs'
+alias emasc='emacs'
+alias emac='emacs'
+alias emacds='emacs'
+alias emacsd='emacs'
+alias enacs='emacs'
+alias emnacs='emacs'
+alias enmacs='emacs'
+alias eemacs='emacs'
+alias jorbs='jobs'
+
+
+#C++ SHORTCUTS
+alias compile='g++ *.cpp -Wall -g'
+alias debug='gdb ./a.out'
+
+
+
+
+

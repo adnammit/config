@@ -1,0 +1,13 @@
+\pset pager off
+\pset linestyle unicode
+\pset border 2
+\set PROMPT1 '%/ ::> '
+\set PROMPT2 '%/%R%# '
+\pset format wrapped
+\pset null NULL
+\timing
+\c db
+set search_path to saddlelibrary,public;
+set enable_bitmapscan to true;
+\echo '\n\n\tWelcome to your lovely PostgreSQL\n\tMuch happy, very smile.\n\n'
+
