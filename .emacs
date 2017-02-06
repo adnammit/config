@@ -5,6 +5,11 @@
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
+(add-to-list 'load-path "~/.emacs.d/nyan-mode/")
+(load-file "~/.emacs.d/nyan-mode/nyan-mode.el")
+(require 'nyan-mode)
+(nyan-mode)
+
 (package-initialize)
 
 (setq user-init-file
@@ -16,6 +21,7 @@
 (setq custom-file
       (expand-file-name "pl.el"
 			(expand-file-name ".xemacs" "~")))
+
 
 (load-file user-init-file)
 (load-file custom-file)
@@ -40,10 +46,9 @@
 ;; CUSTOM KEY BINDINGS
 ;;=============================================================================
 
-;; (global-unset-key "\C-z")
-;; (global-unset-key "\C-_")
-;; (define-key global-map [(control n)] 'ctl-x-map)
-(global-set-key (kbd "C-i") 'indent-region)
+;; disambiguate 'tab' from 'C-i' (which are the same in ASCII) by setting C-i to Hyper-i:
+(keyboard-translate ?\C-i ?\H-i)
+(global-set-key [?\H-i] 'indent-region)
 (global-set-key (kbd "C-/") 'comment-region)
 (global-set-key (kbd "C-?") 'uncomment-region)
 (global-set-key (kbd "C-z") 'undo)
@@ -59,6 +64,7 @@
 (global-set-key (kbd "C-v") 'vc-diff)
 (global-set-key (kbd "M-p") 'ace-window)
 (define-key global-map (kbd "RET") 'newline-and-indent)
+(global-set-key [?\C-'] 'hs-toggle-hiding)
 
 ;; ENABLE ESCAPE:
 (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
@@ -131,9 +137,12 @@
   scroll-step 1
   scroll-conservatively 90
   scroll-preserve-screen-position 1
-  mouse-wheel-scroll-amount '(10)
   mouse-wheel-progressive-speed nil
 )
+(cond ((eq system-type 'cygwin)
+       (setq mouse-wheel-scroll-amount '(3))))
+(cond ((eq system-type 'darwin)
+       (setq mouse-wheel-scroll-amount '(7))))
 
 ;; LANGUAGE
 (setq c-default-style "linux" c-basic-offset 4)
@@ -241,18 +250,18 @@ to do that, use this command a second time with no argument."
 ;; Enable IDO buffer
 (ido-mode 1)
 (setq
-
   ido-enable-flex-matching t
-
   ido-everywhere t
-
   ido-ignore-buffers ;; Ignore these guys
   '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
   "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
-
   ido-confirm-unique-completion t ;; wait for RET, even with unique completion
 )
 
+
+
+;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+;; (autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 
 ;; ;; auto-complete mode
 ;; (add-to-list 'load-path "~/.emacs.d/auto-complete/")

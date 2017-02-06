@@ -1,27 +1,54 @@
 
+#=========================================
+# FUN WITH FUNCTIONS
+#
+# These functions are aliased here rather
+#  than in the .aliases dir
+#========================================= 
 
-# POP OPEN A NEW SHELL WINDOW
+
+# POP OPEN A NEW SHELL WINDOW. OPTIONAL: OPEN ONE WINDOW PER COMMAND STRING:
+#    $ pop 'cd ../config' 'ls' 'cd ~/dev/dat; rupdate -r'
 function pop() 
 {
     a='Using "$@" string: '
     if [ $# == 0 ]; then
 	xterm -bg ${BG4} -e bash -c "exec bash" -hold &
     else
-	for p in "$@"
+	NUM=$1
+	for p in "$@" 
 	do
+
 	    xterm -e bash -c "$p; exec bash" -hold &
 	done
+
+	# # you could also take the second arg as the # of windows to open:
+	# NUM=$1
+	# for j in `seq 1 ${NUM}`
+	# do
+	#     xterm -bg ${BG4} -e bash -c "exec bash" -hold &
+	# done
+
     fi
 #    xterm -geometry 80x50+50+0 -e bash -c "exec bash" -hold &  #-- make pop open quarter-screen sized -- doesn't work
 }
 
-# RUN RUPDATE AND OPEN SUPPORT DOCS
+# GET ALL OUR WINDOWS SET UP, RUPDATE AND CHECK FOR FILES WE NEED
 function hi()
 {
     a=$PWD
     xterm -bg ${BG3} -e bash -c "cd ~/dev; rupdate -r; exec bash" -hold &
+
+    i=0
+    while [ "$i" -lt 3 ]
+    do
+    	ssh_devlnx
+    	let "i+=1"
+    done
+    
     cd ~/docs
     emacs *.txt &
+    check_files
     cd $a
 }
 
@@ -34,11 +61,62 @@ function rup()
     cd $a
 }
 
+function ssh_devlnx()
+{
+    mintty -t dev-lnx.portland.perflogic.com -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
+
+}
+
+# Reads through a text document and checks to see if any files in the document are available to check out.
+# If they're not, the RCS data is displayed.
+function check_files()
+{
+    b=$PWD
+    cd ~/dev/dat
+
+    TARGET_FILE=~/docs/check_files.txt
+    if [[ "$OSTYPE" == "darwin15" ]]; then
+	SMILE="ʕ•ᴥ•ʔ"
+	FROWN="ಠ_ಠ"
+	SHRUG="¯\_(ツ)_/¯"
+    else
+	SMILE="^__^"
+	FROWN="-__-"
+	SHRUG="o__O"
+    fi
+    FILL="--------------"
+
+    echo "====== Let's find us some files to check out...."    
+    
+    while read FILE; do
+
+	if [ -f ${FILE} ]; then
+
+	    RESULT=$(rlog -L -R ${FILE})
+
+	    if [[ -z "${RESULT// }" ]] ; then
+		echo "${FILL} file [${FILE}] is available ${SMILE}"
+	    else
+		#rlog -N -h -l ${FILE}
+		echo "${FILL} file [${FILE}] is checked out by someone ${FROWN}"
+	    fi
+	else
+	    echo "${FILL} file [${FILE}] could not be found ${SHRUG}"
+
+	fi
+	
+    done <${TARGET_FILE}
+    
+    cd $b
+}
+
+
+
 # LOOK THROUGH ALL .DAT FILES FOR A CASE-INSENSITIVE REGEX
 function sdat()
 {
     if [ $# -gt 0 ] ; then
-	
+	#grep -ni --color "$@" *.dat
         find .  -name "*.dat" | xargs grep -n --color -i "$@"
     fi
 }
@@ -47,9 +125,17 @@ function sdat()
 function Sdat()
 {
     if [ $# -gt 0 ] ; then
-	
+	#grep -n --color "$@" *.dat
         find . -name "*.dat" | xargs grep -n --color "$@"
     fi
+}
+
+# LOOK THROUGH LOG FILES
+function sapp()
+{
+    if [ $# -gt 0 ] ; then
+	grep -ln --color "$@" *app_log
+    fi    
 }
 
 # INC, ROLL PACKAGES TO DEV
@@ -121,6 +207,7 @@ function roll_out_test_me()
 # SYNC CONFIG FILES WITH //DEV-LNX
 function sync_config()
 {
+    # to do: check for config/ dir and make if not there
     a=$PWD
     cd
     cp -r config/. ryman.amanda/config/

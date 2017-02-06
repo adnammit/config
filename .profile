@@ -52,7 +52,6 @@ if [[ "$OSTYPE" == "darwin15" ]]; then
 	    SCREENTITLE=''
 	    ;;
     esac
-
 fi
 
 export PATH

@@ -2,6 +2,7 @@
 
 ;; ----- ido-last-directory-list -----
 (
+ ("/Users/adnammit/Dropbox/" . "nerdz/")
  ("/Users/adnammit/" . ".xemacs/")
  ("//dev-lnx/sites/dev.perflogic.com/__lib__/dat/common/" . "library/")
  ("//dev-lnx/sites/dev.perflogic.com/__lib__/dat/" . "common/")
@@ -42,8 +43,9 @@
 
 ;; ----- ido-work-directory-list -----
 (
- "/Users/adnammit/Dropbox/nerdz/"
+ "/Users/adnammit/Dropbox/codefolio/react/treehouseTutorial/"
  "/Users/adnammit/"
+ "/Users/adnammit/Dropbox/nerdz/"
  "/Users/adnammit/.xemacs/"
  "/c/Users/ryman.amanda/.bash_functions/"
  "/c/Users/ryman.amanda/docs/"
@@ -91,41 +93,46 @@
  "/c/Users/ryman.amanda/docs/nerdz/"
  "/c/Users/ryman.amanda/rel/dat/client/sharp/eoc/"
  "/c/Users/ryman.amanda/rel/dat/common/print/"
- "/c/Users/ryman.amanda/rel/dat/common/filtering/"
 )
 
 ;; ----- ido-work-file-list -----
 (
+ "myapp.jsx"
+ "app.jsx"
+ ".emacs"
+ "app.html"
+ "apppppp.js"
+ "webDesign.txt"
+ "jsIntro.txt"
+ "responsiveWebDesign.txt"
  "shell.txt"
  ".emacs_mac"
- "pl_vpn.txt"
- "versionControl.txt"
- "emacs.txt"
- "ccheatsheet.txt"
- "pl.el"
- ".emacs"
- "pl_funcs.sh"
- "bswqa.txt"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
+ ("/Users/adnammit/Dropbox/config/cl_master/" (22626 50738 0 0) "bin/" ".xemacs/" ".vimrc" ".screenrc" ".psqlrc" ".profile" ".git/" ".funcs/" ".emacs.d/" ".emacs" ".DS_Store" ".bashrc" ".bash_profile" ".aliases/" "../" "./")
+
+ ("/Users/adnammit/Dropbox/codefolio/react/treehouseTutorial/" (22626 50494 0 0) "vendor/" "myapp.jsx" "index.html" "apppppp.js" "app.jsx" "app.html" "app.css" ".DS_Store" "../" "./")
+
+ ("/Users/adnammit/Dropbox/" (22625 43199 0 0) "vitals/" "tickets/" "TC/" "Screenshots/" "resume/" "Public/" "print/" "pl/" "Photo Dec 25, 10 13 56 AM.jpg" "Photo Dec 22, 8 01 43 AM.jpg" "Photo Dec 22, 8 01 19 AM.jpg" "Photo Dec 22, 8 01 08 AM.jpg" "nerdz/" "misc from downloaded/" "maps/" "Icon
+" "financial/" "ebay/" "config/" "codefolio/" "15726448_10211387901801648_4318440601273905829_n.jpg" "15621758_10211387901481640_1588175659147127098_n.jpg" ".DS_Store" ".dropbox.cache/" ".dropbox" "../" "./")
+
+ ("/Users/adnammit/Dropbox/codefolio/" (22579 52939 0 0) "treehouse and practice/" "sites/" "scripts/" "sandbox/" "saddleLibrarySupportDocs/" "react/" "jQuery plugins/" "java/" "heroku/" "googlejobprep.pdf" "genetic/" "eclipse workspace" "eclipse/" "cpp/" "beans workspace" "beans/" "AwesomeProject/" ".DS_Store" "../" "./")
+
+ ("/Users/adnammit/Dropbox/codefolio/react/" (22626 46009 0 0) "treehouseTutorial/" "reactTutorialServer/" "reactSimple/" "reactPracticeGulpBrowserify/" "reactMyProject/" "reactJamesTutorial/" "myJames/" ".DS_Store" "../" "./")
+
+ ("/Users/adnammit/.xemacs/" (22602 2920 0 0) "PLScript_mode.el" "pl.el" "mac-key-mode.el" "init.el" "custom.el" "../" "./")
+
+ ("/Users/adnammit/" (22626 199 0 0) "VirtualBox VMs/" "Sites/" "Public/" "Pictures/" "Music/" "Movies/" "Library/" "Dropbox/" "Downloads/" "Documents/" "Desktop/" "Creative Cloud Files/" "bin/" "Applications/" ".xemacs/" ".Xauthority" ".vimrc" ".viminfo" ".vim/" ".venple" ".v8flags.4.6.85.28.adnammit.json" ".Trash/" ".subversion/" ".ssh/" ".sh_history" ".screenrc" ".rnd" ".psqlrc" ".psql_history" ".profile" ".pia_manager/" ".oracle_jre_usage/" ".nvm/" ".npm/" ".node_repl_history" ".node-gyp/" ".netrc" ".local/" ".lgvxnlirc" ".lesshst" ".inkscape-etc/" ".idlerc/" ".gnome2/" ".gitconfig" ".Genymobile/" ".gem/" ".gdbinit" ".funcs/" ".fontconfig/" ".emacs.d/" ".emacs" ".dvdcss/" ".DS_Store" ".dropbox/" ".cups/" ".config/" ".CFUserTextEncoding" ".cache/" ".bashrc" ".bash_sessions/" ".bash_profile" ".bash_history" ".babel.json" ".atom/" ".android/" ".aliases/" "../" "./")
+
+ ("/Users/adnammit/Dropbox/nerdz/" (22613 40757 0 0) "webDesign.txt" "vim.txt" "versionControl.txt" "shell.txt" "screen.txt" "sass.txt" "saddlelibrary.sql" "responsiveWebDesign.txt" "reboot.txt" "react.txt" "psql.txt" "pl_vpn.txt" "pl_server.txt" "pl_procs.txt" "pl_env.txt" "pl_coding.txt" "phpWebsites.txt" "phpIntro.txt" "phpAndDatabases.txt" "OSquiz.txt" "nodejs.txt" "names.txt" "mentoring/" "json.txt" "jsIntro.txt" "jqueryintro.txt" "html.txt" "homebrew.txt" "hardwareVSsoftware.txt" "gulp.txt" "gdb.txt" "emacs.txt" "css.txt" "cppBible.txt" "coreCS/" "cleanCode.txt" "cleanCode.pdf" "ccheatsheet.txt" "c.txt" "bd/" "bash.txt" "assembly.txt" "apis.txt" "angular.txt" "ajax.txt" ".DS_Store" "../" "./")
+
  ("/Users/adnammit/.git/" (22613 39419 0 0) "refs/" "objects/" "logs/" "info/" "index" "hooks/" "HEAD" "description" "config" "COMMIT_EDITMSG" "branches/" "../" "./")
-
- ("/Users/adnammit/Dropbox/config/cl_master/" (22602 6982 0 0) "config.tar" "bin/" ".profile" ".emacs" ".bashrc" ".bash_profile" ".aliases/" "../" "./")
-
- ("/Users/adnammit/" (22602 2647 0 0) "Sites/" "Public/" "Pictures/" "Music/" "Movies/" "Library/" "Dropbox/" "Downloads/" "Documents/" "Desktop/" "Creative Cloud Files/" "bin/" "Applications/" ".xemacs/" ".Xauthority" ".vimrc" ".viminfo" ".vim/" ".venple" ".v8flags.4.6.85.28.adnammit.json" ".Trash/" ".subversion/" ".ssh/" ".sh_history" ".screenrc" ".rnd" ".psqlrc" ".psql_history" ".oracle_jre_usage/" ".nvm/" ".npm/" ".node_repl_history" ".node-gyp/" ".netrc" ".local/" ".lgvxnlirc" ".lesshst" ".inkscape-etc/" ".idlerc/" ".gnome2/" ".gitconfig" ".git/" ".Genymobile/" ".gem/" ".gdbinit" ".fontconfig/" ".emacs.d/" ".emacs" ".dvdcss/" ".DS_Store" ".dropbox/" ".cups/" ".config/" ".CFUserTextEncoding" ".cache/" ".bashrc_mac" ".bashrc" ".bash_sessions/" ".bash_profile" ".bash_history" ".babel.json" ".atom/" ".android/" "../" "./")
-
- ("/Users/adnammit/Dropbox/" (22602 32 0 0) "tickets/" "TC/" "Public/" "print/" "pl/" "nerdz/" "misc from downloaded/" "maps/" "Icon
-" "grownup docs/" "ebay/" "config/" "codefolio/" ".DS_Store" ".dropbox.cache/" ".dropbox" "../" "./")
 
  ("/Users/adnammit/Dropbox/config/" (22602 1121 0 0) "vpn_screenshots 2/" "vpn_screenshots/" "Music 2-14.txt" "eyebeam/" "emacs_12_6/" "emacs_12_2/" "emacs_11_4/" "Contacts - 10-18-2014.abbu/" "bookmarks_10_18_14.html" "bash_12_8/" "bash_12_2/" ".Xdefaults" ".DS_Store" "../" "./")
 
  ("/Users/adnammit/Dropbox/config/emacs_12_6/" (22601 1806 0 0) ".emacs" "../" "./")
-
- ("/Users/adnammit/Dropbox/nerdz/" (22601 1806 0 0) "webDesign.txt" "vim.txt" "versionControl.txt" "shell.txt" "screen.txt" "sass.txt" "saddlelibrary.sql" "responsiveWebDesign.txt" "reboot.txt" "react.txt" "psql.txt" "pl_vpn.txt" "pl_server.txt" "pl_procs.txt" "pl_env.txt" "pl_coding.txt" "phpWebsites.txt" "phpIntro.txt" "phpAndDatabases.txt" "OSquiz.txt" "nodejs.txt" "names.txt" "mentoring/" "json.txt" "jsIntro.txt" "jqueryintro.txt" "html.txt" "homebrew.txt" "homebrew (beluga's conflicted copy 2016-12-07).txt" "hardwareVSsoftware.txt" "gulp.txt" "gdb.txt" "emacs.txt" "css.txt" "cppBible.txt" "coreCS/" "cleanCode.txt" "cleanCode.pdf" "ccheatsheet.txt" "c.txt" "bd/" "bash.txt" "assembly.txt" "apis.txt" "angular.txt" "ajax.txt" ".DS_Store" "../" "./")
-
- ("/Users/adnammit/.xemacs/" (22556 60296 0 0) "pl.el" "mac-key-mode.el" "init.el" "custom.el" "../" "./")
 
  ("/Users/adnammit/.emacs.d/" (22556 59007 0 0) "undo-tree.el" "themes/" "ido.last" "evil/" "elpa/" "desktopaid/" "desktop/" "bookmark/" "auto-save-list/" "../" "./")
 
@@ -304,12 +311,6 @@
  ("/c/Users/ryman.amanda/rel/dat/client/sharp/" (22387 58487 158857 600000) "version.txt" "RCS/" "eoc/" "dir.make" "../" "./")
 
  ("/c/" (22381 13671 862898 400000) "../" "./" "Windows/" "Users/" "UserData/" "System Volume Information/" "swapfile.sys" "Recovery/" "ProgramData/" "Program Files (x86)/" "Program Files/" "PerfLogs/" "pagefile.sys" "MSOCache/" "Intel/" "inetpub/" "hiberfil.sys" "ESD/" "Documents and Settings/" "BOOTNXT" "$Windows.~WS/" "$Recycle.Bin/")
-
- ("/c/Users/ryman.amanda/ryman.amanda/home/pl_dev/dev.perflogic.com/__lib__/" (22362 49349 0 0) "Gather_user_assignments.dat" ".#add_non_user.dat" ".#Run_script_reverse_path.dat" "#Run_script_reverse_path.dat#" "Run_script_reverse_path.dat" ".___000000150147715ac6e1c17d34f0c1b8" "Create_task_cache.dat" ".#Set_loader_path.dat" "vat/" "ppm_lite/" "Add_process_items.dat" "Run_process_queue.dat" "Create_epmo_report_cache.dat" "add_non_user.dat" "Create_top_parent.dat" "eoc/" "dsrip/" "dat/" "object/" "measures/" "httpd/" "Task_stats.dat" "Set_loader_path.dat" "Push_task_updates.dat" "Project_template.dat" "Project_summary_update_new.dat" "Project_summary_update.dat" "Project_stub_update_new.dat" "Project_stub_update.dat" "New_dashboard_script.dat" "Initialize_remote_session.dat" "generate_password.dat" "ny_dsrip/" "texas_dsrip/" "find_stub.dat" "find_measure.dat" "Calendar_setup.dat" "Build_proj_list_stack.dat" "dir.make" "client/" "RCS/" "../" "./")
-
- ("/c/Users/ryman.amanda/ryman.amanda/home/pl_dev/dev.perflogic.com/__app__/proc/" (22360 49222 0 0) "_1l9QYF1" "Update_webform_data_repository.dat" "deleteme.dat~" "deleteme.dat" "#Update_task_links.dat#" "#Gather_assignment_data.dat#" ".#Update_task_links.dat" "caches/" "texas_dsrip/" "ny_dsrip/" "Update_project_departments.dat" "Save_user_object.dat" "Load_user_object.dat" ".#Load_user_object.dat" "Resolve_webform_path.dat" "Update_task.dat" "Update_task_links.dat" "Get_resource_sandbox_list.dat" "Get_resource_sandbox_list.dat~" "Add_task_link.dat" "Remove_task_link.dat" "Gather_quality_report.dat" "ppm_lite/" "tracer/" "bswqa/" "thr/" "audit/" "Gather_epmo_data_cached.dat" "eoc/" "transformation/" "new_db_request_items/" "Get_measure_selector.dat" "Get_user_emails.dat" "leadership/" "Add_local_requests.dat" "Get_requests_by_id.dat.new" ".#Save_user_object.dat" "Stub_to_task.dat" "Get_gantt_phase_date_list.dat" "backup_Stub_to_task.dat" "contracosta/" "issues/" "inspections/" "huron/" "demo2/" "covenanthealth/" "cfhp/" "utilities/" "childrens/" "grmc/" "doc/" "wellmont/" "visn10/" "visn9/" "vcu/" "vaco/" "va-eoc/" "umhs/" "uhs/" "cdh/" "dsrip/" "tjuh/" "teletracking/" "strategicplan/" "ski2/" "sickkids/" "sharp/" "ski/" "sfgh/" "scvmc/" "barrett/" "sanantonio/" "riverside/" "pinnacle/" "phhs/" "perflogic/" "parkland/" "om/" "olmsted/" "natividad/" "jhs/" "scorecards/" "sg/" "northvalley/" "tha/" "oumc/" "rounding/" "rideout/" "bhset/" "ucirvine/" "visn22/" "pediatrix/" "measures/" "Update_todo.dat" "Update_test_folders.dat" "Update_team_members.dat" "Update_task_user_infos.dat" "Update_task_updates.dat" "Update_task_dependencies.dat" "Update_resource_hours.dat" "Update_request_stub.dat" "Update_requests.dat" "Update_request_list_view.dat" "Update_request.dat" "Update_project_resource_allocation_limits.dat" "Update_project_list_view.dat" "Update_object_prop.dat" "Update_object.dat" "Update_local_subobject.dat" "Update_issues.dat" "Update_issue.dat" "Update_goal.dat" "Update_discussions.dat" "Update_calendar_event.dat" "Set_task_dependency.dat" "Search_measures.dat" "Search_ldap.dat" "Search_doc_repository.dat" "Search.dat" "Save_user_part.dat" "Save_last_status_view.dat" "Rollup_root_cause.dat" "Remove_stub.dat" "Remove_shared_measure.dat" "Remove_requests_by_id.dat" "Remove_local_subobject.dat" "Remove_discussion.dat" "Query_requests.dat" "Log_object_message.dat" "Load_user_part.dat" "Load_template_measures.dat" "Load_resource_data.dat" "Load_request_stubs.dat" "Load_requests.dat" "Load_project.dat" "Load_object_list.dat" "Load_non_users.dat" "Load_measures_for_selector.dat" "Load_local_subobjects.dat" "Load_local_subobject.dat" "Load_issues.dat" "Load_discussions.dat" "Load_calendar_events.dat" "Insert_shared_measure.dat" "Increment_custom_counter.dat" "Get_user_todos.dat" "Get_user_todo.dat" "Get_user_tasks.dat" "Get_user_risks.dat" "Get_user_meetings.dat" "Get_user_issues.dat" "Get_user_goals.dat" "Get_user_goal.dat" "Get_usage_data.dat" "Get_task_info.dat" "Get_request_stubs_by_id.dat" "Get_requests_by_id.dat" "Get_requests_by_assigned_to.dat" "Get_project_notification_properties.dat" "Get_project_allocation_limits.dat" "Get_object_prop.dat" "Get_object_prop_2.dat" "Get_milestone_tasks.dat" "Get_measure_stubs.dat" "Get_current_status_view.dat" "Get_client_directory.dat" "Get_allocation_limits.dat" "Gather_time_sheet_data.dat" "Gather_task_updates.dat" "Gather_tactics_data.dat" "Gather_summaries.dat" "Gather_subproject_docs.dat" "Gather_strategic_project_data.dat" "Gather_status_views.dat" "Gather_project_report_data.dat" "Gather_object_parts.dat" "Gather_log_events.dat" "gather_initiative_task_steps.dat" "Gather_epmo_data.dat" "Gather_custom_form_properties.dat" "Gather_budget_items.dat" "Gather_assignment_data.dat" "Find_stub_by_path.dat" "Find_status_view.dat" "Cross_project_measures.dat" "Create_fiscal_period_mgr.dat" "Copy_user_permission.dat" "Copy_selector_measures.dat" "Collate_user_hours.dat" "Collate_project_items.dat" "Collate_ideas.dat" "Check_local_subobject.dat" "Build_folder_path.dat" "Batch_move_stub.dat" "Archive_requests_by_id.dat" "Add_requests.dat" "Add_request_list_view.dat" "Add_request.dat" "Add_queue_task.dat" "Add_project_list_view.dat" "Add_non_user.dat" "Add_local_subobject.dat" "Add_ldap_user.dat" "Add_issues.dat" "Add_issue.dat" "Add_discussion.dat" "dir.make" "frg/" "RCS/" "../" "./")
-
- ("/c/Users/ryman.amanda/ryman.amanda/home/pl_dev/dev.perflogic.com/__app__/proc/eoc/" (22360 40183 0 0) ".#Get_inspection_email_settings.dat" "facility_transfer/" "Get_inspection_email_settings.datRryqKa" "reports/" "reminders/" "panes/" "offline/" "deficiencies/" "completion/" "Update_required_inspection.dat" "Update_inspection_with_request.dat" "Update_inspection_teams.dat" "Update_inspection_list_stub_entry.dat" "Update_inspection.dat" "Update_insp_digests.dat" "Update_download_status_queue_new.dat" "Update_download_status_queue.dat" "Update_defreq_digests.dat" "Update_deficiency_requests.dat" "Update_default_category_assignments.dat" "Update_building.dat" "Transfer_responsibility_petition_email.dat" "Sync_request_details.dat" "Remove_inspectors_from_open_inspections.dat" "Merge_attendance.dat" "Load_inspections_for_list.dat" "Load_inspections.dat" "Load_insp_digests.dat" "Load_def_req_digests.dat" "Load_archived_requests.dat" "Load_archived_inspections.dat" "Inspection_download_email.dat" "Get_using_svcs.dat" "Get_updated_deficiency_request.dat" "Get_updated_deficiencies.dat" "Get_resp_svcs.dat" "Get_notification_recipients.dat" "Get_next_building_id.dat" "Get_inspection_teams.dat" "Get_inspection_email_settings.dat" "Get_inspection.dat" "Get_inspection_count.dat" "Get_inspection_coordinator.dat" "Get_default_category_assignments.dat" "Get_coordinators.dat" "Get_building_list.dat" "Get_attendance_categories.dat" "Get_all_expressed_properties.dat" "Generate_transfer_notification_emails.dat" "Generate_request_stub.dat" "Generate_inspection_review_emails.dat" "Create_permission_cache.dat" "Create_new_attendance.dat" "Count_deficiencies.dat" "Close_inspection_fork.dat" "Close_inspection.dat" "Archive_inspections.dat" "Add_inspection.dat" "dir.make" "digests/" "RCS/" "../" "./")
 )
 
 ;; ----- ido-unc-hosts-cache -----

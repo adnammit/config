@@ -1,6 +1,9 @@
 
 #=========================================
 # FUN WITH FUNCTIONS
+#
+# These functions are aliased here rather
+#  than in the .aliases dir
 #========================================= 
 
 
