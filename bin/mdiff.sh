@@ -6,7 +6,7 @@
 #    For all your Mega and Multiple diffing purposes
 #
 # Uses and Stupidities:
-#    For when you have a common file and it turns out there are a million more of the boogers
+#    This is for when you have a common file and it turns out there are a million more of the boogers
 #    in custom client code. Gah, if only you didn't have to diff through a billion files...
 #    Oh wait.
 #

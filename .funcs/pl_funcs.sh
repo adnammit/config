@@ -30,6 +30,7 @@ function pop()
 	# done
 
     fi
+    unset a NUM p
 #    xterm -geometry 80x50+50+0 -e bash -c "exec bash" -hold &  #-- make pop open quarter-screen sized -- doesn't work
 }
 
@@ -50,15 +51,17 @@ function hi()
     emacs *.txt &
     check_files
     cd $a
+    unset a
 }
 
 # RUPDATE ALL OF /DAT RECURSIVELY
 function rup()
 {
     a=$PWD
-    cd ~/dev/dat
+    cd ~/dev/
     rupdate -r
     cd $a
+    unset a
 }
 
 function ssh_devlnx()
@@ -72,8 +75,8 @@ function ssh_devlnx()
 function check_files()
 {
     b=$PWD
-    cd ~/dev/dat
-
+    cd //dev-lnx/sites/dev.perflogic.com/__lib__/dat
+    
     TARGET_FILE=~/docs/check_files.txt
     if [[ "$OSTYPE" == "darwin15" ]]; then
 	SMILE="ʕ•ᴥ•ʔ"
@@ -84,30 +87,38 @@ function check_files()
 	FROWN="-__-"
 	SHRUG="o__O"
     fi
-    FILL="--------------"
+    FILL=">>>"
 
-    echo "====== Let's find us some files to check out...."    
+    echo "Let's find us some files to check out...."    
     
     while read FILE; do
 
-	if [ -f ${FILE} ]; then
+	# check to see if the line is a comment or whitespace: 
+	TMP=${FILE:0:2}
+	
+	if [ "${TMP}" != "//" ] && [ "${FILE}" != "" ]; then
+	    
+	    if [ -f ${FILE} ]; then
 
-	    RESULT=$(rlog -L -R ${FILE})
+		RESULT=$(rlog -L -R ${FILE})
 
-	    if [[ -z "${RESULT// }" ]] ; then
-		echo "${FILL} file [${FILE}] is available ${SMILE}"
+		if [[ -z "${RESULT// }" ]] ; then
+		    echo "${FILL} [${FILE}] is available ${SMILE}"
+		else
+		    #rlog -N -h -l ${FILE}
+		    echo "${FILL} [${FILE}] is checked out by someone ${FROWN}"
+		fi
 	    else
-		#rlog -N -h -l ${FILE}
-		echo "${FILL} file [${FILE}] is checked out by someone ${FROWN}"
-	    fi
-	else
-	    echo "${FILL} file [${FILE}] could not be found ${SHRUG}"
+		echo "${FILL} [${FILE}] could not be found ${SHRUG}"
 
+	    fi
 	fi
 	
     done <${TARGET_FILE}
     
     cd $b
+
+    unset b TARGET_FILE SMILE FROWN SHRUG FILL FILE TMP RESULT
 }
 
 
@@ -153,6 +164,8 @@ function roll_out_dev()
     done
 
     cd $a
+
+    unset a
 }
 
 # INC, ROLL PACKAGES TO TEST
@@ -178,13 +191,26 @@ function roll_out_dev_me()
     a=$PWD
     cd ~/dev/build
 
-    for p in "$@";
-    do
-	inc_version $p
-	roll_out $p DEV -t amanda
-    done
+    if [ "${1}" == "-n" ]; then
+	NO_STRIP="--no-strip"
+	DIR="${2}"
+    else
+	DIR="${1}"
+    fi
+
+    inc_version $DIR
+    roll_out $DIR -t amanda $NO_STRIP
+
+    ### Option for handling multiple packages:
+    # for p in "$@";
+    # do
+    # 	inc_version $p
+    # 	roll_out $p DEV -t amanda
+    # done
 
     cd $a
+
+    unset a NO_STRIP DIR
 }
 
 # ROLL PACKAGES TO TEST WITH MY TAG
@@ -202,6 +228,7 @@ function roll_out_test_me()
     done
 
     cd $a
+    unset a
 }
 
 # SYNC CONFIG FILES WITH //DEV-LNX
@@ -212,6 +239,7 @@ function sync_config()
     cd
     cp -r config/. ryman.amanda/config/
     cd $a
+    unset a
 }
 
 # CHECK FOR MY LOCKS 
@@ -234,4 +262,5 @@ function inc()
     cd ~/dev/build
     inc_version $1
     cd $a
+    unset a
 }

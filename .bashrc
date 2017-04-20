@@ -67,3 +67,6 @@ if [ -d ~/.funcs ]; then
 fi
 unset FILE
 
+
+export NVM_DIR="/home/aryman/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

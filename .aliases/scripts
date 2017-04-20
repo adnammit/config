@@ -1,3 +1,4 @@
 
 alias mdiff='mdiff.sh'
 alias sts='sync_to_server.sh'
+alias rrdiff='rrdiff.sh'

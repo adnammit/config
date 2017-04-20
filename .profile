@@ -32,6 +32,7 @@ unset $TEMP_VARS
 # FOR WORKY WORK:
 if [[ "$OSTYPE" == "cygwin" ]]; then
     PATH="$PATH://server/Users/shared/dev_tools:~/dev/build"
+    TMPDIR="/tmp/"
 fi
 
 
@@ -55,7 +56,7 @@ if [[ "$OSTYPE" == "darwin15" ]]; then
 fi
 
 export PATH
-
+export TMPDIR
 
 #=========================================
 # SET TELEPORTATION VARIABLES
