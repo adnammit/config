@@ -34,11 +34,44 @@ function pop()
 #    xterm -geometry 80x50+50+0 -e bash -c "exec bash" -hold &  #-- make pop open quarter-screen sized -- doesn't work
 }
 
+function mnt()
+{
+    mintty -t hello -e /bin/bash - &
+}
+
+
+
+# FOR MINTTY
+# GET ALL OUR WINDOWS SET UP, RUPDATE AND CHECK FOR FILES WE NEED
+function hello()
+{
+    a=$PWD
+    mintty -t sidecar -e /bin/bash - &
+    #mintty.exe -i /Cygwin-Terminal.ico - &
+    #xterm -bg ${BG3} -e bash -c "cd ~/test; rupdate -r; cd ~/dev; rupdate -r; exec bash" -hold &
+
+    i=0
+    while [ "$i" -lt 3 ]
+    do
+    	ssh_devlnx
+    	let "i+=1"
+    done
+    
+    cd ~/docs
+    emacs *.txt &
+    check_files
+    cd $a
+    unset a
+}
+
+
+
+# FOR XTERM
 # GET ALL OUR WINDOWS SET UP, RUPDATE AND CHECK FOR FILES WE NEED
 function hi()
 {
     a=$PWD
-    xterm -bg ${BG3} -e bash -c "cd ~/dev; rupdate -r; exec bash" -hold &
+    xterm -bg ${BG3} -e bash -c "cd ~/test; rupdate -r; cd ~/dev; rupdate -r; exec bash" -hold &
 
     i=0
     while [ "$i" -lt 3 ]
@@ -60,14 +93,15 @@ function rup()
     a=$PWD
     cd ~/dev/
     rupdate -r
+    cd ~/test/
+    rupdate -r
     cd $a
     unset a
 }
 
 function ssh_devlnx()
 {
-    mintty -t dev-lnx.portland.perflogic.com -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
-
+    mintty -t dev-lnx -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
 }
 
 # Reads through a text document and checks to see if any files in the document are available to check out.
@@ -87,7 +121,7 @@ function check_files()
 	FROWN="-__-"
 	SHRUG="o__O"
     fi
-    FILL=">>>"
+    FILL=">  "
 
     echo "Let's find us some files to check out...."    
     
@@ -103,13 +137,13 @@ function check_files()
 		RESULT=$(rlog -L -R ${FILE})
 
 		if [[ -z "${RESULT// }" ]] ; then
-		    echo "${FILL} [${FILE}] is available ${SMILE}"
+		    echo "${FILL} ${SMILE} can haz ${FILE}" #echo "${FILL} [${FILE}] is available ${SMILE}"
 		else
 		    #rlog -N -h -l ${FILE}
-		    echo "${FILL} [${FILE}] is checked out by someone ${FROWN}"
+		    echo "${FILL} ${FROWN} no can haz ${FILE}" #echo "${FILL} [${FILE}] is checked out by someone ${FROWN}"
 		fi
 	    else
-		echo "${FILL} [${FILE}] could not be found ${SHRUG}"
+		echo "${FILL} ${SHRUG} what can be ${FILE}" #echo "${FILL} [${FILE}] could not be found ${SHRUG}"
 
 	    fi
 	fi

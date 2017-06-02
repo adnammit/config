@@ -31,7 +31,7 @@ unset $TEMP_VARS
 
 # FOR WORKY WORK:
 if [[ "$OSTYPE" == "cygwin" ]]; then
-    PATH="$PATH://server/Users/shared/dev_tools:~/dev/build"
+    PATH="$PATH://server/Users/shared/dev_tools:~/dev/build:~/AppData/Local/atom/bin"
     TMPDIR="/tmp/"
 fi
 

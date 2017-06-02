@@ -1,6 +1,7 @@
 
 
 alias exp='explorer'
+alias atom='~/AppData/Local/atom/atom.exe'
 
 # TELEPORTATION
 alias bld='cd ~/dev/build'
