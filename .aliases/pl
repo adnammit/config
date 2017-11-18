@@ -1,5 +1,3 @@
-
-
 alias dev='cd ${DEV}'
 alias test='cd ${TEST}'
 alias stage='cd ${STAGE}'

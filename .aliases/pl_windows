@@ -16,3 +16,6 @@ alias v='cd ~/dev/dat/client/visn9/'
 alias tools='cd //server/users/shared/dev_tools/'
 alias bu='cd ~/backup/'
 alias docs='cd ~/docs/'
+
+
+alias odev='cd /c/UserData/ryman.amanda/olddev/dat'

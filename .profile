@@ -28,7 +28,7 @@ done
 PATH="$LOCAL_PATH:$BASE_PATH:$HOME/bin"
 unset $TEMP_VARS
 
-PATH="$PATH://server/Users/shared/dev_tools:/c/UserData/ryman.amanda/dev-git/build/:~/AppData/Local/atom/bin:/usr/lib/postgresql/9.3/bin"
+PATH="$PATH://server/Users/shared/dev_tools:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin:/usr/lib/postgresql/9.3/bin"
 TMPDIR="/tmp/"
 
 # FOR PLAY PLAY:
@@ -60,6 +60,7 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     DEV='//dev-lnx/sites/dev.perflogic.com/'
     TEST='//dev-lnx/sites/test.perflogic.com/'
     STAGE='//dev-lnx/sites/stage.perflogic.com/'
+    LOCALDEV='/c/UserData/ryman.amanda/dev'
 fi
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
