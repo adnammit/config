@@ -103,6 +103,46 @@ function cdd()
 
     $STR
     
-    unset STR
-    unset i
+    unset STR i
 }
+
+
+#####nawwwww just use $ sed 's/foo/bar/' input.txt > output.txt
+# # STRIP EXPRESSIONS FROM A FILE
+# function strip_file()
+# {
+#     FILE=$1
+
+#     if [[ -f "$FILE" ]] ; then
+
+
+# 	#if [ $# -gt 1 ] ; then
+# 	if [ $# -gt 0 ] ; then
+
+# 	    while read LINE ; do
+
+# 		echo "removing from: ${LINE}"
+		
+# 		STR=sed
+
+
+		
+# 		# for p in "$@"
+# 		# do
+
+# 		# done
+
+
+# 	    done <"${FILE}"
+
+# 	else
+# 	    echo "Enter some text to remove from ${FILE}"
+# 	fi
+
+#     else
+# 	echo "File ${FILE} does not exist"
+#     fi
+
+#     ###unset FILE
+    
+# }

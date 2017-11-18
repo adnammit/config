@@ -4,19 +4,70 @@
 #
 # These functions are aliased here rather
 #  than in the .aliases dir
-#========================================= 
+#=========================================
+
+function clean_stat_reports()
+{
+    a=$PWD
+
+    PPM_LITE_FILES=("Refresh_status_report_dialog"
+	     "Status_report_do_snapshot"
+	     "Custom_status_report_top_fields"
+	     "Confirm_status_report_refresh_items")
+
+    VISN_FILES=("Refresh_status_report_dialog"
+	     "Custom_status_report_top_fields")
+
+
+    PARKLAND_FILES=("Refresh_status_report_dialog")
+
+
+    cd ~/dev/dat/ppm_lite
+    echo "In ppm_lite"
+    for P in ${PPM_LITE_FILES[@]}
+    do
+	echo "Removing ${P}.dat"
+	rm -f ${P}.dat
+    done
+
+    unset P
+
+    cd ~/dev/dat/client/visn9
+    echo "In visn9"
+    for P in ${VISN_FILES[@]}
+    do
+	echo "Removing ${P}.dat"
+	rm -f ${P}.dat
+    done
+
+    unset P
+
+    cd ~/dev/dat/client/parkland/it_pmo
+    echo "In parkland"
+    for P in ${PARKLAND_FILES[@]}
+    do
+	echo "Removing ${P}.dat"
+	rm -f ${P}.dat
+    done
+
+    cd ${a}
+    unset a PPM_LITE_FILES VISN_FILES PARKLAND_FILES P
+}
+
+
+
 
 
 # POP OPEN A NEW SHELL WINDOW. OPTIONAL: OPEN ONE WINDOW PER COMMAND STRING:
 #    $ pop 'cd ../config' 'ls' 'cd ~/dev/dat; rupdate -r'
-function pop() 
+function pop()
 {
     a='Using "$@" string: '
     if [ $# == 0 ]; then
 	xterm -bg ${BG4} -e bash -c "exec bash" -hold &
     else
 	NUM=$1
-	for p in "$@" 
+	for p in "$@"
 	do
 
 	    xterm -e bash -c "$p; exec bash" -hold &
@@ -46,8 +97,8 @@ function mnt()
 function hello()
 {
     a=$PWD
-    mintty -t sidecar -e /bin/bash - &
-    #mintty.exe -i /Cygwin-Terminal.ico - &
+    #mintty -t sidecar -e /bin/bash - &
+    mintty -ha -t sidecar bash &
     #xterm -bg ${BG3} -e bash -c "cd ~/test; rupdate -r; cd ~/dev; rupdate -r; exec bash" -hold &
 
     i=0
@@ -56,9 +107,9 @@ function hello()
     	ssh_devlnx
     	let "i+=1"
     done
-    
+
     cd ~/docs
-    emacs *.txt &
+    emacs *.txt *.org &
     check_files
     cd $a
     unset a
@@ -79,7 +130,7 @@ function hi()
     	ssh_devlnx
     	let "i+=1"
     done
-    
+
     cd ~/docs
     emacs *.txt &
     check_files
@@ -110,7 +161,7 @@ function check_files()
 {
     b=$PWD
     cd //dev-lnx/sites/dev.perflogic.com/__lib__/dat
-    
+
     TARGET_FILE=~/docs/check_files.txt
     if [[ "$OSTYPE" == "darwin15" ]]; then
 	SMILE="ʕ•ᴥ•ʔ"
@@ -123,15 +174,15 @@ function check_files()
     fi
     FILL=">  "
 
-    echo "Let's find us some files to check out...."    
-    
+    echo "Let's find us some files to check out...."
+
     while read FILE; do
 
-	# check to see if the line is a comment or whitespace: 
+	# check to see if the line is a comment or whitespace:
 	TMP=${FILE:0:2}
-	
+
 	if [ "${TMP}" != "//" ] && [ "${FILE}" != "" ]; then
-	    
+
 	    if [ -f ${FILE} ]; then
 
 		RESULT=$(rlog -L -R ${FILE})
@@ -147,15 +198,23 @@ function check_files()
 
 	    fi
 	fi
-	
+
     done <${TARGET_FILE}
-    
+
     cd $b
 
     unset b TARGET_FILE SMILE FROWN SHRUG FILL FILE TMP RESULT
 }
 
-
+# LOOK THROUGH TXT FILES IN DOCS
+function sdocs()
+{
+    if [ $# -gt 0 ] ; then
+	cd ~/docs
+        find .  -name "*.txt" | xargs grep -n --color -i "$@"
+	cd -
+    fi
+}
 
 # LOOK THROUGH ALL .DAT FILES FOR A CASE-INSENSITIVE REGEX
 function sdat()
@@ -180,7 +239,7 @@ function sapp()
 {
     if [ $# -gt 0 ] ; then
 	grep -ln --color "$@" *app_log
-    fi    
+    fi
 }
 
 # INC, ROLL PACKAGES TO DEV
@@ -194,7 +253,7 @@ function roll_out_dev()
     for p in "$@";
     do
 	inc_version $p
-	roll_out $p DEV 
+	roll_out $p DEV
     done
 
     cd $a
@@ -276,10 +335,11 @@ function sync_config()
     unset a
 }
 
-# CHECK FOR MY LOCKS 
+# CHECK FOR MY LOCKS
 function slocks()
 {
-    rlocks -r | grep "ryman.amanda"
+    rlocks -r -u -f
+    #rlocks -r | grep "ryman.amanda"
 }
 
 # CHECK FOR NEW FILES THAT AREN'T CHECKED IN
