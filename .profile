@@ -11,14 +11,15 @@ export HISTTIMEFORMAT
 
 
 # FOR ALL ENVS:
-STANDARD_PKGS="${OSTYPE%%[-0-9]*} user shell term lang man options"
+#STANDARD_PKGS="${OSTYPE%%[-0-9]*} user shell term lang man options" #for some reason, 'lang' throws cd error
+STANDARD_PKGS="${OSTYPE%%[-0-9]*} user shell term man options"
 BASE_PATH="/usr/bin:/bin" # same as default $PATH
 LOCAL_PATH="/usr/local/bin"
 TEMP_VARS="TEMP_VARS STANDARD_PKGS BASE_PATH LOCAL_PATH"
 
 for PKG in $STANDARD_PKGS ; do
     if [ -r "/etc/profile.d/$PKG.sh" ] ; then
-	. "/etc/profile.d/$PKG.sh"
+    . "/etc/profile.d/$PKG.sh"
     fi
     if [ -r "$HOME/.profile.d/$PKG.sh" ] ; then
 	. "$HOME/.profile.d/$PKG.sh"
@@ -60,13 +61,14 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     DEV='//dev-lnx/sites/dev.perflogic.com/'
     TEST='//dev-lnx/sites/test.perflogic.com/'
     STAGE='//dev-lnx/sites/stage.perflogic.com/'
-    LOCALDEV='/c/UserData/ryman.amanda/dev'
+    REPO='//dev-lnx/repo_sites/'
 fi
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     DEV='/var/www/sites/dev.perflogic.com/'
     TEST='/var/www/sites/test.perflogic.com/'
     STAGE='/var/www/sites/stage.perflogic.com/'
+    REPO='/var/www/repo_sites/'
 fi
 
 if [[ "$OSTYPE" != "darwin15" ]]; then

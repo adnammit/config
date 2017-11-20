@@ -1,7 +1,6 @@
 
 
 alias exp='explorer'
-alias atom='~/AppData/Local/atom/atom.exe'
 
 # TELEPORTATION
 alias bld='cd ~/dev/build'
@@ -9,6 +8,7 @@ alias dat='cd ~/dev/dat'
 alias pl='cd ~/dev/dat/client/perflogic'
 alias j='cd ~/dev/dat/client/jhs'
 alias c='cd ~/dev/dat/common/'
+alias rq='cd ~/dev/dat/common/requests'
 alias pf='cd ~/dev/dat/process_flow/'
 alias e='cd ~/dev/dat/eoc/'
 alias p='cd ~/dev/dat/ppm_lite/'
@@ -16,6 +16,4 @@ alias v='cd ~/dev/dat/client/visn9/'
 alias tools='cd //server/users/shared/dev_tools/'
 alias bu='cd ~/backup/'
 alias docs='cd ~/docs/'
-
-
 alias odev='cd /c/UserData/ryman.amanda/olddev/dat'

@@ -1,6 +1,8 @@
+
 alias dev='cd ${DEV}'
 alias test='cd ${TEST}'
 alias stage='cd ${STAGE}'
+alias repo='cd ${REPO}'
 alias dproc='cd ${DEV}${PROC}'
 alias tproc='cd ${TEST}${PROC}'
 alias sproc='cd ${STAGE}${PROC}'
