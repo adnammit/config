@@ -4,7 +4,7 @@
 #
 # These functions are aliased here rather
 #  than in the .aliases dir
-#========================================= 
+#=========================================
 
 
 # MOVE THINGS TO TRASH!
@@ -16,7 +16,7 @@ function trash()
 # # make a mac version of this:
 
 # # pop open a separate shell window
-# function pop() 
+# function pop()
 # {
 #     a='Using "$@" string: '
 #     if [ $# == 0 ]; then
@@ -30,16 +30,16 @@ function trash()
 # #    xterm -geometry 80x50+50+0 -e bash -c "exec bash" -hold &  #-- make pop open quarter-screen sized -- doesn't work
 # }
 
-# LOOK THROUGH MANY TYPES OF FILES FOR A CASE-INSENSITIVE REGEX 
+# LOOK THROUGH MANY TYPES OF FILES FOR A CASE-INSENSITIVE REGEX
 function ssome()
 {
-    if [ $# -gt 0 ] ; then 
+    if [ $# -gt 0 ] ; then
 	find . -name "*.txt" | xargs grep -n --color -i "$@"
 	find . -name "*.doc" | xargs grep -n --color -i "$@"
 	find . -name "*.docx" | xargs grep -n --color -i "$@"
 	find . -name "*.dat" | xargs grep -n --color -i "$@"
 	find . -name "*.pls" | xargs grep -n --color -i "$@"
-	find . -name "*.pg" | xargs grep -n --color -i "$@"	
+	find . -name "*.pg" | xargs grep -n --color -i "$@"
     fi
 }
 
@@ -86,7 +86,7 @@ function bak()
 	for p in "$@"
 	do
 	    cp "$p" "$p".bak
-	done	
+	done
     fi
 }
 
@@ -102,7 +102,7 @@ function cdd()
     done
 
     $STR
-    
+
     unset STR i
 }
 
@@ -122,11 +122,11 @@ function cdd()
 # 	    while read LINE ; do
 
 # 		echo "removing from: ${LINE}"
-		
+
 # 		STR=sed
 
 
-		
+
 # 		# for p in "$@"
 # 		# do
 
@@ -144,5 +144,5 @@ function cdd()
 #     fi
 
 #     ###unset FILE
-    
+
 # }

@@ -99,7 +99,6 @@ function hello()
     a=$PWD
     #mintty -t sidecar -e /bin/bash - &
     mintty -ha -t sidecar bash &
-    #xterm -bg ${BG3} -e bash -c "cd ~/test; rupdate -r; cd ~/dev; rupdate -r; exec bash" -hold &
 
     i=0
     while [ "$i" -lt 3 ]
@@ -108,10 +107,10 @@ function hello()
     	let "i+=1"
     done
 
-    cd ~/docs
-    emacs *.txt *.org &
-    check_files
-    cd $a
+    #cd ~/docs
+    #emacs *.txt *.org &
+    #check_files
+    #cd $a
     unset a
 }
 

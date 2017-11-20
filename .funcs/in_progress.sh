@@ -1,5 +1,5 @@
 
-#========================================= 
+#=========================================
 # FUNCTIONS THAT DON'T WORK. YET.
 #=========================================
 
@@ -41,9 +41,9 @@ function findmine()
 }
 
 
-#========================================= 
+#=========================================
 # FUNCTIONS I DON'T USE (YET)
-#========================================= 
+#=========================================
 
 
 function sfile()
@@ -60,13 +60,13 @@ alias s='switch'
 function switch()
 {
     a=$PWD
-    b=$(echo $a | sed "s/\/rel/\/backup/") 
+    b=$(echo $a | sed "s/\/rel/\/backup/")
     c=$(echo $a | sed "s/\/backup/\/rel/")
     if [ $b == $a ] && [ $c == $a ];    then
-	b=$(echo $a | sed "s/\/test.perflogic.com/\/dev.perflogic.com/") 
+	b=$(echo $a | sed "s/\/test.perflogic.com/\/dev.perflogic.com/")
 	c=$(echo $a | sed "s/\/dev.perflogic.com/\/test.perflogic.com/")
-    fi    
-    
+    fi
+
     if [ $b == $a ]
     then
 	cd $c
@@ -80,13 +80,13 @@ function switch()
 function copy_switch()
 {
     a=$PWD
-    b=$(echo $a | sed "s/\/rel/\/backup/") 
+    b=$(echo $a | sed "s/\/rel/\/backup/")
     c=$(echo $a | sed "s/\/backup/\/rel/")
     if [ $b == $a ] && [ $c == $a ];    then
-	b=$(echo $a | sed "s/\/test.perflogic.com/\/dev.perflogic.com/") 
+	b=$(echo $a | sed "s/\/test.perflogic.com/\/dev.perflogic.com/")
 	c=$(echo $a | sed "s/\/dev.perflogic.com/\/test.perflogic.com/")
-    fi    
-    
+    fi
+
     if [ $b == $a ]
     then
 	cp -i $@ $c
@@ -99,13 +99,13 @@ function copy_switch()
 function switch_diff()
 {
     a=$PWD
-    b=$(echo $a | sed "s/\/rel/\/backup/") 
+    b=$(echo $a | sed "s/\/rel/\/backup/")
     c=$(echo $a | sed "s/\/backup/\/rel/")
     if [ $b == $a ] && [ $c == $a ];    then
-	b=$(echo $a | sed "s/\/test.perflogic.com/\/dev.perflogic.com/") 
+	b=$(echo $a | sed "s/\/test.perflogic.com/\/dev.perflogic.com/")
 	c=$(echo $a | sed "s/\/dev.perflogic.com/\/test.perflogic.com/")
-    fi    
-    
+    fi
+
     if [ $b == $a ]
     then
 	diff $@ $c/$@
@@ -119,7 +119,7 @@ function rlocks_all()
     # look through ALL relevant directories and check locks as well as norcs
     WD=${PWD}
 
-    
+
 
     TMPFILE=~/my_locks.txt;
     echo "My locks:" > $TMPFILE
@@ -144,7 +144,7 @@ function rlocks_all()
     DIR_LIST=()
 
     NAME=amanda;
-    
+
     for ii in ${DIRS[*]}
     do
         if [ $ii == "dat" ] ; then
@@ -164,7 +164,7 @@ function rlocks_all()
                 else
                     DIR_LIST+="$ii/$jj "
                 fi
-                
+
             done
         else
             DIR_LIST+="$ii "
@@ -228,7 +228,7 @@ function prop_list()
         echo ""
         echo "directory:  "
         sed -E "s/.*rel\/(.*)$PROP_FILE.*/\1/" $TMP_FILE
-        
+
         if [ $1 == "Str_util" ] || [ $1 == "File_util" ]; then
             REP="_rep";
             PROP_FILE=$PROP_FILE$REP;
@@ -243,7 +243,7 @@ function prop_list()
         # echo ""
         # echo "Showing properties -- call with object.property"
         # find ~/rel/ -name "$PROP_FILE.h" | xargs grep --color DCL_PROP
-        
+
         echo ""
         echo "Showing commands  -- call with object.command()"
         echo ""
@@ -253,6 +253,5 @@ function prop_list()
         echo ""
         find ~/rel/ -name "$PROP_FILE.h" | xargs sed -n -E "s/.*PROP\((.*)\).*/\1/p"
         echo ""
-    fi    
+    fi
 }
-
