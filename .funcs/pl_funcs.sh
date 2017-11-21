@@ -326,12 +326,38 @@ function roll_out_test_me()
 # SYNC CONFIG FILES WITH //DEV-LNX
 function sync_config()
 {
-    # to do: check for config/ dir and make if not there
+    DST_BASE="//dev-lnx/home/ryman.amanda/"
+    DST_DIR="config"
+    FILES=".aliases .bash_profile .bashrc bin .emacs .emacs.d .funcs .profile .xemacs"
+
     a=$PWD
-    cd
-    cp -r config/. ryman.amanda/config/
-    cd $a
-    unset a
+    cd ${DST_BASE}
+    if [ ! -e ${DST_DIR} ]; then
+        echo "making ${DST_DIR}"
+        mkdir ${DST_DIR}
+    else
+        echo "already have ${DST_DIR}"
+    fi
+
+    DST_PATH=${DST_BASE}${DST_DIR}"/"
+
+    echo "using ${DST_PATH}"
+
+    cd ~/config
+
+    for FILE in $FILES
+    do
+        echo "checking file $FILE"
+        # cp $FILE $DST_PATH
+        if [ -d $FILE ]; then
+            cp -r $FILE $DST_PATH
+        elif [ -f $FILE ]; then
+            cp $FILE $DST_PATH
+        fi
+    done
+
+    cd ${a}
+    unset a FILE FILES DST_BASE DST_DIR DST_PATH
 }
 
 # CHECK FOR MY LOCKS
