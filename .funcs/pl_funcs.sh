@@ -137,14 +137,29 @@ function hi()
     unset a
 }
 
+#rebase all
+function reball()
+{
+    a=$PWD
+    cd ~/dev
+    git checkout master
+    git pull
+    git checkout roll
+    git rebase master
+    git checkout proj-perms
+    git rebase roll
+    cd $a
+    unset a
+}
+
 # RUPDATE ALL OF /DAT RECURSIVELY
 function rup()
 {
     a=$PWD
-    cd ~/dev/
+    cd /c/UserData/ryman.amanda/olddev/
     rupdate -r
-    cd ~/test/
-    rupdate -r
+    # cd ~/test/
+    # rupdate -r
     cd $a
     unset a
 }
@@ -162,15 +177,9 @@ function check_files()
     cd //dev-lnx/sites/dev.perflogic.com/__lib__/dat
 
     TARGET_FILE=~/docs/check_files.txt
-    if [[ "$OSTYPE" == "darwin15" ]]; then
-	SMILE="ʕ•ᴥ•ʔ"
-	FROWN="ಠ_ಠ"
-	SHRUG="¯\_(ツ)_/¯"
-    else
-	SMILE="^__^"
-	FROWN="-__-"
-	SHRUG="o__O"
-    fi
+    SMILE="ʕ•ᴥ•ʔ"
+    FROWN="ಠ_ಠ"
+    SHRUG="¯\_(ツ)_/¯"
     FILL=">  "
 
     echo "Let's find us some files to check out...."
@@ -347,8 +356,7 @@ function sync_config()
 
     for FILE in $FILES
     do
-        echo "checking file $FILE"
-        # cp $FILE $DST_PATH
+        echo "syncing file $FILE"
         if [ -d $FILE ]; then
             cp -r $FILE $DST_PATH
         elif [ -f $FILE ]; then

@@ -4,8 +4,12 @@
 #==================================================================================
 
 if [ -f /etc/bash_completion ]; then
-    source /etc/bash_completion
+    . /etc/bash_completion
 fi
+# 
+# if [ -f ~/.git-completion.bash ]; then
+#     . ~/.git-completion.bash
+# fi
 
 #=========================================
 # FUN WITH STYLING AND COLOR
@@ -21,7 +25,7 @@ BOLDBLUEONGREEN='\[\e[42;34;1m\]'
 BLUEONYELLOW='\[\e[43;34m\]'
 BOLDYELLOWONGREEN='\[\e[42;33;1m\]'
 BOLDYELLOWONBLUE='\[\e[44;33;1m\]'
-xBOLDWHITEONGREEN='\[\e[42;37;1m\]'
+BOLDWHITEONGREEN='\[\e[42;37;1m\]'
 BOLDPURPLEONGREEN='\[\e[42;35;1m\]'
 BLUEONGREEN='\[\e[42;34m\]'
 RED='\[\e[0;31m\]'

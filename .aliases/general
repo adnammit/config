@@ -7,11 +7,13 @@ else
     alias ls='ls -la --color=always'
 fi
 
-
 alias grep='grep -n --color=auto'
 alias rm='rm -i'
 alias mv='mv -i'
 alias sphp='php -S localhost:8000'
+
+# GREP IGNORE GIT STUFF
+alias gr='grep -r -n --color=auto --exclude-dir=.git'
 
 # BC SPELLIGN IS HARD
 alias emacss='emacs'
@@ -27,7 +29,6 @@ alias emnacs='emacs'
 alias enmacs='emacs'
 alias eemacs='emacs'
 alias jorbs='jobs'
-
 
 #C++ SHORTCUTS
 alias compile='g++ *.cpp -Wall -g'

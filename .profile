@@ -62,6 +62,8 @@ if [[ "$OSTYPE" == "cygwin" ]]; then
     TEST='//dev-lnx/sites/test.perflogic.com/'
     STAGE='//dev-lnx/sites/stage.perflogic.com/'
     REPO='//dev-lnx/repo_sites/'
+    RLOG='//dev-lnx/home/ryman.amanda/repo_logs/'
+    LOCAL_REP='/c/UserData/ryman.amanda/'
 fi
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -69,6 +71,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     TEST='/var/www/sites/test.perflogic.com/'
     STAGE='/var/www/sites/stage.perflogic.com/'
     REPO='/var/www/repo_sites/'
+    RLOGS='/var/www/repo_logs/'
 fi
 
 if [[ "$OSTYPE" != "darwin15" ]]; then
