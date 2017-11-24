@@ -54,10 +54,6 @@ function clean_stat_reports()
     unset a PPM_LITE_FILES VISN_FILES PARKLAND_FILES P
 }
 
-
-
-
-
 # POP OPEN A NEW SHELL WINDOW. OPTIONAL: OPEN ONE WINDOW PER COMMAND STRING:
 #    $ pop 'cd ../config' 'ls' 'cd ~/dev/dat; rupdate -r'
 function pop()
@@ -69,7 +65,6 @@ function pop()
 	NUM=$1
 	for p in "$@"
 	do
-
 	    xterm -e bash -c "$p; exec bash" -hold &
 	done
 
@@ -87,7 +82,8 @@ function pop()
 
 function mnt()
 {
-    mintty -t hello -e /bin/bash - &
+    #mintty -t hello -e /bin/bash - &
+    mintty -i /Cygwin-Terminal.ico - &
 }
 
 
@@ -97,8 +93,8 @@ function mnt()
 function hello()
 {
     a=$PWD
-    #mintty -t sidecar -e /bin/bash - &
-    mintty -ha -t sidecar bash &
+    #mintty -ha -t sidecar bash &
+    mintty -i /Cygwin-Terminal.ico - &
 
     i=0
     while [ "$i" -lt 3 ]
@@ -142,15 +138,36 @@ function reball()
 {
     a=$PWD
     cd ~/dev
+    CURR_REPO=`git symbolic-ref --short HEAD`    
     git checkout master
     git pull
     git checkout roll
     git rebase master
     git checkout proj-perms
     git rebase roll
+    git co ${CURR_REPO}
     cd $a
-    unset a
+    unset a CURR_REPO
 }
+
+#roll out packages on roll branch
+alias ro='roll_to_roll'
+function roll_to_roll()
+{
+    if [ ${#} -gt 0 ]; then
+        a=$PWD
+        cd ~/dev
+        CURR_REPO=`git symbolic-ref --short HEAD`
+        git co roll
+        roll_out "$@"
+        git co ${CURR_REPO}
+        cd $a
+        unset a CURR_REPO
+    else
+        echo gimme some packages to roll, yo
+    fi
+}
+
 
 # RUPDATE ALL OF /DAT RECURSIVELY
 function rup()

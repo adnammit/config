@@ -1,2 +1,8 @@
 .emacs.d/auto-save-list
 .ssh
+emacs.d/ido.last
+emacs.d/evil
+emacs.d/desktop
+emacs.d/desktopaid
+emacs.d/bookmark
+emacs.d/elpa
