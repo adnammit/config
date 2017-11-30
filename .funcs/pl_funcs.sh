@@ -138,12 +138,21 @@ function reball()
 {
     a=$PWD
     cd ~/dev
-    CURR_REPO=`git symbolic-ref --short HEAD`    
+    CURR_REPO=`git symbolic-ref --short HEAD`
+    echo "----------------------------------------------------------------------"
+    echo ">>> checking out master branch"
     git checkout master
+    echo ">>> pulling origin master"
     git pull
+    echo "----------------------------------------------------------------------"
+    echo ">>> checking out roll branch"
     git checkout roll
+    echo ">>> rebasing with master"
     git rebase master
+    echo "----------------------------------------------------------------------"
+    echo ">>> checking out feature branch"
     git checkout proj-perms
+    echo ">>> rebasing with roll"
     git rebase roll
     git co ${CURR_REPO}
     cd $a
