@@ -12,9 +12,6 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias sphp='php -S localhost:8000'
 
-# GREP IGNORE GIT STUFF
-alias gr='grep -r -n --color=auto --exclude-dir=.git'
-
 # REFRESH AFTER MAKING CHANGES
 alias refprof='. ~/.bash_profile'
 

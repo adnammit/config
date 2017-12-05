@@ -136,6 +136,10 @@ function hi()
 #rebase all
 function reball()
 {
+    # to do:
+    # send in an arg for the feature branch you want to update to?
+    # treat an arg as curr_repo. if no arg sent in, get curr_repo
+
     a=$PWD
     cd ~/dev
     CURR_REPO=`git symbolic-ref --short HEAD`
@@ -143,17 +147,21 @@ function reball()
     echo ">>> checking out master branch"
     git checkout master
     echo ">>> pulling origin master"
-    git pull
+    git pull origin master
     echo "----------------------------------------------------------------------"
     echo ">>> checking out roll branch"
     git checkout roll
+    git stash
     echo ">>> rebasing with master"
     git rebase master
+    git stash pop
     echo "----------------------------------------------------------------------"
     echo ">>> checking out feature branch"
     git checkout proj-perms
+    git stash
     echo ">>> rebasing with roll"
     git rebase roll
+    git stash pop
     git co ${CURR_REPO}
     cd $a
     unset a CURR_REPO
