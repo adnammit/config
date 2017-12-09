@@ -8,7 +8,7 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 if [ -f ~/.git-completion.bash ]; then
-    . ~/.git-completion.bash
+    . ~/.git-completion
 fi
 
 #=========================================

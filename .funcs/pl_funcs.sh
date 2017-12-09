@@ -139,6 +139,11 @@ function reball()
     # to do:
     # send in an arg for the feature branch you want to update to?
     # treat an arg as curr_repo. if no arg sent in, get curr_repo
+    # 
+    # if [ ${#} -gt 0 ]; then
+    #     CURR_REPO
+    # fi
+
 
     a=$PWD
     cd ~/dev
