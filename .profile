@@ -27,9 +27,13 @@ for PKG in $STANDARD_PKGS ; do
 done
 
 PATH="$LOCAL_PATH:$BASE_PATH:$HOME/bin"
+
+TARDIGRADE="/mnt/c/Users/tardigrade/"
+
+PATH="$PATH://server/Users/shared/dev_tools:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin:${TARDIGRADE}AppData/Local/atom:/usr/lib/postgresql/9.3/bin"
+
 unset $TEMP_VARS
 
-PATH="$PATH://server/Users/shared/dev_tools:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin:/usr/lib/postgresql/9.3/bin"
 TMPDIR="/tmp/"
 
 # FOR PLAY PLAY:

@@ -11,9 +11,16 @@ alias grep='grep -n --color=auto'
 alias rm='rm -i'
 alias mv='mv -i'
 alias sphp='php -S localhost:8000'
+alias atm='./ /mnt/c/Users/tardigrade/AppData/Local/atom/atom.exe'
 
 # REFRESH AFTER MAKING CHANGES
 alias refprof='. ~/.bash_profile'
+
+alias raptget='sudo apt-get clean; sudo apt-get update; sudo apt-get -y dist-upgrade'
+
+# DOING STUFF TO WEBSITE:
+### upload to checkbook:
+alias scpcb='scp -P 18765 ${@} amandary@amandaryman.com:/home/amandary/www/checkbook/'
 
 # BC SPELLIGN IS HARD
 alias emacss='emacs'
