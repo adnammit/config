@@ -2,8 +2,12 @@
 # Put environment variables and other non-bash variables here.
 # If you had any .profile.d/ scripts to run, you'd do that here as well.
 
-HISTTIMEFORMAT="%d/%m/%y %T "
+HISTTIMEFORMAT="%F %T "
 export HISTTIMEFORMAT
+HISTFILESIZE=1000000
+HISTSIZE=1000000
+# immediately log commands to history so they're recorded in case of a crash:
+PROMPT_COMMAND='history -a'
 
 #=========================================
 # KNOW YR PATHWAYS

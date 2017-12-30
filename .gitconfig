@@ -1,3 +1,7 @@
+[user]
+	email = amandaryman@gmail.com
+	name = aryman
+
 [pull]
 	rebase = true
 
@@ -23,6 +27,3 @@
 	lg4-specific = log --graph --abbrev-commit --decorate --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
 	lg5-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
 	lg6-specific = log --graph --date=format:'%a %F %T' --pretty=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset)%n %C(bold cyan)%ad%C(reset) %C(bold red)%an%C(reset)  %n  %s:'
-[user]
-	email = amandaryman@gmail.com
-	name = aryman
