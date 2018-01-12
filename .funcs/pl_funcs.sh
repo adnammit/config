@@ -129,3 +129,22 @@ function sync_config()
     cd ${a}
     unset a FILE FILES DST_BASE DST_DIR DST_PATH
 }
+
+# Invoke while on a feature branch to rebase in changes from master and
+# roll associated packages
+function update_feature_branch_site
+{
+    local TRUNK_BRANCH=master
+    local FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    local GIT_ROOT=$(git rev-parse --show-toplevel)
+    local DIVERGE_REV=$(git merge-base $FEATURE_BRANCH $TRUNK_BRANCH)
+    local TREE_DIRTY=$(git status --porcelain)
+    if [ -n "$TREE_DIRTY" ]; then
+        git stash -u
+    fi
+    git rebase $TRUNK_BRANCH
+    if [ -n "$TREE_DIRTY" ]; then
+        git stash pop
+    fi
+    $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD
+}

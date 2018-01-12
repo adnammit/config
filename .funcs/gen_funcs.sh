@@ -20,12 +20,12 @@ function trash()
 # {
 #     a='Using "$@" string: '
 #     if [ $# == 0 ]; then
-# 	xterm -bg ${BG4} -e bash -c "exec bash" -hold &
+#         xterm -bg ${BG4} -e bash -c "exec bash" -hold &
 #     else
-# 	for p in "$@"
-# 	do
-# 	    xterm -e bash -c "$p; exec bash" -hold &
-# 	done
+#         for p in "$@"
+#         do
+#             xterm -e bash -c "$p; exec bash" -hold &
+#         done
 #     fi
 # #    xterm -geometry 80x50+50+0 -e bash -c "exec bash" -hold &  #-- make pop open quarter-screen sized -- doesn't work
 # }
@@ -34,50 +34,85 @@ function trash()
 # function ssome()
 # {
 #     if [ $# -gt 0 ] ; then
-# 	find . -name "*.txt" | xargs grep -n --color -i "$@"
-# 	find . -name "*.doc" | xargs grep -n --color -i "$@"
-# 	find . -name "*.docx" | xargs grep -n --color -i "$@"
-# 	find . -name "*.dat" | xargs grep -n --color -i "$@"
-# 	find . -name "*.pls" | xargs grep -n --color -i "$@"
-# 	find . -name "*.pg" | xargs grep -n --color -i "$@"
+#         find . -name "*.txt" | xargs grep -n --color -i "$@"
+#         find . -name "*.doc" | xargs grep -n --color -i "$@"
+#         find . -name "*.docx" | xargs grep -n --color -i "$@"
+#         find . -name "*.dat" | xargs grep -n --color -i "$@"
+#         find . -name "*.pls" | xargs grep -n --color -i "$@"
+#         find . -name "*.pg" | xargs grep -n --color -i "$@"
 #     fi
 # }
 
 alias diws='ignore_ws_comments'
 function ignore_ws_comments()
 {
-    CHAR="//"
+    local CHAR="//"
+    local FILES
+    local MODE="normal"
 
-    ##make an option for supplying a comment char
-    # FILES=""
+    function display_help
+    {
+        echo "Diffs two files while ignoring whitespace and newlines."
+        echo "Also ignores commented lines. Default comment character is \"//\""
+        echo "Specify a different comment character with: "
+        echo "     $ ignore_ws_comments -c \# foo bar"
+    }
 
-    # i=0
-    # while [  ]
-    # for VAR in "$@"
-    # do
-    #     if [ VAR == "-c"] ; then
-    #
-    #     elif
-    #
-    #     fi
-    #
-    # done
+    function print_files
+    {
+        echo "File size is: ${#}"
+        for FILE in ${@}
+        do
+            echo ${FILE}
+        done
+    }
 
-    echo "Diffing files ${1} and ${2} with char ${CHAR}"
-    echo "--------------------------------------------------------"
-    if [ $# == 2 ] ; then
-        # grep each file for non-matching lines (-v) against regular expression
-        #   ^\s*(${CHAR}|$) ("match comment char and empty lines")
-        # show exended expressions (E)
-        # 'command' removes my aliased -I option
-        diff -Bw <(command grep -vE "^\s*(${CHAR}|$)" "$1")  <(command grep -vE "^\s*(${CHAR}|$)" "$2")
-    elif [ $# -gt 2 ] ; then
-        echo Too many files! Just two plz.
+    if [ "${#}" == 0 ] ; then
+        MODE="help"
+        display_help
     else
-        echo Gimme two files to diff.
+        while  [ "${#}" != 0 ]
+        do
+            case "${1}" in
+                  -c | --character)
+                      CHAR="${2}"   # You may want to check validity of $2
+                      echo CHAR is ${CHAR}
+                      shift 2
+                      ;;
+                  -h | --help)
+                      display_help
+                      MODE="help"
+                      break
+                      ;;
+                  -*)
+                      echo "Error: Unknown option: $1"
+                      display_help
+                      MODE="help"
+                      break
+                      ;;
+                  *)
+                      FILES+=(${1})
+                      shift
+                      ;;
+            esac
+        done
     fi
 
-    unset CHAR
+    # echo "MODE is ${MODE}, CHAR is ${CHAR} and files are:"
+    # print_files "${FILES[@]}"
+
+    if [ ${MODE} == "normal" ] ; then
+        if [ ${#FILES[@]} == 2 ] ; then
+            echo "--------------------------------------------------------"
+            # grep each file for non-matching lines (-v) against regular expression
+            # ^\s*(${CHAR}|$) ("match comment char and empty lines")
+            # show exended expressions (E)
+            # 'command' removes my aliased -I option
+            diff -Bw <(command grep -vE "^\s*(${CHAR}|$)" "${FILES[0]}")  <(command grep -vE "^\s*(${CHAR}|$)" "${FILES[1]}")
+        else
+            echo "Please enter two files (we have ${#FILES[@]} files)"
+        fi
+    fi
 }
 
 # LOOK THROUGH ALL TEXT FILES FOR A CASE-INSENSITIVE REGEX
@@ -105,15 +140,15 @@ function sall()
 {
     echo "searching for $# strings in the same file"
     if [ $# -gt 0 ] ; then
-	if [ $# == 1 ] ; then
-	    grep -ril --color "$1"
-	elif [ $# == 2 ] ; then
-	    grep -ril --color "$1" | xargs grep -il --color "$2"
-	elif [ $# == 3 ] ; then
-	    grep -ril --color "$1" | xargs grep -il --color "$2" | xargs grep -il --color "$3"
-	elif [ $# == 4 ] ; then
-	    grep -ril --color "$1" | xargs grep -il --color "$2" | xargs grep -il --color "$3" | xargs grep -il --color "$4"
-	fi
+        if [ $# == 1 ] ; then
+            grep -ril --color "$1"
+        elif [ $# == 2 ] ; then
+            grep -ril --color "$1" | xargs grep -il --color "$2"
+        elif [ $# == 3 ] ; then
+            grep -ril --color "$1" | xargs grep -il --color "$2" | xargs grep -il --color "$3"
+        elif [ $# == 4 ] ; then
+            grep -ril --color "$1" | xargs grep -il --color "$2" | xargs grep -il --color "$3" | xargs grep -il --color "$4"
+        fi
     fi
 }
 
@@ -121,10 +156,10 @@ function sall()
 # function bak()
 # {
 #     if [ $# -gt 0 ] ; then
-# 	for p in "$@"
-# 	do
-# 	    cp "$p" "$p".bak
-# 	done
+#         for p in "$@"
+#         do
+#             cp "$p" "$p".bak
+#         done
 #     fi
 # }
 
@@ -135,8 +170,8 @@ function sall()
 #
 #     while [ "$i" -lt "$1" ]
 #     do
-# 	STR="${STR}/.."
-# 	let "i+=1"
+#         STR="${STR}/.."
+#         let "i+=1"
 #     done
 #
 #     $STR
@@ -154,31 +189,31 @@ function sall()
 #     if [[ -f "$FILE" ]] ; then
 
 
-# 	#if [ $# -gt 1 ] ; then
-# 	if [ $# -gt 0 ] ; then
+#         #if [ $# -gt 1 ] ; then
+#         if [ $# -gt 0 ] ; then
 
-# 	    while read LINE ; do
+#             while read LINE ; do
 
-# 		echo "removing from: ${LINE}"
+#                 echo "removing from: ${LINE}"
 
-# 		STR=sed
-
-
-
-# 		# for p in "$@"
-# 		# do
-
-# 		# done
+#                 STR=sed
 
 
-# 	    done <"${FILE}"
 
-# 	else
-# 	    echo "Enter some text to remove from ${FILE}"
-# 	fi
+#                 # for p in "$@"
+#                 # do
+
+#                 # done
+
+
+#             done <"${FILE}"
+
+#         else
+#             echo "Enter some text to remove from ${FILE}"
+#         fi
 
 #     else
-# 	echo "File ${FILE} does not exist"
+#         echo "File ${FILE} does not exist"
 #     fi
 
 #     ###unset FILE
