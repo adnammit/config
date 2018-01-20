@@ -9,34 +9,89 @@
 function mnt()
 {
     #mintty -t hello -e /bin/bash - &
-    mintty -i /Cygwin-Terminal.ico - &
+    mintty -i /Cygwin-Terminal.ico  - &
 }
 
 # GET ALL OUR MINTTY WINDOWS SET UP
 function hello()
 {
-    a=$PWD
-    #mintty -ha -t sidecar bash &
-    mintty -i /Cygwin-Terminal.ico - &
+    local COL1_X=1913
+    local COL2_X=2870
+    local ROW1_Y=0
+    local ROW2_Y=540
 
-    i=0
-    while [ "$i" -lt 3 ]
-    do
-    	ssh_devlnx
-    	let "i+=1"
-    done
+    # Open our helper local window right below the first one:
+    mintty -i /Cygwin-Terminal.ico -p ${COL1_X},${ROW2_Y} - &
+
+    # Open a couple of dev-lnx windows in the right column:
+    ssh_devlnx ${COL2_X} ${ROW1_Y}
+    ssh_devlnx ${COL2_X} ${ROW2_Y}
 
     ### TO DO
-    ### - place windows on screen
     ### - sync_config
     ### - backup thing like denny does
 
-    unset a
+    #update_all_repos
+
+}
+
+function update_all_repos
+{
+    local REPOS="f1 f2 f3 f4"
+    local MASTER=master
+
+    #local FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    #local GIT_ROOT=$(git rev-parse --show-toplevel)
+    local DIVERGE_REV=$(git merge-base master master)
+
+    local TREE_DIRTY=$(git status --porcelain)
+
+    # do master first
+    TREE_DIRTY=$(git status --porcelain)
+    if [ -n "$TREE_DIRTY" ]; then
+        git stash -u
+    fi
+
+    git rebase $TRUNK_BRANCH
+
+    if [ -n "$TREE_DIRTY" ]; then
+        git stash pop
+    fi
+
+
+    for REPO in ${REPOS}
+    do
+        echo "doing repo ${REPO}"
+
+        DIVERGE_REV=$(git merge-base $REPO $TRUNK_BRANCH)
+        TREE_DIRTY=$(git status --porcelain)
+        if [ -n "$TREE_DIRTY" ]; then
+            git stash -u
+        fi
+
+        git rebase $TRUNK_BRANCH
+
+        if [ -n "$TREE_DIRTY" ]; then
+            git stash pop
+        fi
+
+        $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD
+    done
 }
 
 function ssh_devlnx()
 {
-    mintty -t dev-lnx -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
+    local X=0
+    local Y=0
+
+    if [ ${1} ] ; then
+        X=${1}
+    fi
+    if [ ${2} ] ; then
+        Y=${2}
+    fi
+
+    mintty -p ${X},${Y} -t dev-lnx -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
 }
 
 # #roll out packages on roll branch
@@ -97,11 +152,11 @@ function sapp()
 # SYNC CONFIG FILES WITH //DEV-LNX
 function sync_config()
 {
-    DST_BASE="//dev-lnx/home/ryman.amanda/"
-    DST_DIR="config"
-    FILES=".aliases .bash_profile .bashrc bin .emacs .emacs.d .funcs .profile .xemacs"
+    local DST_BASE="//dev-lnx/home/ryman.amanda/"
+    local DST_DIR="config"
+    local FILES=".aliases .bash_profile .bashrc bin .emacs .emacs.d .funcs .profile .xemacs"
 
-    a=$PWD
+    local a=$PWD
     cd ${DST_BASE}
     if [ ! -e ${DST_DIR} ]; then
         echo "making ${DST_DIR}"
@@ -110,7 +165,7 @@ function sync_config()
         echo "already have ${DST_DIR}"
     fi
 
-    DST_PATH=${DST_BASE}${DST_DIR}"/"
+    local DST_PATH=${DST_BASE}${DST_DIR}"/"
 
     echo "using ${DST_PATH}"
 
@@ -127,7 +182,140 @@ function sync_config()
     done
 
     cd ${a}
-    unset a FILE FILES DST_BASE DST_DIR DST_PATH
+}
+
+# Find all process_flow clients
+function find_pf_clients
+{
+    local CLIENTS=
+    local FILE_NAME=process_flow_request.pls
+    local GIT_ROOT=$(git rev-parse --show-toplevel)
+    local FILES=$(find ${GIT_ROOT} -name ${FILE_NAME})
+    local PATH_STR=
+
+    for FILE in ${FILES}
+    do
+        PATH_STR=$(dirname ${FILE})
+        PATH_STR=$(echo ${PATH_STR##*/})
+        CLIENTS=${CLIENTS}" "${PATH_STR}
+    done
+
+    CLIENTS=$(echo "$CLIENTS" | sort | uniq)
+
+    for CLIENT in ${CLIENTS}
+    do
+        echo ${CLIENT}
+    done
+}
+
+
+function sync_pf_clients
+{
+    local CLIENTS=$(find_pf_clients)
+    local OPTS_STR
+
+    function display_help
+    {
+        echo "HALP!"
+    }
+
+    while  [ "${#}" != 0 ]
+    do
+        case "${1}" in
+              -l | --link)
+                  OPTS_STR=${OPTS_STR}" --link "${2}
+                  shift 2
+                  ;;
+              -h | --help)
+                  display_help
+                  break
+                  ;;
+              -n|--dry-run)
+                  OPTS_STR=${OPTS_STR}" -n"
+                  #DRY_RUN=1
+                  shift
+                  ;;
+              -*)
+                  echo "Error: Unknown option: $1"
+                  display_help
+                  break
+                  ;;
+              *)
+                  break
+                  ;;
+              # *)
+              #     ORGS+=(${1})
+              #     shift
+              #     ;;
+        esac
+    done
+
+    #echo OPTSTR IS: ${OPTS_STR}
+
+    sync_client_data ${OPTS_STR} ${CLIENTS}
+}
+
+
+function sync_client_data
+{
+    local ORGS
+    local LINK_REPO
+    local LINK_STR=
+    local DRY_RUN=
+
+    function display_help
+    {
+        echo "HALP!"
+    }
+
+    if [ "${#}" == 0 ] ; then
+        display_help
+    else
+        while  [ "${#}" != 0 ]
+        do
+            case "${1}" in
+                  -l | --link)
+                      LINK_REPO="${2}"   # You may want to check validity of $2
+                      shift 2
+                      ;;
+                  -h | --help)
+                      display_help
+                      break
+                      ;;
+                  -n|--dry-run)
+                      DRY_RUN=1
+                      shift
+                      ;;
+                  -*)
+                      echo "Error: Unknown option: $1"
+                      display_help
+                      break
+                      ;;
+                  *)
+                      ORGS+=(${1})
+                      shift
+                      ;;
+            esac
+        done
+    fi
+
+    if [ ${LINK_REPO} ] ; then
+        LINK_STR="--link "${LINK_REPO}
+        #echo "MAKE LINK STR: "${LINK_STR}" FROM LINK REPO: "${LINK_REPO}
+    fi
+
+    if [ ${#ORGS[@]} -gt 0 ] ; then
+        for ORG in ${ORGS[@]}
+        do
+            if [ ${DRY_RUN} ] ; then
+                echo "DRY RUN: copy_org ${ORG} ${LINK_STR}"
+            else
+                copy_org ${ORG} ${LINK_STR}
+            fi
+        done
+    else
+        display_help
+    fi
 }
 
 # Invoke while on a feature branch to rebase in changes from master and

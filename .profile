@@ -65,6 +65,12 @@ export TMPDIR
 # SET TELEPORTATION VARIABLES
 #=========================================
 
+MASTER='alr'
+F1='alr-f1'
+F2='alr-f2'
+F3='alr-f3'
+F4='alr-f4'
+
 if [[ "$OSTYPE" == "cygwin" ]]; then
     DEV='//dev-lnx/sites/dev.perflogic.com/'
     TEST='//dev-lnx/sites/test.perflogic.com/'
@@ -79,7 +85,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     TEST='/var/www/sites/test.perflogic.com/'
     STAGE='/var/www/sites/stage.perflogic.com/'
     REPO='/var/www/repo_sites/'
-    RLOGS='/var/www/repo_logs/'
+    RLOG='/var/www/repo_logs/'
 fi
 
 if [[ "$OSTYPE" != "darwin15" ]]; then

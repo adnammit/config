@@ -23,5 +23,8 @@ alias tools='cd //server/users/shared/dev_tools/'
 alias bu='cd ~/backup/'
 alias docs='cd ~/docs/'
 alias odev='cd /c/UserData/ryman.amanda/olddev/dat/'
+
+# DATA STUFF
 alias ro='roll_out'
 alias roll_all='roll_out min_site site_maint ppm_lite process_flow jhs'
+alias linkorg='copy_org --link alr'
