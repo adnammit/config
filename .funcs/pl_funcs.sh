@@ -31,52 +31,84 @@ function hello()
     ### - sync_config
     ### - backup thing like denny does
 
+    ### TEST THE EVERLOVING FUCK OUT OF THIS FIRST:
     #update_all_repos
 
 }
 
+
 function update_all_repos
 {
-    local REPOS="f1 f2 f3 f4"
-    local MASTER=master
+    ##### RIP ALL THAT SHIT OUT BELOW AND START OVER WITH THIS:
+    ## and you know, you might not want to do this anyway.... this will take a
+    ##   goddamn long time. you might just want to update branches as needed
+    ### 1 save state of current branch
+    ### 2 check out master, pull and roll packages in master
+    ### 3 systematically check out each feature branch and update
+    ### 4 restore state of current branch
 
-    #local FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    #local GIT_ROOT=$(git rev-parse --show-toplevel)
-    local DIVERGE_REV=$(git merge-base master master)
+    local BRANCHES="f1 f2 f3 f4"
+    local TRUNK=master
 
-    local TREE_DIRTY=$(git status --porcelain)
+    local GIT_ROOT=$(git rev-parse --show-toplevel)
+    local OLD_HASH
+    local TREE_DIRTY
 
-    # do master first
-    TREE_DIRTY=$(git status --porcelain)
+    # tuck away your current work. do somethine else if it's master?
+    local CURR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    local CURR_TREE_DIRTY=$(git status --porcelain)
+    if [ -n "$CURR_TREE_DIRTY" ]; then
+        echo ">> Stashing ${CURR_BRANCH} before rebasing all"
+        git stash -u
+    else
+        echo ">> ${CURR_BRANCH} was clean -- now rebasing all"
+    fi
+
+    # update and roll master first:
+    git co ${TRUNK}
+
+    # for master, we just need whatever it's at before we pull
+    OLD_HASH=$(git rev-parse ${TRUNK})
+    # hmmm, there shouldn't ever be rando changes on master, but maybe it's good to check
+    ### is "stash, pull, pop" correct?
     if [ -n "$TREE_DIRTY" ]; then
         git stash -u
     fi
 
-    git rebase $TRUNK_BRANCH
+    git pull
 
     if [ -n "$TREE_DIRTY" ]; then
         git stash pop
     fi
 
+    $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD
 
-    for REPO in ${REPOS}
+    ### remove CURR_REPO from the list -- do it at the end so it's only done once
+    ###   though it prob won't hurt to do it like this.
+    for BRANCH in ${BRANCHES}
     do
-        echo "doing repo ${REPO}"
+        echo ">> Updating ${BRANCH}"
 
-        DIVERGE_REV=$(git merge-base $REPO $TRUNK_BRANCH)
+        OLD_HASH=$(git merge-base $BRANCH $TRUNK)
         TREE_DIRTY=$(git status --porcelain)
         if [ -n "$TREE_DIRTY" ]; then
             git stash -u
         fi
 
-        git rebase $TRUNK_BRANCH
+        git rebase $TRUNK
 
         if [ -n "$TREE_DIRTY" ]; then
             git stash pop
         fi
 
-        $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD
+        $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD
     done
+
+    git checkout ${CURR_BRANCH}
+
+    if [ -n "$CURR_TREE_DIRTY" ]; then
+        git stash pop
+    fi
 }
 
 function ssh_devlnx()
@@ -255,7 +287,7 @@ function sync_pf_clients
     sync_client_data ${OPTS_STR} ${CLIENTS}
 }
 
-
+# handle multiple clients w/ --link arg and dry run options
 function sync_client_data
 {
     local ORGS
@@ -275,7 +307,7 @@ function sync_client_data
         do
             case "${1}" in
                   -l | --link)
-                      LINK_REPO="${2}"   # You may want to check validity of $2
+                      LINK_REPO="${2}"
                       shift 2
                       ;;
                   -h | --help)
@@ -322,6 +354,11 @@ function sync_client_data
 # roll associated packages
 function update_feature_branch_site
 {
+    local ARG_STR
+    if [ ${1} == "-n" ] ; then
+        ARG_STR=${1}
+    fi
+
     local TRUNK_BRANCH=master
     local FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
     local GIT_ROOT=$(git rev-parse --show-toplevel)
@@ -334,5 +371,5 @@ function update_feature_branch_site
     if [ -n "$TREE_DIRTY" ]; then
         git stash pop
     fi
-    $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD
+    $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
 }
