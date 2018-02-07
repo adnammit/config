@@ -8,11 +8,25 @@
 
 function mnt()
 {
+    local POS_STR
+
+    if [ ${1} ] ; then
+        X=${1}
+    fi
+    if [ ${2} ] ; then
+        Y=${2}
+    fi
+
+    if [ ${X} ] && [ ${Y} ] ; then
+        POS_STR="-p ${X},${Y}"
+    fi
+    # TO DO:
+    # put X and Y in a str: "-p ${X},${Y}"
+
     #mintty -t hello -e /bin/bash - &
-    mintty -i /Cygwin-Terminal.ico  - &
+    mintty -i /Cygwin-Terminal.ico ${POS_STR} - &
 }
 
-# GET ALL OUR MINTTY WINDOWS SET UP
 function hello()
 {
     local COL1_X=1913
@@ -21,94 +35,211 @@ function hello()
     local ROW2_Y=540
 
     # Open our helper local window right below the first one:
-    mintty -i /Cygwin-Terminal.ico -p ${COL1_X},${ROW2_Y} - &
+    mnt ${COL1_X} ${ROW2_Y}
+    # mintty -i /Cygwin-Terminal.ico -p ${COL1_X},${ROW2_Y} - &
 
     # Open a couple of dev-lnx windows in the right column:
     ssh_devlnx ${COL2_X} ${ROW1_Y}
     ssh_devlnx ${COL2_X} ${ROW2_Y}
 
-    ### TO DO
-    ### - sync_config
-    ### - backup thing like denny does
+    sync_config
+    update_dev
+    show_me_a_robot
+    echo "HELLO."
+}
+#
+# function goodbye
+# {
+#     # rsync ~/dev to dev-lnx
+#     echo "goodbye"
+# }
 
-    ### TEST THE EVERLOVING FUCK OUT OF THIS FIRST:
-    #update_all_repos
+# JUST PLAYING AROUND STUFF
+function test_conds
+{
+    local FOO
+    local BAR=0
+    local BAZ=""
 
+
+    echo ""
+    echo ">> if [ foo ]"
+    if [ ${FOO} ] ; then
+        echo "foo!"
+    else
+        echo "not foo"
+    fi
+
+
+
+    echo ""
+    echo ">> if [ \"foo\" ]"
+    if [ "${FOO}" ] ; then
+        echo "foo!"
+    else
+        echo "not foo"
+    fi
+
+
+    echo ""
+    echo ">> bar=0; zero value in a simple 'if' statement is truthy:"
+    echo ">> if [ \"bar\" ]"
+    if [ "${BAR}" ] ; then
+        echo "bar!"
+    else
+        echo "not bar"
+    fi
+
+
+    echo ""
+    echo ">> no quotes, Conditional: == \"\""
+    if [ ${FOO} == "" ] ; then
+        echo "foo is equal to empty str"
+    else
+        echo "foo is not equal to empty str"
+    fi
+
+    echo ""
+    echo ">> using quotes, Conditional: == \"\""
+    if [ "${FOO}" == "" ] ; then
+        echo "foo is equal to empty str"
+    else
+        echo "foo is not equal to empty str"
+    fi
+
+    echo ""
+    echo ">> Conditional: != \"\""
+    if [ ${FOO} != "" ] ; then
+        echo "foo is not equal to empty str"
+    else
+        echo "foo is equal to empty str"
+    fi
+
+    echo ""
+    echo ">> Conditional: -n"
+    if [ -n ${FOO} ] ; then
+        echo "the length of foo is greater than zero"
+    else
+        echo "the length of foo is not greater than zero"
+    fi
+
+    ###ARGS
+    echo ""
+    echo ">> Conditional: == \"\""
+    if [ "${1}" == "" ] ; then
+        echo "ARG1 is equal to empty str"
+    else
+        echo "ARG1 is not equal to empty str"
+    fi
+
+    echo ""
+    echo ">> Conditional: -n"
+    if [ -n ${1} ] ; then
+        echo "the length of ARG1 is greater than zero"
+    else
+        echo "the length of ARG1 is not greater than zero"
+    fi
+}
+
+function diff_dirs
+{
+    local DIR_ONE=${1}
+    local DIR_TWO=${2}
+    local FILENAME
+
+    if [ "${DIR_TWO}" ] ; then
+        echo "Diffing ${DIR_ONE} with ${DIR_TWO}"
+
+        for FILE in ${DIR_ONE}/* ; do
+            FILENAME=$(basename ${FILE})
+            echo "diff -Bw ${FILE} ${DIR_TWO}/${FILENAME}"
+            diff -Bw ${FILE} ${DIR_TWO}/${FILENAME}
+            read -n 1 -s
+        done
+    else
+        echo "enter two args for the directories you want to compare the contents of"
+    fi
 }
 
 
-function update_all_repos
+# UPDATE MASTER, CURRENT FEATURE BRANCH AND ROLL ALL RELEVANT PACKAGES
+function update_dev
 {
-    ##### RIP ALL THAT SHIT OUT BELOW AND START OVER WITH THIS:
-    ## and you know, you might not want to do this anyway.... this will take a
-    ##   goddamn long time. you might just want to update branches as needed
-    ### 1 save state of current branch
-    ### 2 check out master, pull and roll packages in master
-    ### 3 systematically check out each feature branch and update
-    ### 4 restore state of current branch
-
-    local BRANCHES="f1 f2 f3 f4"
-    local TRUNK=master
+    cd ~/dev
 
     local GIT_ROOT=$(git rev-parse --show-toplevel)
+    local TRUNK=master
+    # local TRUNK_DIRTY
+    local BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    local BRANCH_DIRTY=$(git status --porcelain)
     local OLD_HASH
-    local TREE_DIRTY
+    local ARG_STR
+    local DRY_RUN
 
-    # tuck away your current work. do somethine else if it's master?
-    local CURR_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    local CURR_TREE_DIRTY=$(git status --porcelain)
-    if [ -n "$CURR_TREE_DIRTY" ]; then
-        echo ">> Stashing ${CURR_BRANCH} before rebasing all"
-        git stash -u
+    # lazy. add more args?
+    if [ "${1}" == "-n" ] ; then
+        echo ">> Mode set to DRY_RUN"
+        DRY_RUN=1;
+        ARG_STR="-n"
+    fi
+
+
+    # STASHING FAILS IF MMAP FAILS, WHICH IT DOES ALL THE TIME.
+    # JUST ABORT IF BRANCH IS DIRTY.
+    # REINTRODUCE STASHING IF YOU ARE WORKING ON A COMPUTER THAT DOESN'T SUCK.
+    if [ "$BRANCH_DIRTY" ]; then
+        echo ">> ${BRANCH} is dirty ಠ_ಠ"
+        echo ">> Stash or commit before updating master."
+        # echo ">> Stashing ${BRANCH} before updating master"
+        # git stash -u
     else
-        echo ">> ${CURR_BRANCH} was clean -- now rebasing all"
-    fi
+        echo ">> ${BRANCH} was clean -- now updating master"
 
-    # update and roll master first:
-    git co ${TRUNK}
+        git co ${TRUNK}
 
-    # for master, we just need whatever it's at before we pull
-    OLD_HASH=$(git rev-parse ${TRUNK})
-    # hmmm, there shouldn't ever be rando changes on master, but maybe it's good to check
-    ### is "stash, pull, pop" correct?
-    if [ -n "$TREE_DIRTY" ]; then
-        git stash -u
-    fi
+        BRANCH_DIRTY=$(git status --porcelain)
 
-    git pull
+        if [ "$BRANCH_DIRTY" ]; then
+            echo ">> ${TRUNK} is dirty ಠ_ಠ"
+            echo ">> Stash or commit before pulling."
+        else
+            # for master, we just need whatever it's at before we pull
+            OLD_HASH=$(git rev-parse ${TRUNK})
+            echo ">> Old ${TRUNK} hash is ${OLD_HASH}"
 
-    if [ -n "$TREE_DIRTY" ]; then
-        git stash pop
-    fi
+            if [ "${DRY_RUN}" ] ; then
+                echo ">> DRY_RUN: not really pulling"
+            else
+                git pull
+            fi
 
-    $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD
+            $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD ${ARG_STR}
 
-    ### remove CURR_REPO from the list -- do it at the end so it's only done once
-    ###   though it prob won't hurt to do it like this.
-    for BRANCH in ${BRANCHES}
-    do
-        echo ">> Updating ${BRANCH}"
+            # update the branch you were on:
+            git co ${BRANCH}
 
-        OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-        TREE_DIRTY=$(git status --porcelain)
-        if [ -n "$TREE_DIRTY" ]; then
-            git stash -u
+            OLD_HASH=$(git merge-base $BRANCH $TRUNK)
+            echo ">> Rolling out changes on ${BRANCH} since ${OLD_HASH}"
+
+            if [ "${DRY_RUN}" ] ; then
+                echo ">> DRY_RUN: not really rebasing"
+            else
+                git rebase ${TRUNK}
+            fi
+
+            # if [ -n "$BRANCH_DIRTY" ]; then
+            #     echo ">> Popping stash for ${BRANCH}"
+            #     git stash pop
+            # else
+            #     echo ">> ${BRANCH} was clean -- no pop"
+            # fi
+
+            $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD ${ARG_STR}
+
         fi
-
-        git rebase $TRUNK
-
-        if [ -n "$TREE_DIRTY" ]; then
-            git stash pop
-        fi
-
-        $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD
-    done
-
-    git checkout ${CURR_BRANCH}
-
-    if [ -n "$CURR_TREE_DIRTY" ]; then
-        git stash pop
     fi
+
+    cd -
 }
 
 function ssh_devlnx()
@@ -125,24 +256,6 @@ function ssh_devlnx()
 
     mintty -p ${X},${Y} -t dev-lnx -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
 }
-
-# #roll out packages on roll branch
-# alias ro='roll_to_roll'
-# function roll_to_roll()
-# {
-#     if [ ${#} -gt 0 ]; then
-#         a=$PWD
-#         cd ~/dev
-#         CURR_REPO=`git symbolic-ref --short HEAD`
-#         git co roll
-#         roll_out "$@"
-#         git co ${CURR_REPO}
-#         cd $a
-#         unset a CURR_REPO
-#     else
-#         echo gimme some packages to roll, yo
-#     fi
-# }
 
 # LOOK THROUGH TXT FILES IN DOCS
 function sdocs()
@@ -177,8 +290,13 @@ function Sdat()
 function sapp()
 {
     if [ $# -gt 0 ] ; then
-	grep -ln --color "$@" *app_log
+    	grep -ln --color "$@" *app_log
     fi
+}
+
+function grepstate()
+{
+    find . -name "*state.dat" | xargs grep -n "${@}" --color
 }
 
 # SYNC CONFIG FILES WITH //DEV-LNX
@@ -186,20 +304,18 @@ function sync_config()
 {
     local DST_BASE="//dev-lnx/home/ryman.amanda/"
     local DST_DIR="config"
-    local FILES=".aliases .bash_profile .bashrc bin .emacs .emacs.d .funcs .profile .xemacs"
+    local FILES=".aliases .bash_profile .bashrc bin .funcs .profile"
+    # local FILES=".aliases .bash_profile .bashrc bin .emacs .emacs.d .funcs .profile .xemacs"
 
     local a=$PWD
     cd ${DST_BASE}
     if [ ! -e ${DST_DIR} ]; then
-        echo "making ${DST_DIR}"
         mkdir ${DST_DIR}
-    else
-        echo "already have ${DST_DIR}"
     fi
 
     local DST_PATH=${DST_BASE}${DST_DIR}"/"
 
-    echo "using ${DST_PATH}"
+    echo ">>> copying config files to ${DST_PATH}"
 
     cd ~/config
 
@@ -314,7 +430,7 @@ function sync_client_data
                       display_help
                       break
                       ;;
-                  -n|--dry-run)
+                  -n | --dry-run)
                       DRY_RUN=1
                       shift
                       ;;
@@ -350,26 +466,36 @@ function sync_client_data
     fi
 }
 
-# Invoke while on a feature branch to rebase in changes from master and
-# roll associated packages
-function update_feature_branch_site
+
+
+
+# Invoke while on a feature branch to rebase in changes from master and roll associated packages
+function update_feature
 {
     local ARG_STR
-    if [ ${1} == "-n" ] ; then
+    if [ "${1}" == "-n" ] ; then
         ARG_STR=${1}
     fi
 
-    local TRUNK_BRANCH=master
-    local FEATURE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    local TRUNK=master
+    local BRANCH=$(git rev-parse --abbrev-ref HEAD)
     local GIT_ROOT=$(git rev-parse --show-toplevel)
-    local DIVERGE_REV=$(git merge-base $FEATURE_BRANCH $TRUNK_BRANCH)
+    local DIVERGE_REV=$(git merge-base $BRANCH $TRUNK)
     local TREE_DIRTY=$(git status --porcelain)
     if [ -n "$TREE_DIRTY" ]; then
         git stash -u
     fi
-    git rebase $TRUNK_BRANCH
+
+
+    if [ "${ARG_STR}" ] ; then
+        echo ">> DRY_RUN: not really rebasing"
+    else
+        git rebase ${TRUNK}
+    fi
+
     if [ -n "$TREE_DIRTY" ]; then
         git stash pop
     fi
+
     $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
 }

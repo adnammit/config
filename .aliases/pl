@@ -29,3 +29,8 @@ alias sform='cd ${STAGE}${FORMS}'
 alias dlib='cd ${DEV}${LIB}'
 alias tlib='cd ${TEST}${LIB}'
 alias slib='cd ${STAGE}${LIB}'
+
+# temp; delete later
+alias or='cd ${REPO}alr-opp-req/'
+# alias grstate='find -name \"*state.dat\"'
+# alias grstate="find -name \'*state.dat\' | xargs grep ${1} --color"
