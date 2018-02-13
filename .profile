@@ -32,11 +32,16 @@ done
 
 PATH="$LOCAL_PATH:$BASE_PATH:$HOME/bin"
 
-TARDIGRADE="/mnt/c/Users/tardigrade/"
+WINDOWS="/cygdrive/c/"
+TARDIGRADE="${WINDOWS}Users/tardigrade/"
+PROGRAM_FILES="${WINDOWS}Program Files/"
+APP_DATA="${TARDIGRADE}AppData/"
 
-# PATH="$PATH://server/Users/shared/dev_tools:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin:${TARDIGRADE}AppData/Local/atom"
-PATH="$PATH:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom:${TARDIGRADE}AppData/Local/atom"
-#":/usr/lib/postgresql/9.3/bin"
+#PATH="$PATH://server/Users/shared/dev_tools"
+PATH="$PATH:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin:${TARDIGRADE}:${WINDOWS}Users/tardigrade/AppData/Local/atom"
+# FOR NODE:
+PATH="$PATH:${PROGRAM_FILES}nodejs/:${APP_DATA}/Roaming/npm/"
+# PATH="$PATH/usr/lib/postgresql/9.3/bin"
 
 unset $TEMP_VARS
 
