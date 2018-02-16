@@ -67,11 +67,12 @@ export TMPDIR
 # SET TELEPORTATION VARIABLES
 #=========================================
 
-MASTER='alr'
-F1='alr-f1'
-F2='alr-f2'
-F3='alr-f3'
-F4='alr-f4'
+MASTER='alr/'
+F1='alr-f1/'
+F2='alr-f2/'
+F3='alr-f3/'
+F4='alr-f4/'
+CLIENT='__client__/'
 
 if [[ "$OSTYPE" == "cygwin" ]]; then
     DEV='//dev-lnx/sites/dev.perflogic.com/'

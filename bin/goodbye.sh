@@ -22,10 +22,12 @@ TGT=${REMOTE_BKUP_DIR}/notes
 echo "rsync -ltvr -e ssh --delete ${SRC}/ ${TGT}/ ${EXCLUDE_FLAGS}"
 rsync -ltvr -e ssh --delete ${SRC}/ ${TGT}/ ${EXCLUDE_FLAGS}
 
-echo ""
-echo "----------------------------------"
-echo "goodbye! ʕ•ᴥ•ʔ"
-echo "----------------------------------"
+show_me_a_robot.sh
+
+# echo ""
+# echo "----------------------------------"
+# echo "goodbye! ʕ•ᴥ•ʔ"
+# echo "----------------------------------"
 
 # DIR=log_dlj
 # SRC=${LOCAL_HOME}/$DIR

@@ -430,3 +430,62 @@
 #     cd $a
 #     unset a
 # }
+#
+# function rrdiff()
+# {
+#     if [ "${#}" != 0 ]; then
+#
+#         for DIR in "${@}"
+#         do
+#     	echo " >>> Checking dir ${DIR}"
+#
+#     	if [ -d ${DIR} ]; then
+#     	    FILES="${DIR}*"
+#     	    for FILE in $FILES; do
+#     		echo " --- Checking file ${FILE}"
+#     		if [ "${FILE}" != "." ] && [ "${FILE}" != ".." ]; then
+#     		    rcsdiff -b "${FILE}"
+#     		fi
+#     	    done
+#     	else
+#     	    echo "!!! Directory ${p} could not be found."
+#     	fi
+#         done
+#     fi
+# }
+#
+# function search_edits()
+# {
+#
+#    if[ $1 == "-r" ]
+#    then
+#        find -L . -name  "*,v" ! -name "version.txt,v" | xargs awk '/date/ && /ryman/ {print $2 "     "  FILENAME}' | sort -k1
+#    else
+#        cd RCS
+#        find . -name  "*,v" ! -name "version.txt,v" | xargs awk '/date/ && /ryman/ {print $2 "     "  FILENAME}' | sort -k1
+#        cd ..
+#    fi
+# }
+
+
+function sync_to_server()
+{
+    # example call:
+    #   $ sts process_flow test        # sync process flow dir to test
+    #   $ sts common                   # sync common to dev (default)
+
+    LOCAL_PATH=${1}
+    STAGE="${2,,}"
+    if [[ -z "${STAGE}" ]]; then
+        STAGE=dev
+    fi
+
+    SERVER=${STAGE}
+
+    SRV_DAT_DIR=/var/www/sites/${SERVER}.perflogic.com/__lib__/dat/${LOCAL_PATH}
+
+    echo ${SRV_DAT_DIR}
+
+    rlocks -f -u | rsync -av --files-from - ./ dev-lnx:${SRV_DAT_DIR}
+
+}

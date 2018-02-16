@@ -1,5 +1,5 @@
-
-alias mdiff='mdiff.sh'
-alias sts='sync_to_server.sh'
-alias rrdiff='rrdiff.sh'
 alias goodbye='goodbye.sh'
+alias update_dev='update_dev.sh'
+alias mdiff='mdiff.sh'
+alias show_me_a_kitty='show_me_a_kitty.sh'
+alias show_me_a_robot='show_me_a_robot.sh'
