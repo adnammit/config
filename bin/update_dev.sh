@@ -34,8 +34,8 @@ else
 
         git co ${BRANCH}
         OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-        echo ">> sleeping (∪｡∪)｡｡｡zzz"
-        sleep 2
+        echo ">> 5x sleeping (∪｡∪)｡｡｡zzz"
+        sleep 5
         git rebase master
         echo ">> ROLLING CHANGES: "
         roll_changed_pkgs --revs $OLD_HASH HEAD -n
