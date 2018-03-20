@@ -58,13 +58,20 @@ function hello()
     ssh_devlnx ${COL2_X} ${ROW2_Y}
 
     sync_config
+
     update_pl
-    # update_dev
-    show_me_a_kitty
+    local SUCCESS=$?
+    if [ "${SUCCESS}" == 1 ] ; then
+        show_me_a_kitty
+    else
+        echo "FAIL"
+    fi
 }
 
 # UPDATE MASTER, CURRENT FEATURE BRANCH AND ROLL ALL RELEVANT PACKAGES
 # tried splitting this out into a separate script but rebase is broken again
+# TO DO:
+# - check rebase etc more rigorously for failure and return
 function update_pl
 {
     echo ">> UPDATING DEV"
@@ -74,42 +81,74 @@ function update_pl
     local BRANCH=$(git rev-parse --abbrev-ref HEAD)
     local BRANCH_DIRTY=$(git status --porcelain)
     local OLD_HASH
+    local SUCCESS=0
 
-    if [ ${BRANCH} == ${TRUNK} ] ; then
-        if [ "${BRANCH_DIRTY}" ] ; then
-            echo ">> ${TRUNK} is dirty ಠ_ಠ"
-            echo ">> Stash or commit before pulling."
-        else
-            OLD_HASH=$(git rev-parse ${TRUNK})
-            git pull
-            echo ">> ROLLING CHANGES: "
-            roll_changed_pkgs --revs $OLD_HASH HEAD
-        fi
+    if [ "${BRANCH_DIRTY}" ] ; then
+        echo ">> ${BRANCH} is dirty ಠ_ಠ"
+        echo ">> Stash or commit before pulling."
     else
-        git co ${TRUNK}
-
-        local TRUNK_DIRTY=$(git status --porcelain)
-
-        if [[ "${BRANCH_DIRTY}" || "${TRUNK_DIRTY}" ]]; then
-            echo ">> ${TRUNK} or ${BRANCH} is dirty ಠ_ಠ"
-            echo ">> Stash or commit before pulling."
-        else
+        if [ ${BRANCH} == ${TRUNK} ] ; then
             OLD_HASH=$(git rev-parse ${TRUNK})
             git pull
-            echo ">> ROLLING CHANGES: "
+            echo ">> Rolling changes to master since ${OLD_HASH}"
             roll_changed_pkgs --revs $OLD_HASH HEAD
+            SUCCESS=1
+        else
+            git co ${TRUNK}
 
-            git co ${BRANCH}
-            OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-            echo ">> 5x sleeping (∪｡∪)｡｡｡zzz"
-            sleep 5
-            git rebase master
-            echo ">> ROLLING CHANGES: "
-            roll_changed_pkgs --revs $OLD_HASH HEAD
+            local TRUNK_DIRTY=$(git status --porcelain)
+
+            if [ "${TRUNK_DIRTY}" ]; then
+                echo ">> ${TRUNK} is dirty ಠ_ಠ"
+                echo ">> Stash or commit before pulling."
+            else
+                OLD_HASH=$(git rev-parse ${TRUNK})
+                git pull
+                echo ">> Rolling changes to master since ${OLD_HASH}"
+                roll_changed_pkgs --revs $OLD_HASH HEAD
+
+                git co ${BRANCH}
+                OLD_HASH=$(git merge-base $BRANCH $TRUNK)
+                echo ">> 5x sleeping (∪｡∪)｡｡｡zzz"
+                sleep 5
+                git rebase master
+                echo ">> Rolling changes to ${BRANCH} since ${OLD_HASH}"
+                roll_changed_pkgs --revs $OLD_HASH HEAD
+                SUCCESS=1
+            fi
         fi
     fi
     cd -
+    return ${SUCCESS}
 }
+
+# Invoke while on a feature branch to rebase in changes from master and roll associated packages
+function update_branch
+{
+    local ARG_STR
+    if [ "${1}" == "-n" ] ; then
+        ARG_STR=${1}
+    fi
+
+    local TRUNK=master
+    local BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    local GIT_ROOT=$(git rev-parse --show-toplevel)
+    local DIVERGE_REV=$(git merge-base $BRANCH $TRUNK)
+    local TREE_DIRTY=$(git status --porcelain)
+    if [ "$TREE_DIRTY" ]; then
+        echo ">> ${BRANCH} is dirty ಠ_ಠ"
+        echo ">> Stash or commit before pulling."
+    else
+        if [ "${ARG_STR}" ] ; then
+            echo ">> DRY_RUN: not really rebasing"
+        else
+            git rebase ${TRUNK}
+        fi
+        echo ">> Rolling changes since ${DIVERGE_REV}"
+        $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
+    fi
+}
+
 
 # # UPDATE MASTER, CURRENT FEATURE BRANCH AND ROLL ALL RELEVANT PACKAGES
 # function update_dev
@@ -397,7 +436,7 @@ function sync_client_data
     fi
 
     if [ ${LINK_REPO} ] ; then
-        LINK_STR="--link "${LINK_REPO}
+        LINK_STR="--link ${LINK_REPO}"
         #echo "MAKE LINK STR: "${LINK_STR}" FROM LINK REPO: "${LINK_REPO}
     fi
 
@@ -426,33 +465,21 @@ function sync_client_data
 #     echo "rsync -ltvr -e ssh --delete ${SRC}/${SBDIR} ${DST}/${SBDIR} ${EXCLUDE_FLAGS}"
 # }
 
-# Invoke while on a feature branch to rebase in changes from master and roll associated packages
-function update_feature
-{
-    local ARG_STR
-    if [ "${1}" == "-n" ] ; then
-        ARG_STR=${1}
-    fi
-
-    local TRUNK=master
-    local BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    local GIT_ROOT=$(git rev-parse --show-toplevel)
-    local DIVERGE_REV=$(git merge-base $BRANCH $TRUNK)
-    local TREE_DIRTY=$(git status --porcelain)
-    if [ "$TREE_DIRTY" ]; then
-        echo ">> ${BRANCH} is dirty ಠ_ಠ"
-        echo ">> Stash or commit before pulling."
-    else
-        if [ "${ARG_STR}" ] ; then
-            echo ">> DRY_RUN: not really rebasing"
-        else
-            git rebase ${TRUNK}
-        fi
-        $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
-    fi
-}
 
 
+### mmm, not quite. second to last commit is not necess
+# function reset_branch
+# {
+#     local BRANCH=$(git rev-parse --abbrev-ref HEAD)
+#     if [ "${BRANCH}" != "master" ] ; then
+#         local PENULTIMATE_COMMIT=$(git reflog show --pretty='format:%H %gs' | awk '/.* reset: moving to .*/{getline; print $1; exit;}')
+#         echo "penultimate commit ${PENULTIMATE_COMMIT}"
+#         roll_changed_pkgs --revs ${PENULTIMATE_COMMIT} HEAD
+#         # do some kind of clean
+#     else
+#         echo "Don't reset master, fool! ╚(ಠ_ಠ)=┐"
+#     fi
+# }
 
 # JUST PLAYING AROUND STUFF
 function test_conds
@@ -460,7 +487,35 @@ function test_conds
     local FOO
     local BAR=1
     local BAZ=""
+    local QUX=0
 
+
+
+    echo ""
+    echo ">> if [ 1 == 1 ]"
+    if [ "${BAR}" == 1 ] ; then
+        echo "1 is 1"
+    else
+        echo "1 is not 1"
+    fi
+
+
+
+    echo ""
+    echo ">> if [ 1 ]"
+    if [ ${BAR} ] ; then
+        echo "1 is true"
+    else
+        echo "1 is false"
+    fi
+
+    echo ""
+    echo ">> if [ 0 ]"
+    if [ ${QUX} ] ; then
+        echo "0 is true"
+    else
+        echo "0 is false"
+    fi
 
     echo ""
     echo ">> if [ foo || bar ]"
@@ -564,4 +619,25 @@ function test_conds
     else
         echo "the length of ARG1 is not greater than zero"
     fi
+}
+
+
+function generate_dev_links
+{
+    local ORGS="abington ahi advocate ashland bhset bayhealth baybluffs bswqa cfhp cmc cnycc contracosta covenanthealth epsg flpps grmc harriscenter healthquest hendry jhs jps lchp medproject missouri mhs nci northwell nqp nypq om om-qvp rideout riverside sanantonio sbhny scvhhs scvmc sg sharp sickkids skf ski2 sipps scc texasrhp6 uhs va-eoc vcu visn9 wcmc wellmont wellspan"
+    # local ORGS="abington ahi advocate jhs"
+
+    for ORG in ${ORGS}
+    do
+        if [[ -e "${ORG}" && ! -L ${ORG} ]] ; then
+            echo "${ORG} exists and is not a symlink, cannot overwrite"
+        else
+            if [ -L "${ORG}" ] ; then
+                unlink ${ORG}
+            fi
+            echo ${ORG}
+            ln -s /var/www/sites/dev.perflogic.com/__client__/${ORG}/
+        fi
+    done
+
 }
