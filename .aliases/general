@@ -1,7 +1,7 @@
 
 #GENERAL ALIASES:
 
-if [[ "$OSTYPE" == "darwin15" ]]; then
+if [[ "$OSTYPE" == "darwin17" ]]; then
     alias ls='ls -laG'
 else
     alias ls='ls -la --color=always'
