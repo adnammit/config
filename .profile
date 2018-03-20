@@ -21,10 +21,10 @@ TEMP_VARS="TEMP_VARS STANDARD_PKGS BASE_PATH LOCAL_PATH"
 
 for PKG in $STANDARD_PKGS ; do
     if [ -r "/etc/profile.d/$PKG.sh" ] ; then
-    . "/etc/profile.d/$PKG.sh"
+        . "/etc/profile.d/$PKG.sh"
     fi
     if [ -r "$HOME/.profile.d/$PKG.sh" ] ; then
-	. "$HOME/.profile.d/$PKG.sh"
+    	. "$HOME/.profile.d/$PKG.sh"
     fi
 done
 
@@ -34,7 +34,7 @@ unset $TEMP_VARS
 
 TMPDIR="/tmp/"
 
-if [[ "$OSTYPE" == "darwin15" ]]; then
+if [[ "$OSTYPE" == "darwin17" ]]; then
     export HOMEBREW_GITHUB_API_TOKEN="10033859e446c1f9ebcc3d74e4334b78eda7ca88"
     export ANDROID_HOME=/user/local/opt/android-sdk
     export CLICOLOR=1
@@ -51,31 +51,27 @@ if [[ "$OSTYPE" == "darwin15" ]]; then
 
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 
-    #### CREATE MORE CASES TO DISTINGUISH BETWEEN WORK AND HOME
+    if [ "${WORK_ENV}" ] ; then
 
+        PATH="$PATH:/c/UserData/ryman.amanda/dev/build/"
+        PATH="$PATH:~/AppData/Local/atom/bin"
 
-    #### BOTH:
-    PROGRAM_FILES="${WINDOWS}Program Files/"
+    else
 
-    #### HOME:
-    WINDOWS="/cygdrive/c/"
-    TARDIGRADE="${WINDOWS}Users/tardigrade/"
-    APP_DATA="${TARDIGRADE}AppData/"
-    # FOR NODE:
-    PATH="$PATH:${PROGRAM_FILES}nodejs/:${APP_DATA}/Roaming/npm/"
-    # PATH="$PATH/usr/lib/postgresql/9.3/bin"
+        WINDOWS="/cygdrive/c/"
+        PROGRAM_FILES="${WINDOWS}Program Files/"
+        TARDIGRADE="${WINDOWS}Users/tardigrade/"
+        APP_DATA="${TARDIGRADE}AppData/"
+        ATOM="${APP_DATA}Local/atom"
+        NODE="${PROGRAM_FILES}nodejs/:${APP_DATA}Roaming/npm/"
 
-    #### WORK:
-    PATH="$PATH:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin:${TARDIGRADE}:${WINDOWS}Users/tardigrade/AppData/Local/atom"
-    #PATH="$PATH://server/Users/shared/dev_tools"
+        PATH="$PATH:${ATOM}:${NODE}"
+        ###i don't think you need tardigrade...
+        # PATH="$PATH:${TARDIGRADE}:${ATOM}:${NODE}"
+        # PATH="$PATH/usr/lib/postgresql/9.3/bin"
 
-
-
-    ##TARDIGRADE="/mnt/c/Users/tardigrade/"
-    ### PATH="$PATH://server/Users/shared/dev_tools:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin:${TARDIGRADE}AppData/Local/atom"
-    ##PATH="$PATH:/c/UserData/ryman.amanda/dev/build/:~/AppData/Local/atom/bin/:${TARDIGRADE}AppData/Local/atom"
-    ###":/usr/lib/postgresql/9.3/bin"
-
+        unset WINDOWS PROGRAM_FILES TARDIGRADE APP_DATA ATOM NODE
+    fi
 fi
 
 export PATH
@@ -85,8 +81,8 @@ export TMPDIR
 # SET TELEPORTATION VARIABLES
 #=========================================
 
-### AGAIN, DETECT IF WORK OR NO
-if [[ "$OSTYPE" != "darwin15" ]]; then
+if [ "${WORK_ENV}" ] ; then
+
     MASTER='alr/'
     F1='alr-f1/'
     F2='alr-f2/'
@@ -101,9 +97,7 @@ if [[ "$OSTYPE" != "darwin15" ]]; then
         REPO='//dev-lnx/repo_sites/'
         RLOG='//dev-lnx/home/ryman.amanda/repo_logs/'
         LOCAL_REP='/c/UserData/ryman.amanda/'
-    fi
-
-    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    elif [[ "$OSTYPE" == "linux-gnu" ]]; then
         DEV='/var/www/sites/dev.perflogic.com/'
         TEST='/var/www/sites/test.perflogic.com/'
         STAGE='/var/www/sites/stage.perflogic.com/'
@@ -116,4 +110,5 @@ if [[ "$OSTYPE" != "darwin15" ]]; then
     LOG='__log__/'
     FORMS='__web__/forms/'
     LIB='__lib__/dat/'
+
 fi
