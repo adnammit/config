@@ -88,6 +88,7 @@ if [ "${WORK_ENV}" ] ; then
     F2='alr-f2/'
     F3='alr-f3/'
     F4='alr-f4/'
+    F5='alr-f5/'
     CLIENT='__client__/'
 
     if [[ "$OSTYPE" == "cygwin" ]]; then
