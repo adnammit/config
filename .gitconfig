@@ -5,12 +5,16 @@
 [pull]
 	rebase = true
 
+[color]
+	ui = true
+
 [alias]
 	co = checkout
 	ci = commit
 	st = status
 	br = branch
-
+    cm = commit -m
+	aa = add -A
 
 	# ==== LOG STUFF ====
     lg = !"git lg1" #change to your favorite l#

@@ -50,6 +50,11 @@ if [ "${WORK_ENV}" ] ; then
         local COL2_X=2870
         local ROW1_Y=0
         local ROW2_Y=540
+        local a=$PWD
+
+        if [[ "${1}" == "-s" || "${1}" == "--skip-update" ]] ; then
+            local SKIP_UPDATE=1
+        fi
 
         # Open our helper local window right below the first one:
         mnt ${COL1_X} ${ROW2_Y}
@@ -61,12 +66,24 @@ if [ "${WORK_ENV}" ] ; then
 
         sync_config
 
-        update_pl
-        local SUCCESS=$?
-        if [ "${SUCCESS}" == 1 ] ; then
-            show_me_a_kitty
+        cd ~
+        atom ./config ./.atom ./docs/notes
+
+        cd /c/UserData/ryman.amanda
+        atom ./dev
+
+        cd ${a}
+
+        if [ -z "${SKIP_UPDATE}" ] ; then
+            update_pl
+            local SUCCESS=$?
+            if [ "${SUCCESS}" == 1 ] ; then
+                show_me_a_kitty
+            else
+                echo "FAIL"
+            fi
         else
-            echo "FAIL"
+            echo "update skipped"
         fi
     }
 
@@ -527,6 +544,22 @@ if [ "${WORK_ENV}" ] ; then
             echo "1 is true"
         else
             echo "1 is false"
+        fi
+
+        echo ""
+        echo ">> if [ !1 ]"
+        if [ !${BAR} ] ; then
+            echo "!1 is true"
+        else
+            echo "!1 is false"
+        fi
+
+        echo ""
+        echo ">> if [ -z 1 ]"
+        if [ -z ${BAR} ] ; then
+            echo "-z 1 is true"
+        else
+            echo "-z 1 is false"
         fi
 
         echo ""

@@ -8,4 +8,5 @@ alias grit='git grep -I --untracked --no-exclude-standard -- '
 
 alias giff='git diff -B -w'
 alias giffns='git diff -B -w --name-status'
+alias giffm='git diff -B -w master'
 alias testwc='git whatchanged test..master --name-only -p --author="Amanda Ryman"'
