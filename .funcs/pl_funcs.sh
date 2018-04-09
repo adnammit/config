@@ -44,13 +44,26 @@ if [ "${WORK_ENV}" ] ; then
         mintty -p ${X},${Y} -t dev-lnx -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
     }
 
+    alias oa='open_atoms'
+    function open_atoms()
+    {
+        local a=$PWD
+
+        cd ~
+        atom ./config ./.atom ./docs/notes
+
+        cd /c/UserData/ryman.amanda
+        atom ./dev
+
+        cd ${a}
+    }
+
     function hello()
     {
         local COL1_X=1913
         local COL2_X=2870
         local ROW1_Y=0
         local ROW2_Y=540
-        local a=$PWD
 
         if [[ "${1}" == "-s" || "${1}" == "--skip-update" ]] ; then
             local SKIP_UPDATE=1
@@ -66,13 +79,7 @@ if [ "${WORK_ENV}" ] ; then
 
         sync_config
 
-        cd ~
-        atom ./config ./.atom ./docs/notes
-
-        cd /c/UserData/ryman.amanda
-        atom ./dev
-
-        cd ${a}
+        open_atoms
 
         if [ -z "${SKIP_UPDATE}" ] ; then
             update_pl
@@ -166,6 +173,17 @@ if [ "${WORK_ENV}" ] ; then
             echo ">> Rolling changes since ${DIVERGE_REV}"
             $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
         fi
+    }
+
+    function reset_branch()
+    {
+        local OLD_HASH=$(git rev-parse HEAD)
+        local GIT_ROOT=$(git rev-parse --show-toplevel)
+
+        git reset --hard master
+        local NEW_HASH=$(git rev-parse HEAD)
+        echo ">>> Rolling out all changes between ${OLD_HASH} and ${NEW_HASH}"
+        $GIT_ROOT/build/roll_changed_pkgs --revs ${OLD_HASH} HEAD
     }
 
 

@@ -7,6 +7,25 @@
 #=========================================
 
 
+function giff()
+{
+    local REVS
+    if [ "${1}" == "mh" ] ; then
+        REVS="master..HEAD"
+    fi
+    git diff -B -w "${REVS}"
+}
+
+function giffns()
+{
+    local REVS
+    if [ "${1}" == "mh" ] ; then
+        REVS="master..HEAD"
+    fi
+    git diff -B -w --name-status "${REVS}"
+}
+
+
 # MOVE THINGS TO TRASH!
 function trash()
 {
