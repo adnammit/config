@@ -10,7 +10,6 @@ fi
 alias grep='grep -n --color=auto'
 alias rm='rm -i'
 alias mv='mv -i'
-# alias atm='./ /mnt/c/Users/tardigrade/AppData/Local/atom/atom.exe'
 
 # REFRESH AFTER MAKING CHANGES
 alias refprof='. ~/.bash_profile'
@@ -34,7 +33,7 @@ alias jorbs='jobs'
 alias compile='g++ *.cpp -Wall -g'
 alias debug='gdb ./a.out'
 
-if [ ! "${WORK_ENV}" ] ; then
+if [ "$OSTYPE" == "cygwin" ] && [ ! "${WORK_ENV}" ] ; then
 
     alias sphp='php -S localhost:8000'
     alias raptget='sudo apt-get clean; sudo apt-get update; sudo apt-get -y dist-upgrade'
@@ -54,5 +53,9 @@ if [ ! "${WORK_ENV}" ] ; then
     alias starwars='telnet towel.blinkenlights.nl'
     alias horseeBooks='curl -s horseebooksipsum.com/api/v1/ | say'
     alias baconIpsum='curl -s https://baconipsum.com/api/?type=all-meat |say'
+
+elif [ "$OSTYPE" == "darwin17" ]; then
+
+    alias nerdz='cd ~/Dropbox/nerdz/'
 
 fi

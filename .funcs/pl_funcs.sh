@@ -94,6 +94,23 @@ if [ "${WORK_ENV}" ] ; then
         fi
     }
 
+
+    function test_funcs()
+    {
+        local SAY="echo 'foo'"
+        local SUCCESS=0
+
+        echo "setting success"
+        SUCCESS=$(${SAY})
+
+        if [ "${SUCCESS}" ] ; then
+            echo success is ${SUCCESS}
+        else
+            echo "no success"
+        fi
+
+    }
+
     # UPDATE MASTER, CURRENT FEATURE BRANCH AND ROLL ALL RELEVANT PACKAGES
     # tried splitting this out into a separate script but rebase is broken again
     # TO DO:
@@ -108,6 +125,7 @@ if [ "${WORK_ENV}" ] ; then
         local BRANCH_DIRTY=$(git status --porcelain)
         local OLD_HASH
         local SUCCESS=0
+        local RCP="roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD"
 
         if [ "${BRANCH_DIRTY}" ] ; then
             echo ">> ${BRANCH} is dirty ಠ_ಠ"
@@ -117,8 +135,10 @@ if [ "${WORK_ENV}" ] ; then
                 OLD_HASH=$(git rev-parse ${TRUNK})
                 git pull
                 echo ">> Rolling changes to master since ${OLD_HASH}"
-                roll_changed_pkgs --revs $OLD_HASH HEAD
-                SUCCESS=1
+
+                SUCCESS=$(${RCP})
+                # roll_changed_pkgs --revs $OLD_HASH HEAD
+                # SUCCESS=1
             else
                 git co ${TRUNK}
 
@@ -139,12 +159,25 @@ if [ "${WORK_ENV}" ] ; then
                     sleep 5
                     git rebase master
                     echo ">> Rolling changes to ${BRANCH} since ${OLD_HASH}"
-                    roll_changed_pkgs --revs $OLD_HASH HEAD
-                    SUCCESS=1
+
+                    SUCCESS=$(${RCP})
+
+                    # roll_changed_pkgs --revs $OLD_HASH HEAD
+                    # SUCCESS=1
                 fi
             fi
         fi
         cd -
+
+        #### RCP RETURNS SOMETHING NO MATTER WHAT SO YOU'LL NEED TO TWEAK THIS
+
+        if [ "${SUCCESS}" ] ; then
+            echo "${SUCCESS}"
+            echo "Successful update! ~(˘▾˘~)"
+        else
+            echo "Unsuccessful update ಠ╭╮ಠ"
+        fi
+
         return ${SUCCESS}
     }
 
@@ -161,6 +194,11 @@ if [ "${WORK_ENV}" ] ; then
         local GIT_ROOT=$(git rev-parse --show-toplevel)
         local DIVERGE_REV=$(git merge-base $BRANCH $TRUNK)
         local TREE_DIRTY=$(git status --porcelain)
+
+        local SUCCESS=0
+        local RCP="roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD ${ARG_STR}"
+
+
         if [ "$TREE_DIRTY" ]; then
             echo ">> ${BRANCH} is dirty ಠ_ಠ"
             echo ">> Stash or commit before pulling."
@@ -171,8 +209,22 @@ if [ "${WORK_ENV}" ] ; then
                 git rebase ${TRUNK}
             fi
             echo ">> Rolling changes since ${DIVERGE_REV}"
-            $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
+            # $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
+
+            SUCCESS=$(${RCP})
+
         fi
+
+
+        #### RCP RETURNS SOMETHING NO MATTER WHAT SO YOU'LL NEED TO TWEAK THIS
+        if [ "${SUCCESS}" ] ; then
+            echo "${SUCCESS}"
+            echo "Successful update! ~(˘▾˘~)"
+        else
+            echo "Unsuccessful update ಠ╭╮ಠ"
+        fi
+
+        return ${SUCCESS}
     }
 
     function reset_branch()

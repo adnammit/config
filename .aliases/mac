@@ -1,6 +1,0 @@
-if [[ "$OSTYPE" == "darwin17" ]]; then
-
-    #DIRECTORY SHORTCUTS:
-    alias nerdz='cd ~/Dropbox/nerdz/'
-
-fi
