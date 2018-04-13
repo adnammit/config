@@ -34,6 +34,7 @@ unset $TEMP_VARS
 
 TMPDIR="/tmp/"
 
+# SPECIFIC ENVS:
 if [[ "$OSTYPE" == "darwin17" ]]; then
     export HOMEBREW_GITHUB_API_TOKEN="10033859e446c1f9ebcc3d74e4334b78eda7ca88"
     export ANDROID_HOME=/user/local/opt/android-sdk

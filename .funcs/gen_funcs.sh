@@ -9,20 +9,45 @@
 
 function giff()
 {
-    local REVS
-    if [ "${1}" == "mh" ] ; then
-        REVS="master..HEAD"
-    fi
-    git diff -B -w "${REVS}"
+    local PARAMS=""
+
+    while [ "${#}" != 0 ]
+    do
+        case "${1}" in
+            -mh | mh)
+                PARAMS="$PARAMS master..HEAD"
+                shift
+                ;;
+            *)
+                PARAMS="$PARAMS $1"
+                shift
+                ;;
+        esac
+    done
+
+    git diff -B -w ${PARAMS}
 }
+
 
 function giffns()
 {
-    local REVS
-    if [ "${1}" == "mh" ] ; then
-        REVS="master..HEAD"
-    fi
-    git diff -B -w --name-status "${REVS}"
+    local PARAMS=""
+
+    while [ "${#}" != 0 ]
+    do
+        case "${1}" in
+            -mh | mh)
+                PARAMS="$PARAMS master..HEAD"
+                shift
+                ;;
+            *)
+                PARAMS="$PARAMS $1"
+                shift
+                ;;
+        esac
+    done
+
+    git diff -B -w --name-status ${PARAMS}
 }
 
 
@@ -32,35 +57,6 @@ function trash()
     mv $@ ~/.Trash
 }
 
-# # make a mac version of this:
-
-# # pop open a separate shell window
-# function pop()
-# {
-#     a='Using "$@" string: '
-#     if [ $# == 0 ]; then
-#         xterm -bg ${BG4} -e bash -c "exec bash" -hold &
-#     else
-#         for p in "$@"
-#         do
-#             xterm -e bash -c "$p; exec bash" -hold &
-#         done
-#     fi
-# #    xterm -geometry 80x50+50+0 -e bash -c "exec bash" -hold &  #-- make pop open quarter-screen sized -- doesn't work
-# }
-
-# # LOOK THROUGH MANY TYPES OF FILES FOR A CASE-INSENSITIVE REGEX
-# function ssome()
-# {
-#     if [ $# -gt 0 ] ; then
-#         find . -name "*.txt" | xargs grep -n --color -i "$@"
-#         find . -name "*.doc" | xargs grep -n --color -i "$@"
-#         find . -name "*.docx" | xargs grep -n --color -i "$@"
-#         find . -name "*.dat" | xargs grep -n --color -i "$@"
-#         find . -name "*.pls" | xargs grep -n --color -i "$@"
-#         find . -name "*.pg" | xargs grep -n --color -i "$@"
-#     fi
-# }
 
 alias diws='ignore_ws_comments'
 function ignore_ws_comments()
@@ -196,45 +192,4 @@ function bak()
 #     $STR
 #
 #     unset STR i
-# }
-
-
-#####nawwwww just use $ sed 's/foo/bar/' input.txt > output.txt
-# # STRIP EXPRESSIONS FROM A FILE
-# function strip_file()
-# {
-#     FILE=$1
-
-#     if [[ -f "$FILE" ]] ; then
-
-
-#         #if [ $# -gt 1 ] ; then
-#         if [ $# -gt 0 ] ; then
-
-#             while read LINE ; do
-
-#                 echo "removing from: ${LINE}"
-
-#                 STR=sed
-
-
-
-#                 # for p in "$@"
-#                 # do
-
-#                 # done
-
-
-#             done <"${FILE}"
-
-#         else
-#             echo "Enter some text to remove from ${FILE}"
-#         fi
-
-#     else
-#         echo "File ${FILE} does not exist"
-#     fi
-
-#     ###unset FILE
-
 # }

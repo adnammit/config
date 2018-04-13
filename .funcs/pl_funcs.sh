@@ -22,10 +22,7 @@ if [ "${WORK_ENV}" ] ; then
         if [ ${X} ] && [ ${Y} ] ; then
             POS_STR="-p ${X},${Y}"
         fi
-        # TO DO:
-        # put X and Y in a str: "-p ${X},${Y}"
 
-        #mintty -t hello -e /bin/bash - &
         mintty -i /Cygwin-Terminal.ico ${POS_STR} - &
     }
 
@@ -71,7 +68,6 @@ if [ "${WORK_ENV}" ] ; then
 
         # Open our helper local window right below the first one:
         mnt ${COL1_X} ${ROW2_Y}
-        # mintty -i /Cygwin-Terminal.ico -p ${COL1_X},${ROW2_Y} - &
 
         # Open a couple of dev-lnx windows in the right column:
         ssh_devlnx ${COL2_X} ${ROW1_Y}
@@ -87,35 +83,189 @@ if [ "${WORK_ENV}" ] ; then
             if [ "${SUCCESS}" == 1 ] ; then
                 show_me_a_kitty
             else
-                echo "FAIL"
+                echo ">> FAIL"
             fi
         else
-            echo "update skipped"
+            echo ">> update skipped"
         fi
     }
 
 
     function test_funcs()
     {
-        local SAY="echo 'foo'"
+        # local FOO="foo"
+        # local SAY="echo Foo: bar baz ${FOO}"
+        # local RESULT
+        # local TMP
         local SUCCESS=0
 
-        echo "setting success"
-        SUCCESS=$(${SAY})
+        function parse_result()
+        {
+            local SUCCESS=0
+            local RESULT="${1}"
 
-        if [ "${SUCCESS}" ] ; then
-            echo success is ${SUCCESS}
+            local TMP=$(echo $RESULT | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
+
+            if [ "$TMP" == "Error" ] ; then
+                echo "$RESULT"
+                echo "Unsuccessful update ಠ╭╮ಠ"
+            elif [ "$TMP" == "none" ] ; then
+                SUCCESS=1
+                echo "$RESULT"
+                echo "Nothing to roll out ¯\_(ツ)_/¯"
+            else
+                SUCCESS=1
+                echo "$RESULT"
+                echo "Successful update! ~(˘▾˘~)"
+            fi
+
+            return $SUCCESS
+        }
+
+        # parse_result $(echo "Error: we have one")
+        # parse_result "Error: we have one"
+        # SUCCESS=$(parse_result $(echo "Error: we have one"))
+        #
+        parse_result $(echo "Error: we have one")
+        # parse_result "Error: we have one"
+        SUCCESS=$?
+        echo ">>> Success of error is ${SUCCESS}"
+        echo "-------------------------------------"
+
+        parse_result "none"
+        SUCCESS=$?
+        echo ">>> Success of none is ${SUCCESS}"
+        echo "-------------------------------------"
+
+        parse_result "some packages were rolled"
+        SUCCESS=$?
+        echo ">>> Success of successful roll is ${SUCCESS}"
+        echo "-------------------------------------"
+
+        parse_result
+        SUCCESS=$?
+        echo ">>> Success of null is ${SUCCESS}"
+        echo "-------------------------------------"
+
+        # # TMP=$(echo ${RESULT} | head -n1 | awk '{print $1;}')
+        # TMP=$(echo ${RESULT} | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
+        # # TMP=$(echo ${RESULT} | head -n1 | sed -e 's/\([a-z]*\).*/\1/')
+        # echo "TMP is [${TMP}]"
+        # #
+        # # if [ "${SUCCESS}" ] ; then
+        # #     echo success is ${SUCCESS}
+        # # else
+        # #     echo "no success"
+        # # fi
+
+        function get_return()
+        {
+            local BSUCCESS=0
+            local MSUCCESS
+            #
+            # if [ 1 == 1 ] ; then
+            #     echo "1 is true"
+            # fi
+            #
+            # if [ 0 ] ; then
+            #     echo "0 is true"
+            # fi
+            #
+            # if [[ 1 && 1 ]] ; then
+            #     echo "1 and 1 is true"
+            # fi
+            #
+            # local SUCCESS
+            # if [[ $MSUCCESS -eq 1 && $BSUCCESS -eq 1 ]] ; then
+            #     SUCCESS=1
+            # else
+            #     SUCCESS=0
+            # fi
+
+            # if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
+            #     return 1
+            # else
+            #     return 0
+            # fi
+
+            if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
+                echo "successes are equal"
+            else
+                echo "successes are not equal"
+            fi
+        }
+
+        # get_return
+        # local FINAL=$? # must be stored otherwise this next 'echo' statement will change $? to 0
+        # echo "get_return's return is: "
+        # echo $FINAL
+
+
+        local result=$(get_return)
+        echo "result is $result"
+
+
+        function greater_than_five()
+        {
+            if [[ $1 -gt 5 ]] ; then
+                return 1
+            else
+                return 0
+            fi
+
+        }
+        # local my_result=$(greater_than_five 3)
+        greater_than_five 6
+        my_result=$?
+        echo "my result is $my_result"
+
+
+
+        function equal_to_five()
+        {
+            if [[ $1 -eq 5 ]] ; then
+                echo "Your number is equal to five. Huzzah!"
+            else
+                echo "Whomp whomp, your number is not equal to five. Better luck next time."
+            fi
+
+        }
+        local my_other_result=$(equal_to_five 5)
+        echo "equal to five is: $my_other_result"
+    }
+
+    #### HELPER FUNC FOR UPDATE FUNCS
+    #### roll_changed_pkgs --porcelain returns one of the following:
+    # * `Error: <error>` on errors with exit 1 status
+    # * `none`: if no packages are to be rolled
+    # * a list of packages readable by build/roll_out
+    function parse_result()
+    {
+        local SUCCESS=0
+        local RESULT="${1}"
+
+        local TMP=$(echo $RESULT | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
+
+        if [ "$TMP" == "Error" ] ; then
+            echo ">> $RESULT"
+            echo "Unsuccessful update ಠ╭╮ಠ"
+        elif [ "$TMP" == "none" ] ; then
+            SUCCESS=1
+            echo ">> $RESULT"
+            echo "Nothing to roll out ¯\_(ツ)_/¯"
         else
-            echo "no success"
+            SUCCESS=1
+            echo ">> ROLLED: $RESULT"
+            echo ">> Successful update! ~(˘▾˘~)"
         fi
 
+        return $SUCCESS
     }
+
 
     # UPDATE MASTER, CURRENT FEATURE BRANCH AND ROLL ALL RELEVANT PACKAGES
     # tried splitting this out into a separate script but rebase is broken again
-    # TO DO:
-    # - check rebase etc more rigorously for failure and return
-    function update_pl
+    function update_pl()
     {
         echo ">> UPDATING DEV"
         cd ~/dev/
@@ -124,65 +274,76 @@ if [ "${WORK_ENV}" ] ; then
         local BRANCH=$(git rev-parse --abbrev-ref HEAD)
         local BRANCH_DIRTY=$(git status --porcelain)
         local OLD_HASH
-        local SUCCESS=0
-        local RCP="roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD"
+        # local RESULT
+        # local TMP
+        local MSUCCESS=0
+        local BSUCCESS=0
+        # local RCP="roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD"
 
-        if [ "${BRANCH_DIRTY}" ] ; then
-            echo ">> ${BRANCH} is dirty ಠ_ಠ"
+        if [ "$BRANCH_DIRTY" ] ; then
+            echo ">> $BRANCH is dirty ಠ_ಠ"
             echo ">> Stash or commit before pulling."
         else
-            if [ ${BRANCH} == ${TRUNK} ] ; then
-                OLD_HASH=$(git rev-parse ${TRUNK})
+            if [ $BRANCH == $TRUNK ] ; then
+                OLD_HASH=$(git rev-parse $TRUNK)
                 git pull
-                echo ">> Rolling changes to master since ${OLD_HASH}"
+                echo ">> Rolling changes to master since $OLD_HASH"
 
-                SUCCESS=$(${RCP})
-                # roll_changed_pkgs --revs $OLD_HASH HEAD
-                # SUCCESS=1
+                parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                MSUCCESS=$?
+                BSUCCESS=1
+                # RESULT=$(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
             else
-                git co ${TRUNK}
+                git co $TRUNK
 
                 local TRUNK_DIRTY=$(git status --porcelain)
 
-                if [ "${TRUNK_DIRTY}" ]; then
-                    echo ">> ${TRUNK} is dirty ಠ_ಠ"
+                if [ "$TRUNK_DIRTY" ]; then
+                    echo ">> $TRUNK is dirty ಠ_ಠ"
                     echo ">> Stash or commit before pulling."
                 else
-                    OLD_HASH=$(git rev-parse ${TRUNK})
+                    # DO MASTER
+                    OLD_HASH=$(git rev-parse $TRUNK)
                     git pull
-                    echo ">> Rolling changes to master since ${OLD_HASH}"
-                    roll_changed_pkgs --revs $OLD_HASH HEAD
+                    echo ">> Rolling changes to master since $OLD_HASH"
 
+                    parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                    MSUCCESS=$?
+                    # RESULT=$(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                    # parse_result ${RESULT}
+
+
+                    # NOTE FAIL OF MASTER AND CONTINUE
                     git co ${BRANCH}
                     OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-                    echo ">> 5x sleeping (∪｡∪)｡｡｡zzz"
-                    sleep 5
+                    echo ">> 10x sleeping (∪｡∪)｡｡｡zzz"
+                    sleep 10
                     git rebase master
                     echo ">> Rolling changes to ${BRANCH} since ${OLD_HASH}"
 
-                    SUCCESS=$(${RCP})
-
-                    # roll_changed_pkgs --revs $OLD_HASH HEAD
-                    # SUCCESS=1
+                    parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                    BSUCCESS=$?
+                    # RESULT=$(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                    # # RESULT=$(${RCP})
+                    # # roll_changed_pkgs --revs $OLD_HASH HEAD
+                    # # SUCCESS=1
                 fi
             fi
         fi
         cd -
 
-        #### RCP RETURNS SOMETHING NO MATTER WHAT SO YOU'LL NEED TO TWEAK THIS
+        echo "Branch Success: $BSUCCESS and Master Success: $MSUCCESS"
 
-        if [ "${SUCCESS}" ] ; then
-            echo "${SUCCESS}"
-            echo "Successful update! ~(˘▾˘~)"
+        if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
+            return 1
         else
-            echo "Unsuccessful update ಠ╭╮ಠ"
+            return 0
         fi
-
-        return ${SUCCESS}
     }
 
+
     # Invoke while on a feature branch to rebase in changes from master and roll associated packages
-    function update_branch
+    function update_branch()
     {
         local ARG_STR
         if [ "${1}" == "-n" ] ; then
@@ -194,10 +355,10 @@ if [ "${WORK_ENV}" ] ; then
         local GIT_ROOT=$(git rev-parse --show-toplevel)
         local DIVERGE_REV=$(git merge-base $BRANCH $TRUNK)
         local TREE_DIRTY=$(git status --porcelain)
-
+        # local RESULT
+        # local TMP
         local SUCCESS=0
-        local RCP="roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD ${ARG_STR}"
-
+        # local RCP="roll_changed_pkgs --porcelain --revs ${DIVERGE_REV} HEAD ${ARG_STR}"
 
         if [ "$TREE_DIRTY" ]; then
             echo ">> ${BRANCH} is dirty ಠ_ಠ"
@@ -209,23 +370,40 @@ if [ "${WORK_ENV}" ] ; then
                 git rebase ${TRUNK}
             fi
             echo ">> Rolling changes since ${DIVERGE_REV}"
-            # $GIT_ROOT/build/roll_changed_pkgs --revs $DIVERGE_REV HEAD ${ARG_STR}
 
-            SUCCESS=$(${RCP})
+
+
+            parse_result $(roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD)
+            SUCCESS=$?
+
+            # RESULT=$(roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD)
+            # RESULT=$(${RCP})
 
         fi
 
-
-        #### RCP RETURNS SOMETHING NO MATTER WHAT SO YOU'LL NEED TO TWEAK THIS
-        if [ "${SUCCESS}" ] ; then
-            echo "${SUCCESS}"
-            echo "Successful update! ~(˘▾˘~)"
-        else
-            echo "Unsuccessful update ಠ╭╮ಠ"
-        fi
+        # #### RCP RETURNS SOMETHING NO MATTER WHAT SO YOU'LL NEED TO INTERPRET RESULT
+        # # * `Error: <error>` on errors with exit 1 status
+        # # * `none`: if no packages are to be rolled
+        # # * a list of packages readable by build/roll_out
+        #
+        # TMP=$(echo ${RESULT} | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
+        #
+        # if [ "${TMP}" == "Error" ] ; then
+        #     echo "${RESULT}"
+        #     echo "Unsuccessful update ಠ╭╮ಠ"
+        # elif [ "${TMP}" == "none" ] ; then
+        #     SUCCESS=1
+        #     echo "${RESULT}"
+        #     echo "Nothing to roll out ¯\_(ツ)_/¯"
+        # else
+        #     SUCCESS=1
+        #     echo "${RESULT}"
+        #     echo "Successful update! ~(˘▾˘~)"
+        # fi
 
         return ${SUCCESS}
     }
+
 
     function reset_branch()
     {
@@ -444,7 +622,7 @@ if [ "${WORK_ENV}" ] ; then
             echo "HALP!"
         }
 
-        while  [ "${#}" != 0 ]
+        while [ "${#}" != 0 ]
         do
             case "${1}" in
                   -l | --link)
@@ -763,7 +941,6 @@ if [ "${WORK_ENV}" ] ; then
             fi
         done
     }
-
 
 
 fi

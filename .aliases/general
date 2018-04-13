@@ -12,7 +12,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 
 # REFRESH AFTER MAKING CHANGES
-alias refprof='. ~/.bash_profile'
+alias rp='. ~/.bash_profile'
 
 # BC SPELLIGN IS HARD
 alias emacss='emacs'
