@@ -63,15 +63,16 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
         PROGRAM_FILES="${WINDOWS}Program Files/"
         TARDIGRADE="${WINDOWS}Users/tardigrade/"
         APP_DATA="${TARDIGRADE}AppData/"
-        ATOM="${APP_DATA}Local/atom"
+        ATOM="${APP_DATA}Local/atom/bin"
+        SYSTEM="${WINDOWS}Windows/System32/"
         NODE="${PROGRAM_FILES}nodejs/:${APP_DATA}Roaming/npm/"
 
-        PATH="$PATH:${ATOM}:${NODE}"
+        PATH="$PATH:${ATOM}:${NODE}:${SYSTEM}"
         ###i don't think you need tardigrade...
         # PATH="$PATH:${TARDIGRADE}:${ATOM}:${NODE}"
         # PATH="$PATH/usr/lib/postgresql/9.3/bin"
 
-        unset WINDOWS PROGRAM_FILES TARDIGRADE APP_DATA ATOM NODE
+        unset WINDOWS PROGRAM_FILES TARDIGRADE APP_DATA ATOM SYSTEM NODE
     fi
 fi
 
