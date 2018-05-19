@@ -4,7 +4,8 @@
 alias gr='grep -r -n --color=auto --exclude-dir=.git'
 
 # USE GIT GREP TO SEARCH, EXCLUDE BINARIES (-I), DON'T LOOK AT BRANCH STUFF AND SEARCH UNTRACKED FILES.
-alias grit='git grep -I --untracked --no-exclude-standard -- '
+alias grit='git grep -I --untracked --no-exclude-standard '
 
 alias giffm='git diff -B -w master'
+alias gish='git show -B -w'
 alias testwc='git whatchanged test..master --name-only -p --author="Amanda Ryman"'

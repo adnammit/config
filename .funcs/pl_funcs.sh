@@ -93,10 +93,7 @@ if [ "${WORK_ENV}" ] ; then
 
     function test_funcs()
     {
-        # local FOO="foo"
-        # local SAY="echo Foo: bar baz ${FOO}"
-        # local RESULT
-        # local TMP
+        # HERE IS A BUNCH OF STUFF FOR TESTING RETURN VALUES AND OTHER PARSING STUFF
         local SUCCESS=0
 
         function parse_result()
@@ -122,12 +119,7 @@ if [ "${WORK_ENV}" ] ; then
             return $SUCCESS
         }
 
-        # parse_result $(echo "Error: we have one")
-        # parse_result "Error: we have one"
-        # SUCCESS=$(parse_result $(echo "Error: we have one"))
-        #
         parse_result $(echo "Error: we have one")
-        # parse_result "Error: we have one"
         SUCCESS=$?
         echo ">>> Success of error is ${SUCCESS}"
         echo "-------------------------------------"
@@ -147,46 +139,10 @@ if [ "${WORK_ENV}" ] ; then
         echo ">>> Success of null is ${SUCCESS}"
         echo "-------------------------------------"
 
-        # # TMP=$(echo ${RESULT} | head -n1 | awk '{print $1;}')
-        # TMP=$(echo ${RESULT} | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
-        # # TMP=$(echo ${RESULT} | head -n1 | sed -e 's/\([a-z]*\).*/\1/')
-        # echo "TMP is [${TMP}]"
-        # #
-        # # if [ "${SUCCESS}" ] ; then
-        # #     echo success is ${SUCCESS}
-        # # else
-        # #     echo "no success"
-        # # fi
-
         function get_return()
         {
             local BSUCCESS=0
             local MSUCCESS
-            #
-            # if [ 1 == 1 ] ; then
-            #     echo "1 is true"
-            # fi
-            #
-            # if [ 0 ] ; then
-            #     echo "0 is true"
-            # fi
-            #
-            # if [[ 1 && 1 ]] ; then
-            #     echo "1 and 1 is true"
-            # fi
-            #
-            # local SUCCESS
-            # if [[ $MSUCCESS -eq 1 && $BSUCCESS -eq 1 ]] ; then
-            #     SUCCESS=1
-            # else
-            #     SUCCESS=0
-            # fi
-
-            # if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
-            #     return 1
-            # else
-            #     return 0
-            # fi
 
             if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
                 echo "successes are equal"
@@ -199,7 +155,6 @@ if [ "${WORK_ENV}" ] ; then
         # local FINAL=$? # must be stored otherwise this next 'echo' statement will change $? to 0
         # echo "get_return's return is: "
         # echo $FINAL
-
 
         local result=$(get_return)
         echo "result is $result"
@@ -242,20 +197,31 @@ if [ "${WORK_ENV}" ] ; then
     function parse_result()
     {
         local SUCCESS=0
-        local RESULT="${1}"
+        local RESULT="$@"
+        local RESULT_STR=""
+
+        for RES in $RESULT
+        do
+            if [[ $RES =~ [^\#*] ]] ; then
+                RESULT_STR=$RESULT_STR$RES" "
+            else
+                break
+            fi
+        done
+
+        echo ">> $RESULT_STR"
 
         local TMP=$(echo $RESULT | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
 
         if [ "$TMP" == "Error" ] ; then
-            echo ">> $RESULT"
             echo "Unsuccessful update ಠ╭╮ಠ"
         elif [ "$TMP" == "none" ] ; then
             SUCCESS=1
-            echo ">> $RESULT"
+            # echo ">> $RESULT"
             echo "Nothing to roll out ¯\_(ツ)_/¯"
         else
             SUCCESS=1
-            echo ">> ROLLED: $RESULT"
+            # echo ">> ROLLED: $RESULT"
             echo ">> Successful update! ~(˘▾˘~)"
         fi
 
@@ -345,61 +311,22 @@ if [ "${WORK_ENV}" ] ; then
     # Invoke while on a feature branch to rebase in changes from master and roll associated packages
     function update_branch()
     {
-        local ARG_STR
-        if [ "${1}" == "-n" ] ; then
-            ARG_STR=${1}
-        fi
-
         local TRUNK=master
         local BRANCH=$(git rev-parse --abbrev-ref HEAD)
         local GIT_ROOT=$(git rev-parse --show-toplevel)
         local DIVERGE_REV=$(git merge-base $BRANCH $TRUNK)
         local TREE_DIRTY=$(git status --porcelain)
-        # local RESULT
-        # local TMP
         local SUCCESS=0
-        # local RCP="roll_changed_pkgs --porcelain --revs ${DIVERGE_REV} HEAD ${ARG_STR}"
 
         if [ "$TREE_DIRTY" ]; then
             echo ">> ${BRANCH} is dirty ಠ_ಠ"
             echo ">> Stash or commit before pulling."
         else
-            if [ "${ARG_STR}" ] ; then
-                echo ">> DRY_RUN: not really rebasing"
-            else
-                git rebase ${TRUNK}
-            fi
+            git rebase ${TRUNK}
             echo ">> Rolling changes since ${DIVERGE_REV}"
-
-
-
             parse_result $(roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD)
             SUCCESS=$?
-
-            # RESULT=$(roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD)
-            # RESULT=$(${RCP})
-
         fi
-
-        # #### RCP RETURNS SOMETHING NO MATTER WHAT SO YOU'LL NEED TO INTERPRET RESULT
-        # # * `Error: <error>` on errors with exit 1 status
-        # # * `none`: if no packages are to be rolled
-        # # * a list of packages readable by build/roll_out
-        #
-        # TMP=$(echo ${RESULT} | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
-        #
-        # if [ "${TMP}" == "Error" ] ; then
-        #     echo "${RESULT}"
-        #     echo "Unsuccessful update ಠ╭╮ಠ"
-        # elif [ "${TMP}" == "none" ] ; then
-        #     SUCCESS=1
-        #     echo "${RESULT}"
-        #     echo "Nothing to roll out ¯\_(ツ)_/¯"
-        # else
-        #     SUCCESS=1
-        #     echo "${RESULT}"
-        #     echo "Successful update! ~(˘▾˘~)"
-        # fi
 
         return ${SUCCESS}
     }
@@ -573,6 +500,8 @@ if [ "${WORK_ENV}" ] ; then
         local DIR_TWO=${2}
         local FILENAME
 
+        # TO DO: slice off / from dir names
+
         if [ "${DIR_TWO}" ] ; then
             echo "Diffing ${DIR_ONE} with ${DIR_TWO}"
 
@@ -663,8 +592,9 @@ if [ "${WORK_ENV}" ] ; then
     function sync_client_data
     {
         local ORGS
-        local LINK_REPO
+        # local LINK_REPO
         local LINK_STR=
+        local SITE_STR=
         local DRY_RUN=
 
         function display_help
@@ -678,43 +608,48 @@ if [ "${WORK_ENV}" ] ; then
             while  [ "${#}" != 0 ]
             do
                 case "${1}" in
-                      -l | --link)
-                          LINK_REPO="${2}"
-                          shift 2
-                          ;;
-                      -h | --help)
-                          display_help
-                          break
-                          ;;
-                      -n | --dry-run)
-                          DRY_RUN=1
-                          shift
-                          ;;
-                      -*)
-                          echo "Error: Unknown option: $1"
-                          display_help
-                          break
-                          ;;
-                      *)
-                          ORGS+=(${1})
-                          shift
-                          ;;
+                    -l | --link)
+                        # LINK_REPO="${2}"
+                        LINK_STR="--link ${2}"
+                        shift 2
+                        ;;
+                    -s | --site)
+                        SITE_STR="--site ${2}"
+                        shift 2
+                        ;;
+                    -h | --help)
+                        display_help
+                        break
+                        ;;
+                    -n | --dry-run)
+                        DRY_RUN=1
+                        shift
+                        ;;
+                    -*)
+                        echo "Error: Unknown option: $1"
+                        display_help
+                        break
+                        ;;
+                    *)
+                        ORGS+=(${1})
+                        shift
+                        ;;
                 esac
             done
         fi
 
-        if [ ${LINK_REPO} ] ; then
-            LINK_STR="--link ${LINK_REPO}"
-            #echo "MAKE LINK STR: "${LINK_STR}" FROM LINK REPO: "${LINK_REPO}
-        fi
+        # if [ ${LINK_REPO} ] ; then
+        #     LINK_STR="--link ${LINK_REPO}"
+        #     #echo "MAKE LINK STR: "${LINK_STR}" FROM LINK REPO: "${LINK_REPO}
+        # fi
 
         if [ ${#ORGS[@]} -gt 0 ] ; then
             for ORG in ${ORGS[@]}
             do
                 if [ ${DRY_RUN} ] ; then
-                    echo "DRY RUN: copy_org ${ORG} ${LINK_STR}"
+                    echo "DRY RUN: copy_org ${ORG} ${LINK_STR} ${SITE_STR}"
                 else
-                    copy_org ${ORG} ${LINK_STR}
+                    copy_org ${ORG} ${LINK_STR} ${SITE_STR}
                 fi
             done
         else

@@ -50,6 +50,42 @@ function giffns()
     git diff -B -w --name-status ${PARAMS}
 }
 
+# function grit()
+# {
+#     local EXP=""
+#     local CTX_PRMS=""
+#
+#     echo "GRIT! "
+#     while [ "${#}" != 0 ]
+#     do
+#         case "${1}" in
+#             # -A*)
+#             #     CTX_PRMS="$1"
+#             #     shift
+#             #     ;;
+#             *)
+#                 EXP="$EXP $1"
+#                 shift
+#                 ;;
+#         esac
+#     done
+#     echo "context prms set to $CTX_PRMS"
+#     git grep -I $CTX_PRMS --untracked --no-exclude-standard $EXP
+#
+# }
+
+#### TO DO
+# # For removing a file that you don't want to be deleted on other instances of the repo
+# #   (i.e., an env-specific config file)
+# # Add a file to .gitignore and make sure it's not being tracked anymore
+# # Use git update-index instead of rm --cached so that subsequent pulls will not not delete the file
+# function girm()
+# {
+#
+#
+# }
+
+
 
 # MOVE THINGS TO TRASH!
 function trash()
