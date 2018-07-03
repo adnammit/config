@@ -1,6 +1,7 @@
 # CONFIG YOUR WAY TO A HAPPY COMMAND LINE ENVIRONMENT
 
 ### Config package contains the following:
+* one big (mostly) happy system that works across my work pc, work linux server, home pc and home mac
 * bash env files including `.profile` and `.inputrc`
 * `bin` with some fun functions
 * emacs config, because even though I use Atom now, I want to keep this around

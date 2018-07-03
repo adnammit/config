@@ -2,6 +2,8 @@
 if [ "${WORK_ENV}" ] ; then
 
     alias grst='find -name "*state.dat" | xargs grep -n --color'
+    # just for doing this launch refactor business
+    alias fstep='find -name "*step.dat*"'
 
     alias dev='cd ${DEV}'
     alias test='cd ${TEST}'
