@@ -657,6 +657,180 @@ if [ "${WORK_ENV}" ] ; then
         fi
     }
 
+    function setup_client()
+    {
+        local a=$PWD
+        local ORGS
+        local LINK_STR=
+        local SITE_STR=
+        local DRY_RUN=
+        local OPTS_STR
+        local SKIP_DATA
+
+        function display_help
+        {
+            echo "Sync data and roll out any packages listed in Additional Modules and Search Modules."
+            echo "Option to link synced data to another repo using '--link'. This will pull data to the repo being linked"
+            echo "to, and this might be broken for non-master repos."
+            echo ""
+            echo "    $ setup_client jhs uhs epsg --link alr"
+            echo ""
+            echo "Use '--skip' to just roll packages and skip pulling down data."
+            echo "This script creates a ~/temp/ directory in which to store the client data for parsing."
+            echo "The list of CLIENT_PKGS will need to be manually updated when new clients are added, so that's annoying."
+        }
+
+        if [ "${#}" == 0 ] ; then
+            display_help
+        else
+            while  [ "${#}" != 0 ]
+            do
+                case "${1}" in
+                    -k | --skip)
+                        SKIP_DATA=1
+                        shift
+                        ;;
+                    -l | --link)
+                        LINK_STR="--link ${2}"
+                        SITE_STR="--site ${2}"
+                        shift 2
+                        ;;
+                    -h | --help)
+                        display_help
+                        break
+                        ;;
+                    -n | --dry-run)
+                        DRY_RUN="-n"
+                        shift
+                        ;;
+                    -*)
+                        echo "Error: Unknown option: $1"
+                        display_help
+                        break
+                        ;;
+                    *)
+                        # ORGS+=(${1})
+                        ORGS=$ORGS${1}" "
+                        shift
+                        ;;
+                esac
+            done
+        fi
+
+        if [[ $ORGS ]] ; then
+        # if [ ${#ORGS[@]} -gt 0 ] ; then
+
+            cd ~/dev/
+
+            local BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            local CLIENT_DIR="alr-${BRANCH}/__client__/"
+            local LNX_DIR="//dev-lnx/repo_sites/"
+            local TMP_DIR="temp/"
+            local FILENAME=
+            local VERSION=
+            local MAX
+            local MAXFILE=
+            local BZFILE=
+            local PKGS=
+            local CLIENT_PKGS="abington advocate advocate_demo ashland barrett bayhealth bbtrails bswqa cadence cfhp cmc contracosta covenanthealth demo demo2 fintrack forrestgeneral grmc healthquest hendry htpn jhs leadership lifebridge mercy mhs northvalley northwell nshs om om-qvp oumc oums parkland perflogic rcrmc riverside rounding sanantonio scvmc sfgh sg sharp sickkids skf ski ski2 sni solutions supplychain teletracking texas texasrhp14 texasrhp15 texasrhp3 texasrhp6 texasrhp7 tha thr tjuh tpc tracer transformation uhs umhs va-eoc vaco vcu visn10 visn22 visn4 visn9 wellmont wellspan"
+            local LINEARR
+            local LINE=
+            local SUB=
+
+            cd ~
+
+            if [ ! -d "$TMP_DIR" ] ; then
+                mkdir temp
+            fi
+
+            if [[ ! $SKIP_DATA ]] ; then
+                # If we're linking to another site, make sure that site's data is up to date first
+                if [[ $LINK_STR ]] ; then
+                    sync_client_data ${SITE_STR} ${DRY_RUN} ${ORGS}
+                fi
+
+                sync_client_data ${LINK_STR} ${DRY_RUN} ${ORGS}
+            else
+                echo "Skipping data"
+            fi
+
+            for ORG in ${ORGS}
+            do
+                MAX=0
+                MAXFILE=
+
+                # If the client has its own package, add it to the roll list
+                if [[ "$CLIENT_PKGS" =~ "$ORG" ]] ; then
+                    PKGS=$PKGS$ORG" "
+                fi
+
+                # Copy all the org.dat* files to temp/ and then look for the most recent one
+                rsync -ta --delete-excluded --exclude='*.lock' --include='org.dat*' --exclude='*' $LNX_DIR$CLIENT_DIR$ORG/ $TMP_DIR
+
+                for FILE in ${TMP_DIR}/* ; do
+                    FILENAME=$(basename ${FILE})
+                    VERSION="${FILENAME: -2}"
+
+                    # Check for annoying files ending in org.dat.2 instead of org.dat.02
+                    if [[ "$VERSION" =~ "." ]] ; then
+                        VERSION="${VERSION: -1}"
+                    fi
+
+                    if [ $VERSION -gt $MAX ] ; then
+                        MAX=$VERSION
+                        MAXFILE=$FILENAME
+                    fi
+                done
+
+                echo "Pulling $ORG org data from $MAXFILE"
+
+                # Unzip the file if needed
+                if [[ "$MAXFILE" =~ "bz2" ]] ; then
+                    BZFILE=$MAXFILE".out"
+                    echo "bz file $MAXFILE detected, decompressing to $BZFILE"
+                    bzip2 -dfq $TMP_DIR$MAXFILE > $TMP_DIR$BZFILE
+                    MAXFILE=$BZFILE
+                fi
+
+                # Store the file lines in an array so we can step through them:
+                mapfile -t LINEARR < $TMP_DIR$MAXFILE
+
+                for ((i=0; i<${#LINEARR[*]}; i++)) ; do
+                    LINE=${LINEARR[i]}
+
+                    # If we find Additional or Search Modules, walk through the subsequent lines
+                    #   until we come to the closing Val_list tag looking for anything that doesn't
+                    #   start with a tag opener '<'
+                    if [[ "$LINE" =~ "additional_modules" || "$LINE" =~ "search_modules" ]] ; then
+                        while [[ $LINE ]]; do
+                            LINE=${LINEARR[i]}
+                            if [[ $LINE =~ "</Val_list>" ]] ; then
+                                LINE=
+                            else
+                                SUB="${LINE:0:1}"
+                                if [[ ! $SUB == '<' ]] ; then
+                                    PKGS=$PKGS$LINE" "
+                                fi
+                            fi
+                            ((i++))
+                        done
+                    fi
+                done
+            done
+
+            # Create a unique list of packages to roll:
+            PKGS=$(echo "$PKGS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+
+            if [[ $DRY_RUN ]] ; then
+                echo "roll_out $PKGS"
+            else
+                roll_out $PKGS
+            fi
+        fi
+
+        cd $a
+    }
+
     # NAH, YOU GOTTA BE PL_BLD. JUST ROLL_OUT
     # function ropf()
     # {
