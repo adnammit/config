@@ -55,8 +55,8 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     if [ "${WORK_ENV}" ] ; then
 
         PATH="$PATH:/c/UserData/ryman.amanda/dev/build/"
-        PATH="$PATH:~/AppData/Local/atom/bin"
-
+        PATH="$PATH:/c/UserData/ryman.amanda/atom/bin"
+        # PATH="$PATH:~/AppData/Local/atom/bin"
     else
 
         WINDOWS="/cygdrive/c/"

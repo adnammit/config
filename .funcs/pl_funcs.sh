@@ -12,18 +12,17 @@ if [ "${WORK_ENV}" ] ; then
     {
         local POS_STR
 
-        if [ ${1} ] ; then
-            X=${1}
+        if [[ $1 ]] ; then
+            X=$1
         fi
-        if [ ${2} ] ; then
-            Y=${2}
+        if [[ $2 ]] ; then
+            Y=$2
+        fi
+        if [[ $X && $Y ]] ; then
+            POS_STR="-p $X,$Y"
         fi
 
-        if [ ${X} ] && [ ${Y} ] ; then
-            POS_STR="-p ${X},${Y}"
-        fi
-
-        mintty -i /Cygwin-Terminal.ico ${POS_STR} - &
+        mintty -i /Cygwin-Terminal.ico $POS_STR - &
     }
 
     function ssh_devlnx()
@@ -31,14 +30,14 @@ if [ "${WORK_ENV}" ] ; then
         local X=0
         local Y=0
 
-        if [ ${1} ] ; then
-            X=${1}
+        if [ $1 ] ; then
+            X=$1
         fi
-        if [ ${2} ] ; then
-            Y=${2}
+        if [ $2 ] ; then
+            Y=$2
         fi
 
-        mintty -p ${X},${Y} -t dev-lnx -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
+        mintty -p $X,$Y -t dev-lnx -e /bin/bash -c 'read -pusername\($USERNAME\):\  SSHUSER; export DISPLAY=:$((UID%10000)).0; exec /usr/bin/ssh -XY ${SSHUSER:-$USERNAME}@dev-lnx.portland.perflogic.com' -hold &
     }
 
     alias oa='open_atoms'
@@ -62,25 +61,25 @@ if [ "${WORK_ENV}" ] ; then
         local ROW1_Y=0
         local ROW2_Y=540
 
-        if [[ "${1}" == "-s" || "${1}" == "--skip-update" ]] ; then
+        if [[ $1 == "-s" || $1 == "--skip-update" ]] ; then
             local SKIP_UPDATE=1
         fi
 
         # Open our helper local window right below the first one:
-        mnt ${COL1_X} ${ROW2_Y}
+        mnt $COL1_X $ROW2_Y
 
         # Open a couple of dev-lnx windows in the right column:
-        ssh_devlnx ${COL2_X} ${ROW1_Y}
-        ssh_devlnx ${COL2_X} ${ROW2_Y}
+        ssh_devlnx $COL2_X $ROW1_Y
+        ssh_devlnx $COL2_X $ROW2_Y
 
         sync_config
 
         open_atoms
 
-        if [ -z "${SKIP_UPDATE}" ] ; then
+        if [[ -z $SKIP_UPDATE ]] ; then
             update_pl
             local SUCCESS=$?
-            if [ "${SUCCESS}" == 1 ] ; then
+            if [[ $SUCCESS == 1 ]] ; then
                 show_me_a_kitty
             else
                 echo ">> FAIL"
@@ -88,105 +87,6 @@ if [ "${WORK_ENV}" ] ; then
         else
             echo ">> update skipped"
         fi
-    }
-
-
-    function test_funcs()
-    {
-        # HERE IS A BUNCH OF STUFF FOR TESTING RETURN VALUES AND OTHER PARSING STUFF
-        local SUCCESS=0
-
-        function parse_result()
-        {
-            local SUCCESS=0
-            local RESULT="${1}"
-
-            local TMP=$(echo $RESULT | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
-
-            if [ "$TMP" == "Error" ] ; then
-                echo "$RESULT"
-                echo "Unsuccessful update ಠ╭╮ಠ"
-            elif [ "$TMP" == "none" ] ; then
-                SUCCESS=1
-                echo "$RESULT"
-                echo "Nothing to roll out ¯\_(ツ)_/¯"
-            else
-                SUCCESS=1
-                echo "$RESULT"
-                echo "Successful update! ~(˘▾˘~)"
-            fi
-
-            return $SUCCESS
-        }
-
-        parse_result $(echo "Error: we have one")
-        SUCCESS=$?
-        echo ">>> Success of error is ${SUCCESS}"
-        echo "-------------------------------------"
-
-        parse_result "none"
-        SUCCESS=$?
-        echo ">>> Success of none is ${SUCCESS}"
-        echo "-------------------------------------"
-
-        parse_result "some packages were rolled"
-        SUCCESS=$?
-        echo ">>> Success of successful roll is ${SUCCESS}"
-        echo "-------------------------------------"
-
-        parse_result
-        SUCCESS=$?
-        echo ">>> Success of null is ${SUCCESS}"
-        echo "-------------------------------------"
-
-        function get_return()
-        {
-            local BSUCCESS=0
-            local MSUCCESS
-
-            if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
-                echo "successes are equal"
-            else
-                echo "successes are not equal"
-            fi
-        }
-
-        # get_return
-        # local FINAL=$? # must be stored otherwise this next 'echo' statement will change $? to 0
-        # echo "get_return's return is: "
-        # echo $FINAL
-
-        local result=$(get_return)
-        echo "result is $result"
-
-
-        function greater_than_five()
-        {
-            if [[ $1 -gt 5 ]] ; then
-                return 1
-            else
-                return 0
-            fi
-
-        }
-        # local my_result=$(greater_than_five 3)
-        greater_than_five 6
-        my_result=$?
-        echo "my result is $my_result"
-
-
-
-        function equal_to_five()
-        {
-            if [[ $1 -eq 5 ]] ; then
-                echo "Your number is equal to five. Huzzah!"
-            else
-                echo "Whomp whomp, your number is not equal to five. Better luck next time."
-            fi
-
-        }
-        local my_other_result=$(equal_to_five 5)
-        echo "equal to five is: $my_other_result"
     }
 
     #### HELPER FUNC FOR UPDATE FUNCS
@@ -213,15 +113,13 @@ if [ "${WORK_ENV}" ] ; then
 
         local TMP=$(echo $RESULT | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
 
-        if [ "$TMP" == "Error" ] ; then
+        if [[ $TMP == "Error" ]] ; then
             echo "Unsuccessful update ಠ╭╮ಠ"
-        elif [ "$TMP" == "none" ] ; then
+        elif [[ $TMP == "none" ]] ; then
             SUCCESS=1
-            # echo ">> $RESULT"
             echo "Nothing to roll out ¯\_(ツ)_/¯"
         else
             SUCCESS=1
-            # echo ">> ROLLED: $RESULT"
             echo ">> Successful update! ~(˘▾˘~)"
         fi
 
@@ -240,13 +138,10 @@ if [ "${WORK_ENV}" ] ; then
         local BRANCH=$(git rev-parse --abbrev-ref HEAD)
         local BRANCH_DIRTY=$(git status --porcelain)
         local OLD_HASH
-        # local RESULT
-        # local TMP
         local MSUCCESS=0
         local BSUCCESS=0
-        # local RCP="roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD"
 
-        if [ "$BRANCH_DIRTY" ] ; then
+        if [[ $BRANCH_DIRTY ]] ; then
             echo ">> $BRANCH is dirty ಠ_ಠ"
             echo ">> Stash or commit before pulling."
         else
@@ -258,41 +153,49 @@ if [ "${WORK_ENV}" ] ; then
                 parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
                 MSUCCESS=$?
                 BSUCCESS=1
-                # RESULT=$(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
             else
                 git co $TRUNK
 
                 local TRUNK_DIRTY=$(git status --porcelain)
 
-                if [ "$TRUNK_DIRTY" ]; then
+                if [[ $TRUNK_DIRTY ]] ; then
                     echo ">> $TRUNK is dirty ಠ_ಠ"
                     echo ">> Stash or commit before pulling."
                 else
-                    # DO MASTER
                     OLD_HASH=$(git rev-parse $TRUNK)
                     git pull
-                    echo ">> Rolling changes to master since $OLD_HASH"
+                    MSUCCESS=$? # returns 0 if nothing was updated. what if there's an error?
+                    echo ">> git pull result after pulling master is $MSUCCESS"
 
-                    parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-                    MSUCCESS=$?
-                    # RESULT=$(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-                    # parse_result ${RESULT}
+                    if [[ $MSUCCESS != 0 ]] ; then
+                        echo ">> Rolling changes to master since $OLD_HASH"
+                        parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                        MSUCCESS=$?
+                    else
+                        echo ">> Skipping roll_changed_pkgs -- nothing to update"
+                        MSUCCESS=1
+                    fi
 
 
-                    # NOTE FAIL OF MASTER AND CONTINUE
-                    git co ${BRANCH}
-                    OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-                    echo ">> 10x sleeping (∪｡∪)｡｡｡zzz"
-                    sleep 10
-                    git rebase master
-                    echo ">> Rolling changes to ${BRANCH} since ${OLD_HASH}"
+                    # if update of master fails, do not update branch
+                    if [[ $MSUCCESS == 1 ]] ; then
+                        git co ${BRANCH}
+                        OLD_HASH=$(git merge-base $BRANCH $TRUNK)
+                        # echo ">> 5x sleeping (∪｡∪)｡｡｡zzz"
+                        # sleep 5
+                        git rebase master
+                        BSUCCESS=$? # returns 0 if nothing was updated. what if there's an error?
+                        echo ">> git pull result after pulling $BRANCH is $BSUCCESS"
 
-                    parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-                    BSUCCESS=$?
-                    # RESULT=$(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-                    # # RESULT=$(${RCP})
-                    # # roll_changed_pkgs --revs $OLD_HASH HEAD
-                    # # SUCCESS=1
+                        if [[ $BSUCCESS != 0 ]] ; then
+                            echo ">> Rolling changes to $BRANCH since $OLD_HASH"
+                            parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                            BSUCCESS=$?
+                        else
+                            echo ">> Skipping roll_changed_pkgs -- nothing to update"
+                            BSUCCESS=1
+                        fi
+                    fi
                 fi
             fi
         fi
@@ -300,7 +203,7 @@ if [ "${WORK_ENV}" ] ; then
 
         echo "Branch Success: $BSUCCESS and Master Success: $MSUCCESS"
 
-        if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
+        if [[ $BSUCCESS == 1 && $MSUCCESS == 1 ]] ; then
             return 1
         else
             return 0
@@ -318,17 +221,17 @@ if [ "${WORK_ENV}" ] ; then
         local TREE_DIRTY=$(git status --porcelain)
         local SUCCESS=0
 
-        if [ "$TREE_DIRTY" ]; then
-            echo ">> ${BRANCH} is dirty ಠ_ಠ"
+        if [[ $TREE_DIRTY ]]; then
+            echo ">> $BRANCH is dirty ಠ_ಠ"
             echo ">> Stash or commit before pulling."
         else
-            git rebase ${TRUNK}
-            echo ">> Rolling changes since ${DIVERGE_REV}"
+            git rebase $TRUNK
+            echo ">> Rolling changes since $DIVERGE_REV"
             parse_result $(roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD)
             SUCCESS=$?
         fi
 
-        return ${SUCCESS}
+        return $SUCCESS
     }
 
 
@@ -339,90 +242,9 @@ if [ "${WORK_ENV}" ] ; then
 
         git reset --hard master
         local NEW_HASH=$(git rev-parse HEAD)
-        echo ">>> Rolling out all changes between ${OLD_HASH} and ${NEW_HASH}"
-        $GIT_ROOT/build/roll_changed_pkgs --revs ${OLD_HASH} HEAD
+        echo ">>> Rolling out all changes between $OLD_HASH and $NEW_HASH"
+        $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD
     }
-
-
-    # # UPDATE MASTER, CURRENT FEATURE BRANCH AND ROLL ALL RELEVANT PACKAGES
-    # function update_dev
-    # {
-    #     cd ~/dev
-    #
-    #     local GIT_ROOT=$(git rev-parse --show-toplevel)
-    #     local TRUNK=master
-    #     # local TRUNK_DIRTY
-    #     local BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    #     local BRANCH_DIRTY=$(git status --porcelain)
-    #     local OLD_HASH
-    #     local ARG_STR
-    #     local DRY_RUN
-    #
-    #     # lazy. add more args?
-    #     if [ "${1}" == "-n" ] ; then
-    #         echo ">> Mode set to DRY_RUN"
-    #         DRY_RUN=1;
-    #         ARG_STR="-n"
-    #     fi
-    #
-    #
-    #     # STASHING FAILS IF MMAP FAILS, WHICH IT DOES ALL THE TIME.
-    #     # JUST ABORT IF BRANCH IS DIRTY.
-    #     # REINTRODUCE STASHING IF YOU ARE WORKING ON A COMPUTER THAT DOESN'T SUCK.
-    #     if [ "$BRANCH_DIRTY" ]; then
-    #         echo ">> ${BRANCH} is dirty ಠ_ಠ"
-    #         echo ">> Stash or commit before updating master."
-    #         # echo ">> Stashing ${BRANCH} before updating master"
-    #         # git stash -u
-    #     else
-    #         echo ">> ${BRANCH} was clean -- now updating master"
-    #
-    #         git co ${TRUNK}
-    #
-    #         BRANCH_DIRTY=$(git status --porcelain)
-    #
-    #         if [ "$BRANCH_DIRTY" ]; then
-    #             echo ">> ${TRUNK} is dirty ಠ_ಠ"
-    #             echo ">> Stash or commit before pulling."
-    #         else
-    #             # for master, we just need whatever it's at before we pull
-    #             OLD_HASH=$(git rev-parse ${TRUNK})
-    #             echo ">> Old ${TRUNK} hash is ${OLD_HASH}"
-    #
-    #             if [ "${DRY_RUN}" ] ; then
-    #                 echo ">> DRY_RUN: not really pulling"
-    #             else
-    #                 git pull
-    #             fi
-    #
-    #             $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD ${ARG_STR}
-    #
-    #             # update the branch you were on:
-    #             git co ${BRANCH}
-    #
-    #             OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-    #             echo ">> Rolling out changes on ${BRANCH} since ${OLD_HASH}"
-    #
-    #             if [ "${DRY_RUN}" ] ; then
-    #                 echo ">> DRY_RUN: not really rebasing"
-    #             else
-    #                 git rebase ${TRUNK}
-    #             fi
-    #
-    #             # if [ -n "$BRANCH_DIRTY" ]; then
-    #             #     echo ">> Popping stash for ${BRANCH}"
-    #             #     git stash pop
-    #             # else
-    #             #     echo ">> ${BRANCH} was clean -- no pop"
-    #             # fi
-    #
-    #             $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD ${ARG_STR}
-    #
-    #         fi
-    #     fi
-    #
-    #     cd -
-    # }
 
     # SYNC CONFIG FILES WITH //DEV-LNX
     function sync_config()
@@ -433,28 +255,28 @@ if [ "${WORK_ENV}" ] ; then
         # local FILES=".aliases .bash_profile .bashrc bin .emacs .emacs.d .funcs .profile .xemacs"
 
         local a=$PWD
-        cd ${DST_BASE}
-        if [ ! -e ${DST_DIR} ]; then
-            mkdir ${DST_DIR}
+        cd $DST_BASE
+        if [ ! -e $DST_DIR ]; then
+            mkdir $DST_DIR
         fi
 
-        local DST_PATH=${DST_BASE}${DST_DIR}"/"
+        local DST_PATH=$DST_BASE$DST_DIR"/"
 
-        echo ">>> copying config files to ${DST_PATH}"
+        echo ">>> copying config files to $DST_PATH"
 
         cd ~/config
 
         for FILE in $FILES
         do
             echo "syncing file $FILE"
-            if [ -d $FILE ]; then
+            if [[ -d $FILE ]] ; then
                 cp -r $FILE $DST_PATH
-            elif [ -f $FILE ]; then
+            elif [[ -f $FILE ]] ; then
                 cp $FILE $DST_PATH
             fi
         done
 
-        cd ${a}
+        cd $a
     }
 
     # LOOK THROUGH TXT FILES IN DOCS
@@ -463,7 +285,6 @@ if [ "${WORK_ENV}" ] ; then
         if [ $# -gt 0 ] ; then
     	cd ~/docs
             stxt $@
-            #find . -name "*.txt" | xargs grep -n --color -i "$@"
     	cd -
         fi
     }
@@ -502,8 +323,8 @@ if [ "${WORK_ENV}" ] ; then
 
         # TO DO: slice off / from dir names
 
-        if [ "${DIR_TWO}" ] ; then
-            echo "Diffing ${DIR_ONE} with ${DIR_TWO}"
+        if [[ $DIR_TWO ]] ; then
+            echo "Diffing $DIR_ONE with $DIR_TWO"
 
             for FILE in ${DIR_ONE}/* ; do
                 FILENAME=$(basename ${FILE})
@@ -519,25 +340,30 @@ if [ "${WORK_ENV}" ] ; then
     # Find all process_flow clients
     function find_pf_clients
     {
+        local a=$PWD
+        cd ~/dev/
+
         local CLIENTS=
         local FILE_NAME=process_flow_request.pls
         local GIT_ROOT=$(git rev-parse --show-toplevel)
-        local FILES=$(find ${GIT_ROOT} -name ${FILE_NAME})
+        local FILES=$(find $GIT_ROOT -name $FILE_NAME)
         local PATH_STR=
 
-        for FILE in ${FILES}
+        for FILE in $FILES
         do
-            PATH_STR=$(dirname ${FILE})
+            PATH_STR=$(dirname $FILE)
             PATH_STR=$(echo ${PATH_STR##*/})
-            CLIENTS=${CLIENTS}" "${PATH_STR}
+            CLIENTS=$CLIENTS" "$PATH_STR
         done
 
-        CLIENTS=$(echo "$CLIENTS" | sort | uniq)
+        CLIENTS=$(echo $CLIENTS | sort | uniq)
 
-        for CLIENT in ${CLIENTS}
+        for CLIENT in $CLIENTS
         do
-            echo ${CLIENT}
+            echo $CLIENT
         done
+
+        cd $a
     }
 
 
@@ -545,10 +371,15 @@ if [ "${WORK_ENV}" ] ; then
     {
         local CLIENTS=$(find_pf_clients)
         local OPTS_STR
+        local HELP_FLAG
 
         function display_help
         {
-            echo "HALP!"
+            echo "Call to sync client data for all process_flow clients."
+            echo "Cues off of a search for the process_flow_request.pls script for generating process flows."
+            echo "Options include '--link <repo>' and '--dry-run'."
+            echo "Sync client data for all process_flow clients by linking to master repo site:"
+            echo "  $ sync_pf_clients --link alr "
         }
 
         while [ "${#}" != 0 ]
@@ -560,11 +391,11 @@ if [ "${WORK_ENV}" ] ; then
                       ;;
                   -h | --help)
                       display_help
+                      HELP_FLAG=1
                       break
                       ;;
                   -n|--dry-run)
                       OPTS_STR=${OPTS_STR}" -n"
-                      #DRY_RUN=1
                       shift
                       ;;
                   -*)
@@ -575,16 +406,12 @@ if [ "${WORK_ENV}" ] ; then
                   *)
                       break
                       ;;
-                  # *)
-                  #     ORGS+=(${1})
-                  #     shift
-                  #     ;;
             esac
         done
 
-        #echo OPTSTR IS: ${OPTS_STR}
-
-        sync_client_data ${OPTS_STR} ${CLIENTS}
+        if [[ ! $HELP_FLAG ]] ; then
+            sync_client_data ${OPTS_STR} ${CLIENTS}
+        fi
     }
 
     # handle multiple clients w/ --link arg and dry run options
@@ -592,14 +419,17 @@ if [ "${WORK_ENV}" ] ; then
     function sync_client_data
     {
         local ORGS
-        # local LINK_REPO
         local LINK_STR=
         local SITE_STR=
         local DRY_RUN=
+        local HELP_FLAG=
 
         function display_help
         {
-            echo "HALP!"
+            echo "Sync data for multiple clients using copy_org."
+            echo "All the usual copy_org options apply."
+            echo "Link data in f3 to master when in a different repo:"
+            echo "   $ sync_client_data --link alr --site alr-f3 jhs uhs epsg"
         }
 
         if [ "${#}" == 0 ] ; then
@@ -618,7 +448,8 @@ if [ "${WORK_ENV}" ] ; then
                         shift 2
                         ;;
                     -h | --help)
-                        display_help
+                        # display_help
+                        HELP_FLAG=1
                         break
                         ;;
                     -n | --dry-run)
@@ -638,12 +469,7 @@ if [ "${WORK_ENV}" ] ; then
             done
         fi
 
-        # if [ ${LINK_REPO} ] ; then
-        #     LINK_STR="--link ${LINK_REPO}"
-        #     #echo "MAKE LINK STR: "${LINK_STR}" FROM LINK REPO: "${LINK_REPO}
-        # fi
-
-        if [ ${#ORGS[@]} -gt 0 ] ; then
+        if [[ ${#ORGS[@]} -gt 0 && ! $HELP_FLAG ]] ; then
             for ORG in ${ORGS[@]}
             do
                 if [ ${DRY_RUN} ] ; then
@@ -657,13 +483,14 @@ if [ "${WORK_ENV}" ] ; then
         fi
     }
 
-    function setup_client()
+    function setup_clients()
     {
         local a=$PWD
         local ORGS
         local LINK_STR=
         local SITE_STR=
         local DRY_RUN=
+        local HELP_FLAG=
         local OPTS_STR
         local SKIP_DATA
 
@@ -681,7 +508,7 @@ if [ "${WORK_ENV}" ] ; then
         }
 
         if [ "${#}" == 0 ] ; then
-            display_help
+            HELP_FLAG=1
         else
             while  [ "${#}" != 0 ]
             do
@@ -691,12 +518,12 @@ if [ "${WORK_ENV}" ] ; then
                         shift
                         ;;
                     -l | --link)
-                        LINK_STR="--link ${2}"
-                        SITE_STR="--site ${2}"
+                        LINK_STR="--link $2"
+                        SITE_STR="--site $2"
                         shift 2
                         ;;
                     -h | --help)
-                        display_help
+                        HELP_FLAG=1
                         break
                         ;;
                     -n | --dry-run)
@@ -709,23 +536,23 @@ if [ "${WORK_ENV}" ] ; then
                         break
                         ;;
                     *)
-                        # ORGS+=(${1})
-                        ORGS=$ORGS${1}" "
+                        ORGS=$ORGS$1" "
                         shift
                         ;;
                 esac
             done
         fi
 
-        if [[ $ORGS ]] ; then
-        # if [ ${#ORGS[@]} -gt 0 ] ; then
+        if [[ $HELP_FLAG || ! $ORGS ]] ; then
+            display_help
+        elif [[ $ORGS ]] ; then
 
             cd ~/dev/
 
             local BRANCH=$(git rev-parse --abbrev-ref HEAD)
-            local CLIENT_DIR="alr-${BRANCH}/__client__/"
+            local CLIENT_DIR="alr-$BRANCH/__client__/"
             local LNX_DIR="//dev-lnx/repo_sites/"
-            local TMP_DIR="temp/"
+            local TMP_DIR="temp"
             local FILENAME=
             local VERSION=
             local MAX
@@ -739,17 +566,17 @@ if [ "${WORK_ENV}" ] ; then
 
             cd ~
 
-            if [ ! -d "$TMP_DIR" ] ; then
-                mkdir temp
+            if [[ ! -d $TMP_DIR ]] ; then
+                mkdir $TMP_DIR
             fi
 
             if [[ ! $SKIP_DATA ]] ; then
                 # If we're linking to another site, make sure that site's data is up to date first
                 if [[ $LINK_STR ]] ; then
-                    sync_client_data ${SITE_STR} ${DRY_RUN} ${ORGS}
+                    sync_client_data $SITE_STR $DRY_RUN $ORGS
                 fi
 
-                sync_client_data ${LINK_STR} ${DRY_RUN} ${ORGS}
+                sync_client_data $LINK_STR $DRY_RUN $ORGS
             else
                 echo "Skipping data"
             fi
@@ -760,19 +587,19 @@ if [ "${WORK_ENV}" ] ; then
                 MAXFILE=
 
                 # If the client has its own package, add it to the roll list
-                if [[ "$CLIENT_PKGS" =~ "$ORG" ]] ; then
+                if [[ $CLIENT_PKGS =~ "$ORG" ]] ; then
                     PKGS=$PKGS$ORG" "
                 fi
 
                 # Copy all the org.dat* files to temp/ and then look for the most recent one
-                rsync -ta --delete-excluded --exclude='*.lock' --include='org.dat*' --exclude='*' $LNX_DIR$CLIENT_DIR$ORG/ $TMP_DIR
+                rsync -ta --delete-excluded --exclude='*.lock' --include='org.dat*' --exclude='*' $LNX_DIR$CLIENT_DIR$ORG/ $TMP_DIR/
 
                 for FILE in ${TMP_DIR}/* ; do
                     FILENAME=$(basename ${FILE})
                     VERSION="${FILENAME: -2}"
 
                     # Check for annoying files ending in org.dat.2 instead of org.dat.02
-                    if [[ "$VERSION" =~ "." ]] ; then
+                    if [[ $VERSION =~ "." ]] ; then
                         VERSION="${VERSION: -1}"
                     fi
 
@@ -782,18 +609,18 @@ if [ "${WORK_ENV}" ] ; then
                     fi
                 done
 
-                echo "Pulling $ORG org data from $MAXFILE"
-
                 # Unzip the file if needed
                 if [[ "$MAXFILE" =~ "bz2" ]] ; then
                     BZFILE=$MAXFILE".out"
-                    echo "bz file $MAXFILE detected, decompressing to $BZFILE"
-                    bzip2 -dfq $TMP_DIR$MAXFILE > $TMP_DIR$BZFILE
+                    echo "Pulling $ORG data from bz file $MAXFILE, decompressing to $BZFILE"
+                    bzip2 -dfq $TMP_DIR/$MAXFILE > $TMP_DIR/$BZFILE
                     MAXFILE=$BZFILE
+                else
+                    echo "Pulling $ORG org data from $MAXFILE"
                 fi
 
                 # Store the file lines in an array so we can step through them:
-                mapfile -t LINEARR < $TMP_DIR$MAXFILE
+                mapfile -t LINEARR < $TMP_DIR/$MAXFILE
 
                 for ((i=0; i<${#LINEARR[*]}; i++)) ; do
                     LINE=${LINEARR[i]}
@@ -801,14 +628,14 @@ if [ "${WORK_ENV}" ] ; then
                     # If we find Additional or Search Modules, walk through the subsequent lines
                     #   until we come to the closing Val_list tag looking for anything that doesn't
                     #   start with a tag opener '<'
-                    if [[ "$LINE" =~ "additional_modules" || "$LINE" =~ "search_modules" ]] ; then
+                    if [[ $LINE =~ "additional_modules" || $LINE =~ "search_modules" ]] ; then
                         while [[ $LINE ]]; do
                             LINE=${LINEARR[i]}
                             if [[ $LINE =~ "</Val_list>" ]] ; then
                                 LINE=
                             else
                                 SUB="${LINE:0:1}"
-                                if [[ ! $SUB == '<' ]] ; then
+                                if [[ $SUB != "<" && $LINE != "it_pmo" ]] ; then
                                     PKGS=$PKGS$LINE" "
                                 fi
                             fi
@@ -820,217 +647,16 @@ if [ "${WORK_ENV}" ] ; then
 
             # Create a unique list of packages to roll:
             PKGS=$(echo "$PKGS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+            # PKGS=$(echo "$PKGS" | sort | uniq) # y u no work??
 
-            if [[ $DRY_RUN ]] ; then
-                echo "roll_out $PKGS"
-            else
+            if [[ ! $DRY_RUN ]] ; then
                 roll_out $PKGS
             fi
+            echo "ROLLED: $PKGS"
         fi
 
         cd $a
     }
-
-    # NAH, YOU GOTTA BE PL_BLD. JUST ROLL_OUT
-    # function ropf()
-    # {
-    #     local DST="pl_bld@dev-lnx.portland.perflogic.com:/var/www/repo_sites/alr-opp-req"
-    #     local SRC="~/dev/web"
-    #     local SBDIR="__maint__/util/process_flow/"
-    #     local EXCLUDE_FLAGS="--exclude w32/ --exclude w32.9/ --exclude w64.9/ --exclude build/DEV/ --exclude build/TEST/ --exclude *.ncb --exclude *.suo --exclude *vcproj*"
-    #
-    #     echo "rsync -ltvr -e ssh --delete ${SRC}/${SBDIR} ${DST}/${SBDIR} ${EXCLUDE_FLAGS}"
-    # }
-
-
-
-    ### mmm, not quite. second to last commit is not necess
-    # function reset_branch
-    # {
-    #     local BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    #     if [ "${BRANCH}" != "master" ] ; then
-    #         local PENULTIMATE_COMMIT=$(git reflog show --pretty='format:%H %gs' | awk '/.* reset: moving to .*/{getline; print $1; exit;}')
-    #         echo "penultimate commit ${PENULTIMATE_COMMIT}"
-    #         roll_changed_pkgs --revs ${PENULTIMATE_COMMIT} HEAD
-    #         # do some kind of clean
-    #     else
-    #         echo "Don't reset master, fool! ╚(ಠ_ಠ)=┐"
-    #     fi
-    # }
-
-
-
-    # JUST PLAYING AROUND STUFF
-    function test_conds
-    {
-        local FOO
-        local BAR=1
-        local BAZ=""
-        local QUX=0
-
-
-        echo ""
-        echo ">> if [ !null ]"
-        if [ ! "${FAKE}" ] ; then
-            echo "fake has no value"
-        else
-            echo "fake has value"
-        fi
-
-        echo ""
-        echo ">> if [ -z null ]"
-        if [ -z "${FAKE}" ] ; then
-            echo "string length of fake is zero"
-        else
-            echo "string length of fake is not zero"
-        fi
-
-        echo ""
-        echo ">> if [ 1 == 1 ]"
-        if [ "${BAR}" == 1 ] ; then
-            echo "1 is 1"
-        else
-            echo "1 is not 1"
-        fi
-
-
-
-        echo ""
-        echo ">> if [ 1 ]"
-        if [ ${BAR} ] ; then
-            echo "1 is true"
-        else
-            echo "1 is false"
-        fi
-
-        echo ""
-        echo ">> if [ !1 ]"
-        if [ !${BAR} ] ; then
-            echo "!1 is true"
-        else
-            echo "!1 is false"
-        fi
-
-        echo ""
-        echo ">> if [ -z 1 ]"
-        if [ -z ${BAR} ] ; then
-            echo "-z 1 is true"
-        else
-            echo "-z 1 is false"
-        fi
-
-        echo ""
-        echo ">> if [ 0 ]"
-        if [ ${QUX} ] ; then
-            echo "0 is true"
-        else
-            echo "0 is false"
-        fi
-
-        echo ""
-        echo ">> if [ foo || bar ]"
-        if [[ ${FOO} || ${BAR} ]] ; then
-            echo "foo!"
-        else
-            echo "not foo"
-        fi
-
-
-
-
-        echo ""
-        echo ">> if [ \$\{foo\} ]"
-        if [ ${FOO} ] ; then
-            echo "foo!"
-        else
-            echo "not foo"
-        fi
-
-        echo ""
-        echo ">> if [ \$foo ]"
-        if [ $FOO ] ; then
-            echo "foo!"
-        else
-            echo "not foo"
-        fi
-
-        echo ""
-        echo ">> if [ \"\$foo\" ]"
-        if [ "$FOO" ] ; then
-            echo "foo!"
-        else
-            echo "not foo"
-        fi
-
-        echo ""
-        echo ">> if [ \"foo\" ]"
-        if [ "${FOO}" ] ; then
-            echo "foo!"
-        else
-            echo "not foo"
-        fi
-
-
-        echo ""
-        echo ">> bar=0; zero value in a simple 'if' statement is truthy:"
-        echo ">> if [ \"bar\" ]"
-        if [ "${BAR}" ] ; then
-            echo "bar!"
-        else
-            echo "not bar"
-        fi
-
-
-        echo ""
-        echo ">> no quotes, Conditional: == \"\""
-        if [ ${FOO} == "" ] ; then
-            echo "foo is equal to empty str"
-        else
-            echo "foo is not equal to empty str"
-        fi
-
-        echo ""
-        echo ">> using quotes, Conditional: == \"\""
-        if [ "${FOO}" == "" ] ; then
-            echo "foo is equal to empty str"
-        else
-            echo "foo is not equal to empty str"
-        fi
-
-        echo ""
-        echo ">> Conditional: != \"\""
-        if [ ${FOO} != "" ] ; then
-            echo "foo is not equal to empty str"
-        else
-            echo "foo is equal to empty str"
-        fi
-
-        echo ""
-        echo ">> Conditional: -n"
-        if [ -n ${FOO} ] ; then
-            echo "the length of foo is greater than zero"
-        else
-            echo "the length of foo is not greater than zero"
-        fi
-
-        ###ARGS
-        echo ""
-        echo ">> Conditional: == \"\""
-        if [ "${1}" == "" ] ; then
-            echo "ARG1 is equal to empty str"
-        else
-            echo "ARG1 is not equal to empty str"
-        fi
-
-        echo ""
-        echo ">> Conditional: -n"
-        if [ -n ${1} ] ; then
-            echo "the length of ARG1 is greater than zero"
-        else
-            echo "the length of ARG1 is not greater than zero"
-        fi
-    }
-
 
     function generate_dev_links
     {
@@ -1039,17 +665,16 @@ if [ "${WORK_ENV}" ] ; then
 
         for ORG in ${ORGS}
         do
-            if [[ -e "${ORG}" && ! -L ${ORG} ]] ; then
-                echo "${ORG} exists and is not a symlink, cannot overwrite"
+            if [[ -e $ORG && ! -L $ORG ]] ; then
+                echo "$ORG exists and is not a symlink, cannot overwrite"
             else
-                if [ -L "${ORG}" ] ; then
-                    unlink ${ORG}
+                if [ -L $ORG ] ; then
+                    unlink $ORG
                 fi
-                echo ${ORG}
-                ln -s /var/www/sites/dev.perflogic.com/__client__/${ORG}/
+                echo $ORG
+                ln -s /var/www/sites/dev.perflogic.com/__client__/$ORG/
             fi
         done
     }
-
 
 fi
