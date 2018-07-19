@@ -1,0 +1,21 @@
+
+
+if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
+
+    alias oa='open_atoms'
+    function open_atoms()
+    {
+        local a=$PWD
+
+        TARDIGRADE="/cygdrive/c/Users/tardigrade/"
+        cd ${TARDIGRADE}
+
+        atom ./config ./.atom ./notes
+
+        # temporary -- replace w/ whatever project you're working on
+        atom ./codes/loginapp
+
+        cd ${a}
+    }
+
+fi

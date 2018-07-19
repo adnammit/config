@@ -33,9 +33,9 @@ alias jorbs='jobs'
 alias compile='g++ *.cpp -Wall -g'
 alias debug='gdb ./a.out'
 
-if [ "$OSTYPE" == "cygwin" ] && [ ! "${WORK_ENV}" ] ; then
+if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
 
-    if [[ "$OSTYPE" == "cygwin" ]]; then
+    if [[ $OSTYPE == "cygwin" ]] ; then
         # TRANSPORTATION
         TARDIGRADE="/cygdrive/c/Users/tardigrade/"
         DROPBOX="${TARDIGRADE}Dropbox/"
