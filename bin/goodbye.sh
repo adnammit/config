@@ -22,6 +22,8 @@ TGT=${REMOTE_BKUP_DIR}/notes
 echo "rsync -ltvr -e ssh --delete ${SRC}/ ${TGT}/ ${EXCLUDE_FLAGS}"
 rsync -ltvr -e ssh --delete ${SRC}/ ${TGT}/ ${EXCLUDE_FLAGS}
 
+sync_configuration.sh
+
 show_me_a_robot.sh
 
 # echo ""

@@ -94,19 +94,19 @@ function trash()
 }
 
 
-alias diws='ignore_ws_comments'
-function ignore_ws_comments()
+alias diws='diff_ws_comments'
+function diff_ws_comments()
 {
     local CHAR="//"
     local FILES
-    local MODE="normal"
+    local HELP_FLAG
 
     function display_help
     {
         echo "Diffs two files while ignoring whitespace and newlines."
         echo "Also ignores commented lines. Default comment character is \"//\""
         echo "Specify a different comment character with: "
-        echo "     $ ignore_ws_comments -c \# foo bar"
+        echo "     $ ignore_ws_comments -c '#' foo bar"
     }
 
     function print_files
@@ -119,26 +119,23 @@ function ignore_ws_comments()
     }
 
     if [ "${#}" == 0 ] ; then
-        MODE="help"
-        display_help
+        HELP_FLAG=1
     else
         while  [ "${#}" != 0 ]
         do
             case "${1}" in
                   -c | --character)
-                      CHAR="${2}"   # You may want to check validity of $2
-                      echo CHAR is ${CHAR}
+                      CHAR="$2"
+                      echo CHAR is $CHAR
                       shift 2
                       ;;
                   -h | --help)
-                      display_help
-                      MODE="help"
+                      HELP_FLAG=1
                       break
                       ;;
                   -*)
                       echo "Error: Unknown option: $1"
-                      display_help
-                      MODE="help"
+                      HELP_FLAG=1
                       break
                       ;;
                   *)
@@ -149,10 +146,7 @@ function ignore_ws_comments()
         done
     fi
 
-    # echo "MODE is ${MODE}, CHAR is ${CHAR} and files are:"
-    # print_files "${FILES[@]}"
-
-    if [ ${MODE} == "normal" ] ; then
+    if [[ ! $HELP_FLAG ]] ; then
         if [ ${#FILES[@]} == 2 ] ; then
             echo "--------------------------------------------------------"
             # grep each file for non-matching lines (-v) against regular expression
@@ -163,6 +157,8 @@ function ignore_ws_comments()
         else
             echo "Please enter two files (we have ${#FILES[@]} files)"
         fi
+    else
+        display_help
     fi
 }
 
@@ -213,19 +209,3 @@ function bak()
         done
     fi
 }
-
-# function cdd()
-# {
-#     STR='cd ..'
-#     i=1
-#
-#     while [ "$i" -lt "$1" ]
-#     do
-#         STR="${STR}/.."
-#         let "i+=1"
-#     done
-#
-#     $STR
-#
-#     unset STR i
-# }

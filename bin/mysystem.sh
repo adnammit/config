@@ -15,11 +15,6 @@ echo
 
 echo "This is the uptime information: "
 uptime
-echo 
+echo
 
 echo "That's all folks!"
-
-
-
-
-
