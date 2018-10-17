@@ -55,7 +55,8 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     if [ "${WORK_ENV}" ] ; then
 
         PATH="$PATH:/c/UserData/ryman.amanda/dev/build/"
-        PATH="$PATH:/c/UserData/ryman.amanda/atom/bin"
+        PATH="$PATH:/c/UserData/ryman.amanda/atom/bin/"
+        PATH="$PATH:/c/Windows/Microsoft.NET/Framework/v2.0.50727/"
         # PATH="$PATH:~/AppData/Local/atom/bin"
     else
 

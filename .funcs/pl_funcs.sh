@@ -812,9 +812,9 @@ if [ "${WORK_ENV}" ] ; then
 
         cd ~/dev/dat/
         for FILE in ${FILES} ; do
-            # find . -name $FILE.dat* | xargs grep "${@}" --color
-            find . -name $FILE.dat* | xargs head -1 #look for stupid stuff on the first line
-            
+            find . -name $FILE.dat* | xargs grep "${@}" --color
+            # find . -name $FILE.dat* | xargs head -1 #look for stupid stuff on the first line
+
 
             # find . \( -path dir1 -o -path dir2 -o -path dir3 \) -name $FILE.dat* | xargs grep "${@}" --color
             # find . \( -path client/fintrack -o -path client/skf \) -prune -o -name $FILE.dat*
