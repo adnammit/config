@@ -43,9 +43,10 @@ if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
         alias ctar="cd ${TARDIGRADE}"
         alias cnotes="cd ${TARDIGRADE}notes"
         alias cconfig="cd ${TARDIGRADE}/config"
-        alias ccode="cd ${CODEFOLIO}"
+        alias dropcode="cd ${CODEFOLIO}"
         alias csites="cd ${CODEFOLIO}sites"
         alias creact="cd ${CODEFOLIO}react"
+        alias ccode="cd ${TARDIGRADE}/codes"
         unset TARDIGRADE DROPBOX CODEFOLIO
 
         # CYGWIN STUFF:

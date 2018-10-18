@@ -57,25 +57,23 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
         PATH="$PATH:/c/UserData/ryman.amanda/dev/build/"
         PATH="$PATH:/c/UserData/ryman.amanda/atom/bin/"
         PATH="$PATH:/c/Windows/Microsoft.NET/Framework/v2.0.50727/"
-        # PATH="$PATH:~/AppData/Local/atom/bin"
     else
 
         WINDOWS="/cygdrive/c/"
         PROGRAM_FILES="${WINDOWS}Program Files/"
         TARDIGRADE="${WINDOWS}Users/tardigrade/"
         APP_DATA="${TARDIGRADE}AppData/"
-        ATOM="${APP_DATA}Local/atom/bin"
+        ATOM="${APP_DATA}Local/atom/bin/"
         SYSTEM="${WINDOWS}Windows/System32/"
         NODE="${PROGRAM_FILES}nodejs/:${APP_DATA}Roaming/npm/"
         # POSTGRES="/usr/local/pgsql/bin/"
-        POSTGRES="${PROGRAM_FILES}PostgreSQL/pg10/bin"
+        POSTGRES="${PROGRAM_FILES}PostgreSQL/pg10/bin/"
+        VSBIN="${WINDOWS}Windows/Microsoft.NET/Framework/v2.0.50727/"
+        DOTNET="${PROGRAM_FILES}dotnet/"
 
-        PATH="$PATH:${ATOM}:${NODE}:${SYSTEM}:${POSTGRES}"
-        ###i don't think you need tardigrade...
-        # PATH="$PATH:${TARDIGRADE}:${ATOM}:${NODE}"
-        # PATH="$PATH/usr/lib/postgresql/9.3/bin"
+        PATH="$PATH:${ATOM}:${NODE}:${SYSTEM}:${POSTGRES}:${VSBIN}:${DOTNET}"
 
-        unset WINDOWS PROGRAM_FILES TARDIGRADE APP_DATA ATOM SYSTEM NODE POSTGRES
+        unset WINDOWS PROGRAM_FILES TARDIGRADE APP_DATA ATOM SYSTEM NODE POSTGRES VSBIN DOTNET
     fi
 fi
 
