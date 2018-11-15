@@ -99,157 +99,6 @@ if [ "${WORK_ENV}" ] ; then
         fi
     }
 
-    # #### HELPER FUNC FOR UPDATE FUNCS
-    # #### roll_changed_pkgs --porcelain returns one of the following:
-    # # * `Error: <error>` on errors with exit 1 status
-    # # * `none`: if no packages are to be rolled
-    # # * a list of packages readable by build/roll_out
-    # function parse_result()
-    # {
-    #     local SUCCESS=0
-    #     local RESULT="$@"
-    #     local RESULT_STR=""
-    #
-    #     for RES in $RESULT
-    #     do
-    #         if [[ $RES =~ [^\#*] ]] ; then
-    #             RESULT_STR=$RESULT_STR$RES" "
-    #         else
-    #             break
-    #         fi
-    #     done
-    #
-    #     echo ">> $RESULT_STR"
-    #
-    #     local TMP=$(echo $RESULT | head -n1 | sed -e 's/ *\([a-zA-Z]*\).*/\1/')
-    #
-    #     if [[ $TMP == "Error" ]] ; then
-    #         echo "Unsuccessful update ಠ╭╮ಠ"
-    #     elif [[ $TMP == "none" ]] ; then
-    #         SUCCESS=1
-    #         echo "Nothing to roll out ¯\_(ツ)_/¯"
-    #     else
-    #         SUCCESS=1
-    #         echo ">> Successful update! ~(˘▾˘~)"
-    #     fi
-    #
-    #     return $SUCCESS
-    # }
-
-
-    # # UPDATE MASTER, CURRENT FEATURE BRANCH AND ROLL ALL RELEVANT PACKAGES
-    # # tried splitting this out into a separate script but rebase is broken again
-    # function update_pl()
-    # {
-    #     echo ">> UPDATING DEV"
-    #     cd ~/dev/
-    #
-    #     local TRUNK=master
-    #     local BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    #     local BRANCH_DIRTY=$(git status --porcelain)
-    #     local OLD_HASH
-    #     local MSUCCESS=0
-    #     local BSUCCESS=0
-    #
-    #     if [[ $BRANCH_DIRTY ]] ; then
-    #         echo ">> $BRANCH is dirty ಠ_ಠ"
-    #         echo ">> Stash or commit before pulling."
-    #     else
-    #         if [ $BRANCH == $TRUNK ] ; then
-    #             OLD_HASH=$(git rev-parse $TRUNK)
-    #             git pull
-    #             echo ">> Rolling changes to master since $OLD_HASH"
-    #
-    #             parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-    #             MSUCCESS=$?
-    #             BSUCCESS=1
-    #         else
-    #             git co $TRUNK
-    #
-    #             local TRUNK_DIRTY=$(git status --porcelain)
-    #
-    #             if [[ $TRUNK_DIRTY ]] ; then
-    #                 echo ">> $TRUNK is dirty ಠ_ಠ"
-    #                 echo ">> Stash or commit before pulling."
-    #             else
-    #                 OLD_HASH=$(git rev-parse $TRUNK)
-    #                 git pull # appears to always return '0'
-    #                 echo ">> Rolling changes to master since $OLD_HASH"
-    #                 parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-    #                 MSUCCESS=$?
-    #                 # MSUCCESS=$? # returns 0 if nothing was updated. what if there's an error?
-    #                 # echo ">> git pull result after pulling master is $MSUCCESS"
-    #
-    #                 # if [[ $MSUCCESS != 0 ]] ; then
-    #                 #     echo ">> Rolling changes to master since $OLD_HASH"
-    #                 #     parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-    #                 #     MSUCCESS=$?
-    #                 # else
-    #                 #     echo ">> Skipping roll_changed_pkgs -- nothing to update"
-    #                 #     MSUCCESS=1
-    #                 # fi
-    #
-    #                 # if update of master fails, do not update branch
-    #                 if [[ $MSUCCESS == 1 ]] ; then
-    #                     git co ${BRANCH}
-    #                     OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-    #                     # echo ">> 5x sleeping (∪｡∪)｡｡｡zzz"
-    #                     # sleep 5
-    #                     git rebase master
-    #                     # BSUCCESS=$? # returns 0 if nothing was updated. what if there's an error?
-    #                     # echo ">> git pull result after pulling $BRANCH is $BSUCCESS"
-    #                     echo ">> Rolling changes to $BRANCH since $OLD_HASH"
-    #                     parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-    #                     BSUCCESS=$?
-    #
-    #                     # if [[ $BSUCCESS != 0 ]] ; then
-    #                     #     echo ">> Rolling changes to $BRANCH since $OLD_HASH"
-    #                     #     parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-    #                     #     BSUCCESS=$?
-    #                     # else
-    #                     #     echo ">> Skipping roll_changed_pkgs -- nothing to update"
-    #                     #     BSUCCESS=1
-    #                     # fi
-    #                 fi
-    #             fi
-    #         fi
-    #     fi
-    #     cd -
-    #
-    #     echo "Branch Success: $BSUCCESS and Master Success: $MSUCCESS"
-    #
-    #     if [[ $BSUCCESS == 1 && $MSUCCESS == 1 ]] ; then
-    #         return 1
-    #     else
-    #         return 0
-    #     fi
-    # }
-
-
-    # # Invoke while on a feature branch to rebase in changes from master and roll associated packages
-    # function update_branch()
-    # {
-    #     local TRUNK=master
-    #     local BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    #     local GIT_ROOT=$(git rev-parse --show-toplevel)
-    #     local DIVERGE_REV=$(git merge-base $BRANCH $TRUNK)
-    #     local TREE_DIRTY=$(git status --porcelain)
-    #     local SUCCESS=0
-    #
-    #     if [[ $TREE_DIRTY ]]; then
-    #         echo ">> $BRANCH is dirty ಠ_ಠ"
-    #         echo ">> Stash or commit before pulling."
-    #     else
-    #         git rebase $TRUNK
-    #         echo ">> Rolling changes since $DIVERGE_REV"
-    #         parse_result $(roll_changed_pkgs --porcelain --revs $DIVERGE_REV HEAD)
-    #         SUCCESS=$?
-    #     fi
-    #
-    #     return $SUCCESS
-    # }
-
-
     function reset_branch()
     {
         local OLD_HASH=$(git rev-parse HEAD)
@@ -260,39 +109,6 @@ if [ "${WORK_ENV}" ] ; then
         echo ">>> Rolling out all changes between $OLD_HASH and $NEW_HASH"
         $GIT_ROOT/build/roll_changed_pkgs --revs $OLD_HASH HEAD
     }
-
-    # # SYNC CONFIG FILES WITH //DEV-LNX
-    # function sync_config()
-    # {
-    #     local DST_BASE="//dev-lnx/home/ryman.amanda/"
-    #     local DST_DIR="config"
-    #     local FILES=".aliases .bash_profile .bashrc bin .funcs .profile"
-    #     # local FILES=".aliases .bash_profile .bashrc bin .emacs .emacs.d .funcs .profile .xemacs"
-    #
-    #     local a=$PWD
-    #     cd $DST_BASE
-    #     if [ ! -e $DST_DIR ]; then
-    #         mkdir $DST_DIR
-    #     fi
-    #
-    #     local DST_PATH=$DST_BASE$DST_DIR"/"
-    #
-    #     echo ">>> copying config files to $DST_PATH"
-    #
-    #     cd ~/config
-    #
-    #     for FILE in $FILES
-    #     do
-    #         echo "syncing file $FILE"
-    #         if [[ -d $FILE ]] ; then
-    #             cp -r $FILE $DST_PATH
-    #         elif [[ -f $FILE ]] ; then
-    #             cp $FILE $DST_PATH
-    #         fi
-    #     done
-    #
-    #     cd $a
-    # }
 
     # LOOK THROUGH TXT FILES IN DOCS
     function sdocs()
@@ -764,6 +580,9 @@ if [ "${WORK_ENV}" ] ; then
         Complete_new_project
         Complete_project_func
         Complete_request_launch
+        Custom_form
+        Custom_form_step
+        Customize_project_launch
         Customize_project_launch_specs
         Customize_request_project
         Customize_request_project_step
@@ -784,8 +603,10 @@ if [ "${WORK_ENV}" ] ; then
         New_project_step
         On_proj_launch_func
         Open_project
+        Populate_new_project_data
         Populate_new_project_roster
         Proj_launch_team_member_func
+        Project_launch_util
         Project_list_buttons
         Project_report
         Quick_setup
@@ -812,8 +633,8 @@ if [ "${WORK_ENV}" ] ; then
 
         cd ~/dev/dat/
         for FILE in ${FILES} ; do
-            find . -name $FILE.dat* | xargs grep "${@}" --color
-            # find . -name $FILE.dat* | xargs head -1 #look for stupid stuff on the first line
+            # find . -name $FILE.dat* | xargs grep "${@}" --color
+            find . -name $FILE.dat* | xargs head -1 #look for stupid stuff on the first line
 
 
             # find . \( -path dir1 -o -path dir2 -o -path dir3 \) -name $FILE.dat* | xargs grep "${@}" --color

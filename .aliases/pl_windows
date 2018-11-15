@@ -1,4 +1,4 @@
-if [ "${WORK_ENV}" ] && [ "$OSTYPE" == "cygwin" ] ; then
+if [[ $OSTYPE == "cygwin" && $WORK_ENV ]] ; then
 
     # TELEPORTATION
     alias bld='cd ~/dev/build/'
@@ -18,7 +18,6 @@ if [ "${WORK_ENV}" ] && [ "$OSTYPE" == "cygwin" ] ; then
     alias bu='cd ~/backup/'
     alias cdocs='cd ~/docs/'
     alias cnotes='cd ~/docs/notes/'
-
 
     # DATA STUFF
     alias ro='roll_out'

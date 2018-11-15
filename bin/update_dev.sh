@@ -83,12 +83,18 @@ else
             if [[ $MSUCCESS == 1 ]] ; then
                 git co ${BRANCH}
                 OLD_HASH=$(git merge-base $BRANCH $TRUNK)
+                
                 # would love to check for an error here but rebase appears to always return '0'
-                git rebase master
-                echo ">> rebase result is $?"
-                echo ">> Rolling changes to $BRANCH since $OLD_HASH:"
-                parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
-                BSUCCESS=$?
+                REBASE=$(git rebase $TRUNK)
+                echo ">> rebase result is $REBASE"
+                if [[ $REBASE == 0 ]] ; then
+                    echo ">> Rolling changes to $BRANCH since $OLD_HASH:"
+                    parse_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
+                    BSUCCESS=$?
+                else
+                    echo "!!! unsuccessful rebase of $TRUNK to master"
+                    BSUCCESS=0
+                fi
             else
                 echo ">> No updates to master, skipping updates to $BRANCH"
             fi

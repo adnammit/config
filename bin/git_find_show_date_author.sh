@@ -1,8 +1,7 @@
 #!/bin/bash
-# GIT_ROOT=$(git rev-parse --show-toplevel)
-# FILES=$(find $GIT_ROOT -name "$@")
+# Kind of like git blame, but for filenames rather than line numbers
+
 FILES=$(find . -name "$@")
-# FILES=$(git ls-files "*/$@")
 
 for FILE in $FILES
 do
