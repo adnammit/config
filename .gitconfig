@@ -8,6 +8,21 @@
 [color]
 	ui = true
 
+[color "branch"]
+    current = yellow reverse bold
+    local = yellow
+    remote = yellow dim
+
+[color "diff"]
+    meta = yellow bold
+    old = cyan bold
+    new = magenta bold
+
+[color "status"]
+    added = cyan
+    changed = magenta
+    untracked = yellow
+
 [alias]
 	co = checkout
 	ci = commit
@@ -15,6 +30,9 @@
 	br = branch
     cm = commit -m
 	aa = add -A
+    reb = rebase
+    rebc = rebase --continue
+    rl = reflog
 
 	# ==== LOG STUFF ====
     lg = !"git lg1" #change to your favorite l#

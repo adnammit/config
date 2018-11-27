@@ -11,9 +11,9 @@ function giff()
 {
     local PARAMS=""
 
-    while [ "${#}" != 0 ]
+    while [[ $# != 0 ]]
     do
-        case "${1}" in
+        case "$1" in
             -mh | mh)
                 PARAMS="$PARAMS master..HEAD"
                 shift
@@ -33,9 +33,9 @@ function giffns()
 {
     local PARAMS=""
 
-    while [ "${#}" != 0 ]
+    while [[ $# != 0 ]]
     do
-        case "${1}" in
+        case "$1" in
             -mh | mh)
                 PARAMS="$PARAMS master..HEAD"
                 shift

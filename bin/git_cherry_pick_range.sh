@@ -12,11 +12,11 @@ fi
 
 if [[ $HELP_FLAG == 1 ]] ; then
     echo ""
-    echo "Requires two args: "
+    echo "Requires two args:"
     echo "1: the most recent commit in the range you'd like cherry picked"
     echo "2: the total number of commits you'd like picked (including the most recent commit)"
     echo ""
-    echo "ps: DON'T BE A DUMB-ASS."
+    echo "Remember: check twice, run once, reflog if you done fucked it up anyway."
     echo ""
 else
 
