@@ -8,7 +8,7 @@ if [[ $1 == "-h" ]] ; then
     echo "Get stats on a particular author."
     echo "First arg is for the author, second arg for any additional args."
     echo "For example, try: "
-    echo "   \$ git_author_stat \"Amanda Ryman\" '--since=6.months --first-parent master' "
+    echo "   \$ git_author_stat.sh \"Amanda Ryman\" '--since=6.months --first-parent master' "
     echo ""
 
 else

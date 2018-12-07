@@ -15,10 +15,6 @@ fi
 # FUN WITH STYLING AND COLOR
 #=========================================
 
-# BG;FGm
-# BG;FG;1m -- for bold
-# 1;FGm -- for bold, plain background
-
 BLACKONYELLOW='\[\e[43;30m\]'
 BOLDBLUEONYELLOW='\[\e[43;34;1m\]'
 BOLDBLUEONGREEN='\[\e[42;34;1m\]'

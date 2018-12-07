@@ -10,7 +10,8 @@ function display_help
 {
     echo "Sync data for multiple clients using copy_org."
     echo "All the usual copy_org options apply."
-    echo "Link data in f3 to master when in an altogether different repo:"
+    echo "Example: pull data to master, then link f3 to master all while in an altogether different repo:"
+    echo "   \$ sync_client_data --site alr jhs uhs epsg"
     echo "   \$ sync_client_data --link alr --site alr-f3 jhs uhs epsg"
 }
 

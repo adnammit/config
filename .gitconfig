@@ -1,3 +1,4 @@
+# Note that this cannot by symlinked -- must be directly copied to $HOME
 [user]
 	email = amandaryman@gmail.com
 	name = aryman

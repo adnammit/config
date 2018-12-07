@@ -10,7 +10,7 @@ function display_help
     echo "Cues off of a search for the process_flow_request.pls script for generating process flows."
     echo "Options include '--link <repo>' and '--dry-run'."
     echo "Sync client data for all process_flow clients by linking to master repo site:"
-    echo "  $ sync_pf_clients --link alr "
+    echo "  \$ sync_pf_clients --link alr "
 }
 
 while [[ $# != 0 ]] ; do

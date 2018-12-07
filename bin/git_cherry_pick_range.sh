@@ -1,5 +1,5 @@
 #!/bin/bash
-# Because my jerb has a bunch of custom async git stuff that derails
+# Because of all the custom async git stuff that derails
 #   cherry-picking by range, here is a script to cherry pick one commit
 #   at a time.
 

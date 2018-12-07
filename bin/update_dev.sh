@@ -3,6 +3,9 @@
 
 echo ">> UPDATING DEV"
 
+a=$PWD
+cd ~/dev
+
 TRUNK=master
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 BRANCH_DIRTY=$(git status --porcelain)
@@ -61,16 +64,13 @@ else
         MSUCCESS=$?
         BSUCCESS=1
     else
-        # WE'RE ON A FEATURE AND NEED TO UPDATE MASTER FIRST
+        # WE'RE ON A FEATURE -- IF NOT BRANCH_ONLY, UPDATE MASTER FIRST
         if [[ $BRANCH_ONLY == 1 ]] ; then
             MSUCCESS=1
         else
             git co $TRUNK
             OLD_HASH=$(git rev-parse $TRUNK)
-            echo ">> $TRUNK is currently at $OLD_HASH"
-            # would love to check for an error here but pull appears to always return '0'
             git pull
-            # echo ">> pull result is $?"
             echo ">> Rolling changes to master since $OLD_HASH"
             parse_rcp_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
             MSUCCESS=$?
@@ -79,19 +79,17 @@ else
         # IF WE HAD NO ERROR ON MASTER OR ARE JUST DOING BRANCH, UPDATE BRANCH
         if [[ $MSUCCESS == 1 ]] ; then
             OLD_HASH=$(git merge-base $BRANCH $TRUNK)
-            REBASE=$(git rebase $TRUNK)
-            echo ">> rebase result is $REBASE"
-            if [[ $REBASE == 0 ]] ; then
+            OUTPUT=$(git rebase $TRUNK)
+            RESULT=$?
+            if [[ $OUTPUT =~ "up to date" ]] ; then
+                echo "?? No rebase -- $BRANCH is already up to date ¯\_(ツ)_/¯"
+                BSUCCESS=1
+            elif [[ $RESULT == 0 ]] ; then
                 echo ">> Rolling changes to $BRANCH since $OLD_HASH:"
                 parse_rcp_result $(roll_changed_pkgs --porcelain --revs $OLD_HASH HEAD)
                 BSUCCESS=$?
             else
-                if [[ $REBASE =~ "up to date" ]] ; then
-                    echo "?? No rebase -- $BRANCH is already up to date ¯\_(ツ)_/¯"
-                    BSUCCESS=1
-                else
-                    echo "!!! unsuccessful rebase of $TRUNK to master"
-                fi
+                echo "!! unsuccessful rebase of $TRUNK to master"
             fi
         else
             echo "!! Update to $BRANCH was skipped -- error in updating master"
@@ -99,10 +97,12 @@ else
     fi
 fi
 
+cd $a
+
 echo "Branch Success: $BSUCCESS and Master Success: $MSUCCESS"
 
 if [[ $BSUCCESS -eq 1 && $MSUCCESS -eq 1 ]] ; then
-    echo 1
+    exit 0 # '0' is good
 else
-    echo 0
+    exit 1 # anything non-0 is bad. 1 is the catchall code for general errors
 fi

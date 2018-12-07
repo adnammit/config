@@ -8,14 +8,14 @@
 # Uses and Stupidities:
 #    This is for when you have a common file and it turns out there are a million more of the boogers
 #    in custom client code. Gah, if only you didn't have to diff through a billion files...
-#    Oh wait.
+#    But wait -- mdiff is here to help.
 #
 #    Spits the output into a file in ~/mdiff_output (or another dir of your choosing).
 #    You can also output to the screen instead.
 #    For now this only works if the file is in common or one of it's subdirs.
 #
 #   Usage
-#         $ mdiff [OPTIONS] [FILENAME] 
+#         $ mdiff [OPTIONS] [FILENAME]
 
 
 # TO DO:

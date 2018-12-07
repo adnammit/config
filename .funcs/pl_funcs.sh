@@ -70,7 +70,7 @@ if [ "${WORK_ENV}" ] ; then
         local COL2_X=2870
         local ROW1_Y=0
         local ROW2_Y=540
-        local SUCCESS=1
+        local STATUS=0 # in bash, '0' is good
 
         if [[ $1 == "-s" || $1 == "--skip-update" ]] ; then
             local SKIP_UPDATE=1
@@ -86,18 +86,16 @@ if [ "${WORK_ENV}" ] ; then
         open_atoms
 
         if [[ -z $SKIP_UPDATE ]] ; then
-            # update_dev
-            SUCCESS=$(update_dev)
-            # if [[ $SUCCESS == 1 ]] ; then
-            #     show_me_a_kitty
-            # else
-            #     echo ">> FAIL"
-            # fi
+            # STATUS=$(update_dev)
+            update_dev
+            STATUS=$?
         else
             echo ">> update skipped"
         fi
 
-        if [[ $SUCCESS == 1 ]] ; then
+        echo ">> STATUS is $STATUS"
+
+        if [[ $STATUS == 0 ]] ; then
             show_me_a_kitty
         else
             echo ">> FAIL"
