@@ -1,0 +1,7 @@
+BackgroundColour=51,51,51
+Font=Meslo LG L
+FontHeight=11
+Columns=139
+Rows=38
+Scrollbar=right
+Term=xterm-256color

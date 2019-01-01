@@ -30,5 +30,15 @@ alias eemacs='emacs'
 alias jorbs='jobs'
 
 #C++ SHORTCUTS
-alias compile='g++ *.cpp -Wall -g'
-alias debug='gdb ./a.out'
+alias ccompile='g++ *.cpp -Wall -g'
+alias cdbg='gdb ./a.out'
+
+# UNIVERSAL NODE STUFF
+alias nlist='npm list --depth=0'
+alias nglist='npm list -g --depth=0'
+alias kaboom='npm cache clean --force'
+
+# BOREDOM STUFF
+alias starwars='telnet towel.blinkenlights.nl'
+alias horseeBooks='curl -s horseebooksipsum.com/api/v1/ | say'
+alias baconIpsum='curl -s https://baconipsum.com/api/?type=all-meat | say'

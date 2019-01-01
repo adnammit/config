@@ -29,13 +29,4 @@ if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
     alias scpary='scp -r -P 18765 contact.html index.html work.html css/ js/ img/ amandary@amandaryman.com:/home/amandary/public_html/'
     alias sshary='ssh amandary@amandaryman.com -p 18765'
 
-    # UNIVERSAL NODE STUFF
-    alias nlist='npm list --depth=0'
-    alias kaboom='npm cache clean --force'
-
-    # BOREDOM STUFF
-    alias starwars='telnet towel.blinkenlights.nl'
-    alias horseeBooks='curl -s horseebooksipsum.com/api/v1/ | say'
-    alias baconIpsum='curl -s https://baconipsum.com/api/?type=all-meat |say'
-
 fi
