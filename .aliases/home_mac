@@ -2,5 +2,6 @@ if [[ $OSTYPE == "darwin17" ]] ; then
 
     alias cnotes='cd ~/notes'
     alias ccode='cd ~/code'
+    alias nerdz='cd ~/Dropbox/nerdz/'
 
 fi
