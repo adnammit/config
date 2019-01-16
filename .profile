@@ -52,70 +52,21 @@ if [[ "$OSTYPE" == "darwin17" ]]; then
 
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 
-    CYGDRIVE="/cygdrive/c/"
-
-    if [ "${WORK_ENV}" ] ; then
-        USER_HOME="${CYGDRIVE}Users/amanda.ryman/"
-    else
-        USER_HOME="${CYGDRIVE}Users/tardigrade/"
-    fi
-
-    WINDOWS="${CYGDRIVE}Windows/"
-    PROGRAM_FILES="${CYGDRIVE}Program Files/"
-    APP_DATA="${USER_HOME}AppData/"
-    ATOM="${APP_DATA}Local/atom/bin/"
-    SYSTEM="${WINDOWS}System32/"
-    NODE="${PROGRAM_FILES}nodejs/:${APP_DATA}Roaming/npm/"
-    NVM="${APP_DATA}Roaming/nvm/"
+    ATOM="$LOCALAPPDATA/atom/bin/"
+    SYSTEM="$SYSTEMROOT/System32/"
+    NODE="$PROGRAMFILES/nodejs/:$APPDATA/npm/"
+    NVM="$APPDATA/nvm/"
     # POSTGRES="/usr/local/pgsql/bin/"
-    POSTGRES="${PROGRAM_FILES}PostgreSQL/pg10/bin/"
-    DOTNET="${PROGRAM_FILES}dotnet/"
-    VSBIN="${CYGDRIVE}Windows/Microsoft.NET/Framework/v2.0.50727/"
-    VSIDE="${CYGDRIVE}Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
-    CODE="${APP_DATA}Local/Programs/Microsoft Vs Code/bin/"
+    POSTGRES="$PROGRAMFILES/PostgreSQL/pg10/bin/"
+    DOTNET="$PROGRAMFILES/dotnet/"
+    VSBIN="$SYSTEMROOT/Microsoft.NET/Framework/v2.0.50727/"
+    VSIDE="$SYSTEMDRIVE/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
+    CODE="$LOCALAPPDATA/Programs/Microsoft Vs Code/bin/"
 
-    PATH="$PATH:${WINDOWS}:${ATOM}:${NODE}:${NVM}:${SYSTEM}:${POSTGRES}:${VSBIN}:${DOTNET}:${CODE}:${VSIDE}"
-
-    unset CYGDRIVE WINDOWS PROGRAM_FILES USER_HOME APP_DATA ATOM SYSTEM NODE POSTGRES VSBIN VSIDE DOTNET CODE
+    PATH="$PATH:$SYSTEMROOT:$ATOM:$SYSTEM:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$VSIDE:$CODE"
+    unset ATOM SYSTEM NODE NVM POSTGRES DOTNET VSBIN VSIDE CODE
 
 fi
 
 export PATH
 export TMPDIR
-
-# #=========================================
-# # SET TELEPORTATION VARIABLES
-# #=========================================
-#
-# if [ "${WORK_ENV}" ] ; then
-#
-#     MASTER='alr/'
-#     F1='alr-f1/'
-#     F2='alr-f2/'
-#     F3='alr-f3/'
-#     F4='alr-f4/'
-#     F5='alr-f5/'
-#     CLIENT='__client__/'
-#
-#     if [[ "$OSTYPE" == "cygwin" ]]; then
-#         DEV='//dev-lnx/sites/dev.perflogic.com/'
-#         TEST='//dev-lnx/sites/test.perflogic.com/'
-#         STAGE='//dev-lnx/sites/stage.perflogic.com/'
-#         REPO='//dev-lnx/repo_sites/'
-#         RLOG='//dev-lnx/home/ryman.amanda/repo_logs/'
-#         LOCAL_REP='/c/UserData/ryman.amanda/'
-#     elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-#         DEV='/var/www/sites/dev.perflogic.com/'
-#         TEST='/var/www/sites/test.perflogic.com/'
-#         STAGE='/var/www/sites/stage.perflogic.com/'
-#         REPO='/var/www/repo_sites/'
-#         RLOG='/var/www/repo_logs/'
-#     fi
-#
-#     PROC='__app__/proc/'
-#     CAB='__web__/subscriber/plugin/'
-#     LOG='__log__/'
-#     FORMS='__web__/forms/'
-#     LIB='__lib__/dat/'
-#
-# fi

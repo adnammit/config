@@ -1,0 +1,14 @@
+if [[ $OSTYPE == "cygwin" ]] ; then
+
+    alias ls='ls -la --color=always'
+    alias exp='explorer.exe'
+    alias sudo='cygstart --action=runas'
+    alias killnode='taskkill /F /IM node.exe'
+
+    # TELEPORTATION
+    alias ccdr='cd $SYSTEMDRIVE'
+    alias cup='cd $USERPROFILE'
+    alias cnotes='cd $USERPROFILE/notes'
+    alias cconfig='cd $USERPROFILE/config'
+
+fi

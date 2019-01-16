@@ -1,12 +1,6 @@
 
 #GENERAL ALIASES:
 
-if [[ "$OSTYPE" == "darwin17" ]]; then
-    alias ls='ls -laG'
-else
-    alias ls='ls -la --color=always'
-fi
-
 alias grep='grep -n --color=auto'
 alias rm='rm -i'
 alias mv='mv -i'
@@ -28,6 +22,11 @@ alias emnacs='emacs'
 alias enmacs='emacs'
 alias eemacs='emacs'
 alias jorbs='jobs'
+
+# FINDING SHIT
+alias sconfig='grep -r --include "*.config"'
+alias ssln='grep -r --include "*.sln"'
+alias ssql='grep -r --include "*.sql"'
 
 #C++ SHORTCUTS
 alias ccompile='g++ *.cpp -Wall -g'

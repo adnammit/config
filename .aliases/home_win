@@ -1,21 +1,24 @@
 if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
 
     # TRANSPORTATION
-    TARDIGRADE="/cygdrive/c/Users/tardigrade/"
-    DROPBOX="${TARDIGRADE}Dropbox/"
-    CODEFOLIO="${DROPBOX}codefolio/"
-    alias ctar="cd ${TARDIGRADE}"
-    alias cnotes="cd ${TARDIGRADE}notes"
-    alias cconfig="cd ${TARDIGRADE}/config"
-    alias dropcode="cd ${CODEFOLIO}"
-    alias csites="cd ${CODEFOLIO}sites"
-    alias creact="cd ${CODEFOLIO}react"
-    alias ccode="cd ${TARDIGRADE}/codes"
-    unset TARDIGRADE DROPBOX CODEFOLIO
+    CODEFOLIO='$USERPROFILE/Dropbox/codefolio'
+    alias dropcode="cd $CODEFOLIO" #use dbl quotes around var CODEFOLIO to force expansion
+    alias csites="cd $CODEFOLIO/sites"
+    alias creact="cd $CODEFOLIO/react"
+    alias ccode='cd $USERPROFILE/codes'
+    unset CODEFOLIO
 
-    # CYGWIN STUFF:
-    alias sudo="cygstart --action=runas"
-    alias killnode="taskkill /F /IM node.exe"
+    # TARDIGRADE="/cygdrive/c/Users/tardigrade/" #userprofile
+    # DROPBOX="${TARDIGRADE}Dropbox/"
+    # CODEFOLIO="${DROPBOX}codefolio/"
+    # alias ctar="cd ${TARDIGRADE}"
+    # alias cnotes="cd ${TARDIGRADE}notes"
+    # alias cconfig="cd ${TARDIGRADE}/config"
+    # alias dropcode="cd ${CODEFOLIO}"
+    # alias csites="cd ${CODEFOLIO}sites"
+    # alias creact="cd ${CODEFOLIO}react"
+    # alias ccode="cd ${TARDIGRADE}/codes"
+    # unset TARDIGRADE DROPBOX CODEFOLIO
 
     # LINUX BASH STUFF:
     # alias raptget='sudo apt-get clean; sudo apt-get update; sudo apt-get -y dist-upgrade'

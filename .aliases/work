@@ -1,21 +1,13 @@
 
 if [ "${WORK_ENV}" ] ; then
 
-    WINDOWS="/cygdrive/c"
-    PROGRAM_FILES="${WINDOWS}/Program Files"
-    USER_HOME="${WINDOWS}/Users/amanda.ryman"
-    DEV="${WINDOWS}/dev"
-    SCRIPTS="${DEV}/cci-SqlScripts"
+    alias cdev='cd $SYSTEMDRIVE/dev'
+    alias cnic='cd $SYSTEMDRIVE/dev/cci/NIC'
+    alias ctk='cd $SYSTEMDRIVE/dev/cci/Trunk'
+    alias cscripts='cd $SYSTEMDRIVE/dev/cci-SqlScripts'
+    alias appcat='cd $SYSTEMDRIVE/dev/VS2017Tests/ApplicationCatalog'
+    alias vstests='cd $SYSTEMDRIVE/dev/VS2017Tests'
 
-    alias win='cd $WINDOWS'
-    alias hd='cd $USER_HOME'
-    alias cnotes='cd $USER_HOME/notes/'
-    alias dev='cd $DEV'
-    alias nic='cd $DEV/cci/NIC'
-    alias tk='cd $DEV/cci/Trunk'
-    alias cscripts='cd $SCRIPTS'
-    alias vstud='devenv.exe' # no work, stupid permissions
-    alias appcat='cd $DEV/VS2017Tests/ApplicationCatalog'
-    alias vstests='cd $DEV/VS2017Tests'
+    # alias vstud='devenv.exe' # no work, stupid permissions
 
 fi
