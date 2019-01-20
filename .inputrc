@@ -1,3 +1,5 @@
 "\e[1;5C": forward-word
 "\e[1;5D": backward-word
 "\eY": paste-from-clipboard
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward

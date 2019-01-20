@@ -33,9 +33,9 @@ alias ccompile='g++ *.cpp -Wall -g'
 alias cdbg='gdb ./a.out'
 
 # UNIVERSAL NODE STUFF
-alias nlist='npm list --depth=0'
-alias nglist='npm list -g --depth=0'
-alias kaboom='npm cache clean --force'
+alias nls='npm list --depth=0'
+alias ngls='npm list -g --depth=0'
+alias kaboom='rm -rf node_modules; npm cache clean --force'
 
 # BOREDOM STUFF
 alias starwars='telnet towel.blinkenlights.nl'

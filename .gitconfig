@@ -1,13 +1,13 @@
 # Note that this cannot by symlinked -- must be directly copied to $HOME
 [user]
-	email = amandaryman@gmail.com
-	name = aryman
+    email = amandaryman@gmail.com
+    name = aryman
 
 [pull]
-	rebase = true
+    rebase = true
 
 [color]
-	ui = true
+    ui = true
 
 [color "branch"]
     current = yellow reverse bold
@@ -25,28 +25,28 @@
     untracked = yellow
 
 [alias]
-	co = checkout
-	ci = commit
+    co = checkout
+    ci = commit
     st = status
-	br = branch
+    br = branch
     cm = commit -m
-	aa = add -A
+    aa = add -A
     reb = rebase
     rebc = rebase --continue
     rl = reflog
 
-	# ==== LOG STUFF ====
+    # ==== LOG STUFF ====
     lg = !"git lg1" #change to your favorite l#
     lg1 = !"git lg1-specific --all"
     lg2 = !"git lg2-specific --all"
     lg3 = !"git lg3-specific --all"
-	lg4 = !"git lg4-specific --all"
-	lg5 = !"git lg5-specific --all"
-	lg6 = !"git lg6-specific --all"
+    lg4 = !"git lg4-specific --all"
+    lg5 = !"git lg5-specific --all"
+    lg6 = !"git lg6-specific --all"
 
     lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
     lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
     lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
-	lg4-specific = log --graph --abbrev-commit --decorate --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
-	lg5-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-	lg6-specific = log --graph --date=format:'%a %F %T' --pretty=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset)%n %C(bold cyan)%ad%C(reset) %C(bold red)%an%C(reset)  %n  %s:'
+    lg4-specific = log --graph --abbrev-commit --decorate --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
+    lg5-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg6-specific = log --graph --date=format:'%a %F %T' --pretty=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset)%n %C(bold cyan)%ad%C(reset) %C(bold red)%an%C(reset)  %n  %s:'

@@ -68,6 +68,8 @@ if [ -d ~/.funcs ]; then
 fi
 unset FILE
 
-
+# Load nvm
 export NVM_DIR="/home/aryman/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+shopt -s histverify

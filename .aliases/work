@@ -2,6 +2,7 @@
 if [ "${WORK_ENV}" ] ; then
 
     alias cdev='cd $SYSTEMDRIVE/dev'
+    alias cgit='cd $SYSTEMDRIVE/dev/git'
     alias cnic='cd $SYSTEMDRIVE/dev/cci/NIC'
     alias ctk='cd $SYSTEMDRIVE/dev/cci/Trunk'
     alias cscripts='cd $SYSTEMDRIVE/dev/cci-SqlScripts'
