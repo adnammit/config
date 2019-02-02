@@ -166,3 +166,27 @@ function bak()
         done
     fi
 }
+
+# ugh, WHY are you using SVN?!?
+# well since you are, here is a func to call from inside a working copy.
+# pass in the path to the branch you wanna compare against.
+function svn_diff()
+{
+    # Do this more smartly
+    DEST_DIR="$1"
+    if [[ ! $DEST_DIR ]] ; then
+        DEST_DIR="$SYSTEMDRIVE/dev/NIC"
+    fi
+
+    DEST_URL=$(svn info --show-item=url $DEST_DIR)
+    CURR_URL=$(svn info --show-item=url .)
+
+    echo "dest is $DEST_URL"
+    echo "curr is $CURR_URL"
+
+    # if [[ $DEST_URL =~ "not a working copy" ]] || [[ $CURR_URL =~ "not a working copy" ]] ; then
+    #     echo "invalid svn repo(s) -- check your paths!"
+    # else
+    #     svn diff $DEST_URL $CURR_URL -x -w | colordiff
+    # fi
+}

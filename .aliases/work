@@ -8,6 +8,7 @@ if [ "${WORK_ENV}" ] ; then
     alias cscripts='cd $SYSTEMDRIVE/dev/cci-SqlScripts'
     alias appcat='cd $SYSTEMDRIVE/dev/VS2017Tests/ApplicationCatalog'
     alias vstests='cd $SYSTEMDRIVE/dev/VS2017Tests'
+    alias car='cd $SYSTEMDRIVE/dev/cci/57550_INC_eCheckPaymentsAR/src/CCI.WebUI.Internal.Material'
 
     # alias vstud='devenv.exe' # no work, stupid permissions
 

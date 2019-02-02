@@ -1,0 +1,20 @@
+if [[ $OSTYPE == "cygwin" ]] ; then
+
+    function mnt()
+    {
+        local POS_STR
+
+        if [[ $1 ]] ; then
+            X=$1
+        fi
+        if [[ $2 ]] ; then
+            Y=$2
+        fi
+        if [[ $X && $Y ]] ; then
+            POS_STR="-p $X,$Y"
+        fi
+
+        mintty -i /Cygwin-Terminal.ico $POS_STR - &
+    }
+
+fi

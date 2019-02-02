@@ -11,3 +11,5 @@ BackgroundColour=51,51,51
 ForegroundColour=214,214,214
 BellType=0
 BellFlash=yes
+Columns=157
+Rows=38

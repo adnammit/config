@@ -1,5 +1,3 @@
-
-
 if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
 
     alias oa='open_atoms'
