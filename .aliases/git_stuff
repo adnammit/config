@@ -8,3 +8,4 @@ alias giffm='git diff -B -w master'
 alias gish='git show -B -w'
 alias testwc='git whatchanged test..master --name-only -p --author="Amanda Ryman"'
 alias gitstats='git diff -B -w --shortstat'
+alias ggrepall='git rev-list --all | xargs git grep' # search history for an expression

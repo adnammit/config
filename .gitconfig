@@ -25,6 +25,7 @@
     untracked = yellow
 
 [alias]
+    editor = atom --wait
     co = checkout
     ci = commit
     st = status
@@ -34,8 +35,17 @@
     reb = rebase
     rebc = rebase --continue
     rl = reflog
+    sh = show
+    s = stash
+    sl = stash list
+    slp = stash list -p
+    sp = stash pop
+    sa = stash apply
+    res = reset
+    resh = reset --hard
 
     # ==== LOG STUFF ====
+    lno = log --name-only --oneline # show names of files that changed
     lg = !"git lg1" #change to your favorite l#
     lg1 = !"git lg1-specific --all"
     lg2 = !"git lg2-specific --all"

@@ -73,3 +73,5 @@ export NVM_DIR="/home/aryman/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 shopt -s histverify
+
+export GIT_EDITOR=atom
