@@ -25,7 +25,7 @@
     untracked = yellow
 
 [alias]
-    editor = atom --wait
+    # editor = atom --wait
     co = checkout
     ci = commit
     st = status

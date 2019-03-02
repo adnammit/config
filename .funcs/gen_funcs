@@ -18,6 +18,14 @@ function giff()
                 PARAMS="$PARAMS master..HEAD"
                 shift
                 ;;
+            -dh | dh)
+                PARAMS="$PARAMS dev..HEAD"
+                shift
+                ;;
+            -hh | hh)
+                PARAMS="$PARAMS HEAD~..HEAD"
+                shift
+                ;;
             *)
                 PARAMS="$PARAMS $1"
                 shift

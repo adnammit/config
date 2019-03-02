@@ -4,7 +4,7 @@ if [[ $OSTYPE == "cygwin" ]] ; then
     alias exp='explorer.exe'
     alias sudo='cygstart --action=runas'
     alias killnode='taskkill /F /IM node.exe'
-    alias opsln='exp *.sln' #when you're in a project dir, open the solution in VS
+    alias sopen='explorer.exe *.sln' #when you're in a project dir, open the (only, hopefully) solution in VS
 
     # TELEPORTATION
     alias ccdr='cd $SYSTEMDRIVE'

@@ -60,8 +60,11 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     POSTGRES="$PROGRAMFILES/PostgreSQL/pg10/bin/"
     DOTNET="$PROGRAMFILES/dotnet/"
     VSBIN="$SYSTEMROOT/Microsoft.NET/Framework/v2.0.50727/"
-    VSIDE="$SYSTEMDRIVE/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
-    CODE="$LOCALAPPDATA/Programs/Microsoft Vs Code/bin/"
+     #wtf why do neither of these work? suspect it has something to do with spaces in the pathname
+    # VSIDE="$SYSTEMDRIVE/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
+    # CODE="$LOCALAPPDATA/Programs/Microsoft Vs Code/bin/"
+    # VSIDE="/cygdrive/c/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
+    CODE="/cygdrive/c/Users/amanda.ryman/AppData/Local/Programs/Microsoft Vs Code/bin"
 
     PATH="$PATH:$SYSTEMROOT:$ATOM:$SYSTEM:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$VSIDE:$CODE"
     unset ATOM SYSTEM NODE NVM POSTGRES DOTNET VSBIN VSIDE CODE
