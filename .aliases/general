@@ -27,6 +27,14 @@ alias jorbs='jobs'
 alias sconfig='grep -r --include "*.config"'
 alias ssln='grep -r --include "*.sln"'
 alias ssql='grep -r --include "*.sql"'
+alias ffile='find -not -path "*/node_modules/*" -not -path "*/.git/*" -iname'
+alias gr='grep -r -n --color=auto --exclude-dir=.git --exclude-dir=node_modules'
+# -- consider using 'gr' instead
+alias search='find -type f -not -path "*/node_modules/*" -not -path "*/.git/*" | xargs grep --color'
+
+# COPY
+# -- recursive copy all the right things
+alias masscp='rsync -av --exclude .git --exclude node_modules'
 
 #C++ SHORTCUTS
 alias ccompile='g++ *.cpp -Wall -g'

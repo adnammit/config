@@ -26,6 +26,7 @@
 
 [alias]
     # editor = atom --wait
+    editor = vim
     co = checkout
     ci = commit
     st = status
@@ -43,6 +44,7 @@
     sa = stash apply
     res = reset
     resh = reset --hard
+    cp = cherry-pick
 
     # ==== LOG STUFF ====
     lno = log --name-only --oneline # show names of files that changed

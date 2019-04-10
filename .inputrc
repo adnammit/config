@@ -3,3 +3,4 @@
 "\eY": paste-from-clipboard
 "\e[5~": history-search-backward
 "\e[6~": history-search-forward
+set completion-ignore-case On

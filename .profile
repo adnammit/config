@@ -54,7 +54,8 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
 
     ATOM="$LOCALAPPDATA/atom/bin/"
     SYSTEM="$SYSTEMROOT/System32/"
-    NODE="$PROGRAMFILES/nodejs/:$PROGRAMFILES/nodejs/node_modules:$APPDATA/npm/"
+    NODE="/cygdrive/c/Program Files/nodejs/:/cygdrive/c/Program Files/nodejs/node_modules/:$APPDATA/npm/"
+    # NODE="$PROGRAMFILES/nodejs/:$PROGRAMFILES/nodejs/node_modules:$APPDATA/npm/"
     NVM="$APPDATA/nvm/"
     # POSTGRES="/usr/local/pgsql/bin/"
     POSTGRES="$PROGRAMFILES/PostgreSQL/pg10/bin/"

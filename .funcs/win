@@ -17,4 +17,16 @@ if [[ $OSTYPE == "cygwin" ]] ; then
         mintty -i /Cygwin-Terminal.ico $POS_STR - &
     }
 
+    # when you're in a project dir, open the solution in VS
+    function sopen()
+    {
+        if [[ $PWD =~ "employeeReports" ]] ; then
+            SLN="CCI.Employee.Reports.sln"
+        else
+            SLN="*.sln"
+        fi
+
+        explorer.exe $SLN
+    }
+
 fi

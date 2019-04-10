@@ -1,8 +1,5 @@
 # GIT STUFF THAT DOESN'T WORK IN .GITCONFIG
 
-# GREP IGNORE GIT STUFF
-alias gr='grep -r -n --color=auto --exclude-dir=.git'
-
 alias grit='git grep -I --untracked --no-exclude-standard '
 alias giffm='git diff -B -w master'
 alias gish='git show -B -w'
