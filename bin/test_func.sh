@@ -16,3 +16,18 @@ function make_greeting()
 }
 
 make_greeting $1
+
+# can you assign values to variables in an execution chain? (yep)
+BAR=""
+echo "foo" && BAR=$(echo "bar") && echo "BAR is $BAR"
+
+
+RAR=
+
+if [[ $RAR ]] ; then 
+    echo "is RAR"
+else
+    echo "NOT RAR"
+fi
+
+explorer.exe *.sln

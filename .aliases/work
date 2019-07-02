@@ -6,7 +6,9 @@ if [ "${WORK_ENV}" ] ; then
     alias cem='cd $SYSTEMDRIVE/dev/git/employeeManagement'
     alias cer='cd $SYSTEMDRIVE/dev/git/employeeReports'
     alias ccs='cd $SYSTEMDRIVE/dev/git/chatScoring/CCI.Employee.CustomerServiceScoring'
-    alias cra='cd $SYSTEMDRIVE/dev/git/reports-app'
+    alias cir='cd $SYSTEMDRIVE/dev/git/impact-reports'
+    alias cra='cd $SYSTEMDRIVE/dev/git/impact-reports/reports-app'
+    alias crs='cd $SYSTEMDRIVE/dev/git/impact-reports/reports-service'
     alias cscr='cd $SYSTEMDRIVE/dev/git/sqlScripts'
 
     # alias vstud='devenv.exe' # no work, stupid permissions

@@ -4,6 +4,7 @@ if [[ $OSTYPE == "cygwin" ]] ; then
     alias exp='explorer.exe'
     alias sudo='cygstart --action=runas'
     alias killnode='taskkill /F /IM node.exe'
+    alias oc='code $USERPROFILE/config/config_notes.code-workspace'
 
     # TELEPORTATION
     alias ccdr='cd $SYSTEMDRIVE'

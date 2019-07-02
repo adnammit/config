@@ -38,6 +38,7 @@
     rl = reflog
     sh = show
     s = stash
+    su = stash -u
     sl = stash list
     slp = stash list -p
     sp = stash pop

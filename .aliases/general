@@ -45,6 +45,11 @@ alias nls='npm list --depth=0'
 alias ngls='npm list -g --depth=0'
 alias kaboom='rm -rf node_modules; npm cache clean --force'
 
+# DOCKER
+alias dcu='docker-compose up'
+alias dcub='docker-compose up --build'
+alias dcdv='docker-compose down -v'
+
 # BOREDOM STUFF
 alias starwars='telnet towel.blinkenlights.nl'
 alias horseeBooks='curl -s horseebooksipsum.com/api/v1/ | say'
