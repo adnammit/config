@@ -35,7 +35,7 @@ unset $TEMP_VARS
 TMPDIR="/tmp/"
 
 # SPECIFIC ENVS:
-if [[ "$OSTYPE" == "darwin17" ]]; then
+if [[ "$OSTYPE" =~ "darwin" ]]; then
     export HOMEBREW_GITHUB_API_TOKEN="10033859e446c1f9ebcc3d74e4334b78eda7ca88"
     export ANDROID_HOME=/user/local/opt/android-sdk
     export CLICOLOR=1
@@ -62,15 +62,21 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     DOTNET="$PROGRAMFILES/dotnet/"
     SQLSERVE="/cygdrive/c/Program Files (x86)/Microsoft SQL Server/140/DAC/bin/"
     VSBIN="$SYSTEMROOT/Microsoft.NET/Framework/v2.0.50727/"
+    MSBUILD="$SYSTEMROOT/Microsoft.NET/Framework/v4.0.30319/"
     DOCKER="$PROGRAMFILES/Docker/Docker/resources/bin/"
      #wtf why do neither of these work? suspect it has something to do with spaces in the pathname
     # VSIDE="$SYSTEMDRIVE/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
     # CODE="$LOCALAPPDATA/Programs/Microsoft Vs Code/bin/"
     # VSIDE="/cygdrive/c/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
-    CODE="/cygdrive/c/Users/amanda.ryman/AppData/Local/Programs/Microsoft Vs Code/bin"
 
-    PATH="$PATH:$SYSTEMROOT:$ATOM:$SYSTEM:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$SQLSERVE:$VSIDE:$CODE:$DOCKER"
-    unset ATOM SYSTEM NODE NVM POSTGRES DOTNET VSBIN SQLSERVE VSIDE CODE DOCKER
+    if [ "${WORK_ENV}" ] ; then
+        CODE="/cygdrive/c/Users/amanda.ryman/AppData/Local/Programs/Microsoft Vs Code/bin"
+    else
+        CODE="/cygdrive/c/Users/tardigrade/AppData/Local/Programs/Microsoft Vs Code/bin"
+    fi
+
+    PATH="$PATH:$SYSTEMROOT:$ATOM:$SYSTEM:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:${CODE}:$DOCKER"
+    unset ATOM SYSTEM NODE NVM POSTGRES DOTNET VSBIN MSBUILD SQLSERVE VSIDE CODE DOCKER
 
 fi
 

@@ -1,8 +1,9 @@
-if [[ $OSTYPE == "darwin17" ]] ; then
+if [[ $OSTYPE =~ "darwin" ]] ; then
 
     alias ls='ls -laG'
-    alias cnotes='cd ~/notes'
+
     alias ccode='cd ~/code'
-    alias nerdz='cd ~/Dropbox/nerdz/'
+    alias cnotes='cd ~/notes'
+    alias cconfig='cd ~/config'
 
 fi

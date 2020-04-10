@@ -22,12 +22,10 @@ BAR=""
 echo "foo" && BAR=$(echo "bar") && echo "BAR is $BAR"
 
 
-RAR=
+RAR=0
 
-if [[ $RAR ]] ; then 
+if [[ $RAR == 1 ]] ; then 
     echo "is RAR"
 else
     echo "NOT RAR"
 fi
-
-explorer.exe *.sln

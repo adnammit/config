@@ -29,8 +29,6 @@ alias ssln='grep -r --include "*.sln"'
 alias ssql='grep -r --include "*.sql"'
 alias ffile='find -not -path "*/node_modules/*" -not -path "*/.git/*" -iname'
 alias gr='grep -r -n --color=auto --exclude-dir=.git --exclude-dir=node_modules'
-# -- consider using 'gr' instead
-alias search='find -type f -not -path "*/node_modules/*" -not -path "*/.git/*" | xargs grep --color'
 
 # COPY
 # -- recursive copy all the right things
@@ -43,12 +41,20 @@ alias cdbg='gdb ./a.out'
 # UNIVERSAL NODE STUFF
 alias nls='npm list --depth=0'
 alias ngls='npm list -g --depth=0'
+alias nsd='npm install --save-dev'
+alias nrs='taskkill /F /IM node.exe'
+# alias nrs='npm run stop'
+alias nrd='npm run dev'
 alias kaboom='rm -rf node_modules; npm cache clean --force'
+alias nrl='npm run lint'
+alias nrlf='npm run lint --fix'
 
 # DOCKER
-alias dcu='docker-compose up'
-alias dcub='docker-compose up --build'
-alias dcdv='docker-compose down -v'
+alias dc='docker-compose'
+# alias dcu='docker-compose up --detach'
+# alias dcub='docker-compose up --detach --build'
+# alias dcd='docker-compose down'
+# alias dcdv='docker-compose down -v'
 
 # BOREDOM STUFF
 alias starwars='telnet towel.blinkenlights.nl'

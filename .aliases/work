@@ -2,15 +2,21 @@
 if [ "${WORK_ENV}" ] ; then
 
     alias cdev='cd $SYSTEMDRIVE/dev'
-    alias cgit='cd $SYSTEMDRIVE/dev/git'
-    alias cem='cd $SYSTEMDRIVE/dev/git/employeeManagement'
-    alias cer='cd $SYSTEMDRIVE/dev/git/employeeReports'
-    alias ccs='cd $SYSTEMDRIVE/dev/git/chatScoring/CCI.Employee.CustomerServiceScoring'
-    alias cir='cd $SYSTEMDRIVE/dev/git/impact-reports'
-    alias cra='cd $SYSTEMDRIVE/dev/git/impact-reports/reports-app'
-    alias crs='cd $SYSTEMDRIVE/dev/git/impact-reports/reports-service'
-    alias cscr='cd $SYSTEMDRIVE/dev/git/sqlScripts'
-
-    # alias vstud='devenv.exe' # no work, stupid permissions
+    alias cem='cd $SYSTEMDRIVE/dev/attendanceTracker'
+    alias cema='cd $SYSTEMDRIVE/dev/attendanceTrackerApi/api'
+    alias caa='cd $SYSTEMDRIVE/dev/authorization-app'
+    alias cas='cd $SYSTEMDRIVE/dev/authorization-service'
+    alias cds='cd $SYSTEMDRIVE/dev/repair-service'
+    alias cda='cd $SYSTEMDRIVE/dev/repair-app'
+    alias cir='cd $SYSTEMDRIVE/dev/impactReports'
+    alias cra='cd $SYSTEMDRIVE/dev/impactReports/reports-app'
+    alias crs='cd $SYSTEMDRIVE/dev/impactReports/reports-service'
+    alias cri='cd $SYSTEMDRIVE/dev/impactReports/integration'
+    alias crd='cd $SYSTEMDRIVE/dev/impactReports/database'
+    alias cscr='cd $SYSTEMDRIVE/dev/sqlScripts'
+    
+    # obsolete
+    alias cer='cd $SYSTEMDRIVE/dev/employeeReports'
+    alias ccs='cd $SYSTEMDRIVE/dev/chatScoring/CCI.Employee.CustomerServiceScoring'
 
 fi

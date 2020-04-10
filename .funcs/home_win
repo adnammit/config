@@ -1,19 +1,42 @@
 if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
 
-    alias oa='open_atoms'
-    function open_atoms()
+    # alias oa='open_atoms'
+    function open_editors()
     {
         local a=$PWD
 
-        TARDIGRADE="/cygdrive/c/Users/tardigrade/"
-        cd ${TARDIGRADE}
-
-        atom ./config ./.atom ./notes
+        cd $USERPROFILE
+        code ./config ./notes ./AppData/Roaming/Code/User
 
         # temporary -- replace w/ whatever project you're working on
-        atom ./codes/loginapp
+        code ./codes/movie-picker
 
         cd ${a}
+    }
+
+    function mnt()
+    {
+        local POS_STR
+
+        if [[ $1 ]] ; then
+            X=$1
+        fi
+        if [[ $2 ]] ; then
+            Y=$2
+        fi
+        if [[ $X && $Y ]] ; then
+            POS_STR="-p $X,$Y"
+        fi
+
+        mintty -i /Cygwin-Terminal.ico $POS_STR - &
+    }
+
+    function hello()
+    {
+        # Open our helper local window right below the first one:
+        # mnt $COL1_X $ROW2_Y
+        mnt -967 522
+        open_editors
     }
 
 fi

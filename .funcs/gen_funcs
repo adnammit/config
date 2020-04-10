@@ -6,58 +6,16 @@
 #  than in the .aliases dir
 #=========================================
 
-
-function giff()
+function copen()
 {
-    local PARAMS=""
+    local FILE=( "*.code-workspace" )
 
-    while [[ $# != 0 ]]
-    do
-        case "$1" in
-            -mh | mh)
-                PARAMS="$PARAMS master..HEAD"
-                shift
-                ;;
-            -dh | dh)
-                PARAMS="$PARAMS dev..HEAD"
-                shift
-                ;;
-            -hh | hh)
-                PARAMS="$PARAMS HEAD~..HEAD"
-                shift
-                ;;
-            *)
-                PARAMS="$PARAMS $1"
-                shift
-                ;;
-        esac
-    done
-
-    git diff -B -w ${PARAMS}
+    if [ -e ${FILE[0]} ] ; then
+        code ${FILE[0]}
+    else
+        code .
+    fi
 }
-
-
-function giffns()
-{
-    local PARAMS=""
-
-    while [[ $# != 0 ]]
-    do
-        case "$1" in
-            -mh | mh)
-                PARAMS="$PARAMS master..HEAD"
-                shift
-                ;;
-            *)
-                PARAMS="$PARAMS $1"
-                shift
-                ;;
-        esac
-    done
-
-    git diff -B -w --name-status ${PARAMS}
-}
-
 
 alias diws='diff_ws_comments'
 function diff_ws_comments()

@@ -17,16 +17,30 @@ if [[ $OSTYPE == "cygwin" ]] ; then
         mintty -i /Cygwin-Terminal.ico $POS_STR - &
     }
 
-    # when you're in a project dir, open the solution in VS
-    function sopen()
-    {
-        if [[ $PWD =~ "employeeReports" ]] ; then
-            SLN="CCI.Employee.Reports.sln"
-        else
-            SLN="*.sln"
-        fi
+    # # when you're in a project dir, open the solution in VS
+    # function sopen()
+    # {
+    #     if [[ $PWD =~ "attendanceTracker" ]] ; then
+    #         explorer.exe CCI.Employee.Management.sln
+    #         code CCI.Employee.Management.Api
+    #     else
+    #         if [[ $PWD =~ "employeeReports" ]] ; then
+    #             SLN="CCI.Employee.Reports.sln"
+    #         else
+    #             SLN="*.sln"
+    #         fi
+    #         explorer.exe $SLN
+    #     fi
+    # }
 
-        explorer.exe $SLN
+    function whos_on()
+    {
+        # to-do: match to commonly used ports or display all
+        local PORT=$1
+        if [[ ! $PORT ]] ; then 
+            PORT="8083"
+        fi
+        netstat -ano | findstr :"$PORT"
     }
 
 fi

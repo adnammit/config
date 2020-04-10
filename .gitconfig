@@ -3,6 +3,9 @@
     email = amandaryman@gmail.com
     name = aryman
 
+[core]
+	editor = code --wait
+
 [pull]
     rebase = true
 
@@ -23,10 +26,7 @@
     added = cyan
     changed = magenta
     untracked = yellow
-
 [alias]
-    # editor = atom --wait
-    editor = vim
     co = checkout
     ci = commit
     st = status

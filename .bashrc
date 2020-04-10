@@ -41,7 +41,7 @@ NC='\[\e[0m\]' #no color / reset to normal
 
 C1=$LCYAN
 C2=$LYELLOW
-C3=$LRED
+C3=$MAGENTA
 export PS1="${C1}>>-${C2}[${C3}\w${C2}]${C1}-->${NC} "
 
 BG1="#6d4856"
@@ -73,5 +73,3 @@ export NVM_DIR="/home/aryman/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 shopt -s histverify
-
-export GIT_EDITOR=atom

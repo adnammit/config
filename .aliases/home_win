@@ -8,21 +8,6 @@ if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
     alias ccode='cd $USERPROFILE/codes'
     unset CODEFOLIO
 
-    # TARDIGRADE="/cygdrive/c/Users/tardigrade/" #userprofile
-    # DROPBOX="${TARDIGRADE}Dropbox/"
-    # CODEFOLIO="${DROPBOX}codefolio/"
-    # alias ctar="cd ${TARDIGRADE}"
-    # alias cnotes="cd ${TARDIGRADE}notes"
-    # alias cconfig="cd ${TARDIGRADE}/config"
-    # alias dropcode="cd ${CODEFOLIO}"
-    # alias csites="cd ${CODEFOLIO}sites"
-    # alias creact="cd ${CODEFOLIO}react"
-    # alias ccode="cd ${TARDIGRADE}/codes"
-    # unset TARDIGRADE DROPBOX CODEFOLIO
-
-    # LINUX BASH STUFF:
-    # alias raptget='sudo apt-get clean; sudo apt-get update; sudo apt-get -y dist-upgrade'
-
     alias sphp='php -S localhost:8000'
 
     # WEBSITE STUFF:

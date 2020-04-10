@@ -5,11 +5,13 @@ if [[ $OSTYPE == "cygwin" ]] ; then
     alias sudo='cygstart --action=runas'
     alias killnode='taskkill /F /IM node.exe'
     alias oc='code $USERPROFILE/config/config_notes.code-workspace'
+    alias sopen="explorer.exe *.sln"
 
     # TELEPORTATION
     alias ccdr='cd $SYSTEMDRIVE'
     alias cup='cd $USERPROFILE'
     alias cnotes='cd $USERPROFILE/notes'
     alias cconfig='cd $USERPROFILE/config'
+    alias cpf='cd "$PROGRAMFILES"'
 
 fi
