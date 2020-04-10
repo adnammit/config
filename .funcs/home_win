@@ -1,6 +1,5 @@
 if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
 
-    # alias oa='open_atoms'
     function open_editors()
     {
         local a=$PWD
@@ -9,7 +8,7 @@ if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
         code ./config ./notes ./AppData/Roaming/Code/User
 
         # temporary -- replace w/ whatever project you're working on
-        code ./codes/movie-picker
+        code ./codes/movie
 
         cd ${a}
     }

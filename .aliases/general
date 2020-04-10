@@ -46,8 +46,8 @@ alias nrs='taskkill /F /IM node.exe'
 # alias nrs='npm run stop'
 alias nrd='npm run dev'
 alias kaboom='rm -rf node_modules; npm cache clean --force'
-alias nrl='npm run lint'
-alias nrlf='npm run lint --fix'
+alias nlint='npm run lint'
+alias nfix='npm run lint --fix'
 
 # DOCKER
 alias dc='docker-compose'
