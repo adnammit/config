@@ -54,6 +54,7 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
 
     ATOM="$LOCALAPPDATA/atom/bin/"
     SYSTEM="$SYSTEMROOT/System32/"
+    GIT="$PROGRAMFILES/Git/bin/"
     NODE="/cygdrive/c/Program Files/nodejs/:/cygdrive/c/Program Files/nodejs/node_modules/:$APPDATA/npm/"
     # NODE="$PROGRAMFILES/nodejs/:$PROGRAMFILES/nodejs/node_modules:$APPDATA/npm/"
     NVM="$APPDATA/nvm/"
@@ -75,8 +76,8 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
         CODE="/cygdrive/c/Users/tardigrade/AppData/Local/Programs/Microsoft Vs Code/bin"
     fi
 
-    PATH="$PATH:$SYSTEMROOT:$ATOM:$SYSTEM:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:${CODE}:$DOCKER"
-    unset ATOM SYSTEM NODE NVM POSTGRES DOTNET VSBIN MSBUILD SQLSERVE VSIDE CODE DOCKER
+    PATH="$PATH:$SYSTEMROOT:$ATOM:$SYSTEM:$GIT:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:${CODE}:$DOCKER"
+    unset ATOM SYSTEM GIT NODE NVM POSTGRES DOTNET VSBIN MSBUILD SQLSERVE VSIDE CODE DOCKER
 
 fi
 
