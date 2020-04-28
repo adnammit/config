@@ -1,0 +1,44 @@
+if [[ $OSTYPE == "cygwin" && $WORK_ENV ]] ; then
+
+    function hello()
+    {
+        # Open our helper local window right below the first one:
+        # mnt $COL1_X $ROW2_Y
+        mnt -967 522
+        open_editors
+        dcub
+    }
+
+    function dcu()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/dev/impactReports/integration'
+        docker-compose up --detach
+        cd ${a}
+    }
+
+    function dcub()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/dev/impactReports/integration'
+        docker-compose up --detach --build
+        cd ${a}
+    }
+
+    function dcd()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/dev/impactReports/integration'
+        docker-compose down
+        cd ${a}
+    }
+
+    function dcdv()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/dev/impactReports/integration'
+        docker-compose down -v
+        cd ${a}
+    }
+
+fi

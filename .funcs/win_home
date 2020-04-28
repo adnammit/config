@@ -1,0 +1,11 @@
+if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
+
+    function hello()
+    {
+        # Open our helper local window right below the first one:
+        # mnt $COL1_X $ROW2_Y
+        mnt -967 522
+        open_editors
+    }
+
+fi

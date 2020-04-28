@@ -8,6 +8,7 @@ if [ "${WORK_ENV}" ] ; then
     alias cas='cd $SYSTEMDRIVE/dev/authorization-service'
     alias cds='cd $SYSTEMDRIVE/dev/repair-service'
     alias cda='cd $SYSTEMDRIVE/dev/repair-app'
+    alias cgs='cd $SYSTEMDRIVE/dev/goal-service'
     alias cir='cd $SYSTEMDRIVE/dev/impactReports'
     alias cra='cd $SYSTEMDRIVE/dev/impactReports/reports-app'
     alias crs='cd $SYSTEMDRIVE/dev/impactReports/reports-service'

@@ -5,6 +5,8 @@
 
 [core]
 	editor = code --wait
+	pager = C:/cygwin/bin/less.exe
+    autocrlf = input
 
 [pull]
     rebase = true
@@ -26,6 +28,7 @@
     added = cyan
     changed = magenta
     untracked = yellow
+
 [alias]
     co = checkout
     ci = commit

@@ -9,10 +9,8 @@ function display_help
     echo "The ultimate Refresh All The Things script."
     echo
     echo "Performs all the following:"
-    echo "* Pulls dev and rebases all Employee Management-related things including Auth, Integration and ETL Engine"
-    echo "* Restarts docker-compose with a fresh volume (YOU WILL LOSE LOCALHOST DATA)"
+    echo "* For all Employee Management-projects, pull and rebase current branch on dev"
     echo "* Restarts docker"
-    echo "* Publishes database"
     echo
     echo "OPTIONS:"
     echo "      -h : print usage"
@@ -26,10 +24,10 @@ while [[ $# != 0 ]] ; do
             HELP_FLAG=1
             shift
             ;;
-        -k | --skip-teardown)
-            SKIP_DOCKER_REFRESH=1
-            shift
-            ;;
+        # -k | --skip-teardown)
+        #     SKIP_DOCKER_REFRESH=1
+        #     shift
+        #     ;;
         -*)
             echo "Error: Unknown option: $1"
             HELP_FLAG=1
@@ -70,6 +68,8 @@ else
     REPAIR_STASH=
     REPAIR_SERVICE_UPDATED=
     REPAIR_SERVICE_STASH=
+    GOAL_UPDATED=
+    GOAL_STASH=
     TRACKING_SERVICE_UPDATED=
     TRACKING_SERVICE_STASH=
     AT_APP_UPDATED=
@@ -207,6 +207,14 @@ else
     UPDATED=
     STASHED=
 
+    #--------------------------------------------------------------------------------------
+    # GOAL SERVICE
+    #--------------------------------------------------------------------------------------
+    update_branch "goal-service"
+    GOAL_UPDATED=$UPDATED
+    GOAL_STASH=$STASHED
+    UPDATED=
+    STASHED=
 
     #--------------------------------------------------------------------------------------
     # TRACKING SERVICE
@@ -278,6 +286,10 @@ else
         echo "!!! Stash could not be applied to repair-service"
         SUCCESS=0
     fi
+    if [[ $GOAL_STASH ]] ; then 
+        echo "!!! Stash could not be applied to goal-service"
+        SUCCESS=0
+    fi
     if [[ $TRACKING_SERVICE_STASH ]] ; then 
         echo "!!! Stash could not be applied to tracking-service"
         SUCCESS=0
@@ -325,6 +337,10 @@ else
     fi
     if [[ ! $REPAIR_SERVICE_UPDATED ]] ; then 
         echo "!!! Error updating repair-service"
+        SUCCESS=0
+    fi
+    if [[ ! $GOAL_UPDATED ]] ; then 
+        echo "!!! Error updating goal-service"
         SUCCESS=0
     fi
     if [[ ! $TRACKING_SERVICE_UPDATED ]] ; then 
