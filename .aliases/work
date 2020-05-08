@@ -6,16 +6,16 @@ if [ "${WORK_ENV}" ] ; then
     alias cema='cd $SYSTEMDRIVE/dev/attendanceTrackerApi/api'
     alias caa='cd $SYSTEMDRIVE/dev/authorization-app'
     alias cas='cd $SYSTEMDRIVE/dev/authorization-service'
-    alias cds='cd $SYSTEMDRIVE/dev/repair-service'
-    alias cda='cd $SYSTEMDRIVE/dev/repair-app'
-    alias cgs='cd $SYSTEMDRIVE/dev/goal-service'
     alias cir='cd $SYSTEMDRIVE/dev/impactReports'
+    alias cds='cd $SYSTEMDRIVE/dev/impactReports/repair-service'
+    alias cda='cd $SYSTEMDRIVE/dev/impactReports/repair-app'
     alias cra='cd $SYSTEMDRIVE/dev/impactReports/reports-app'
     alias crs='cd $SYSTEMDRIVE/dev/impactReports/reports-service'
     alias cri='cd $SYSTEMDRIVE/dev/impactReports/integration'
     alias crd='cd $SYSTEMDRIVE/dev/impactReports/database'
+    alias cgs='cd $SYSTEMDRIVE/dev/impactReports/goal-service'
     alias cscr='cd $SYSTEMDRIVE/dev/sqlScripts'
-    
+
     # obsolete
     alias cer='cd $SYSTEMDRIVE/dev/employeeReports'
     alias ccs='cd $SYSTEMDRIVE/dev/chatScoring/CCI.Employee.CustomerServiceScoring'

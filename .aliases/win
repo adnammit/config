@@ -3,10 +3,9 @@ if [[ $OSTYPE == "cygwin" ]] ; then
     alias ls='ls -la --color=always'
     alias exp='explorer.exe'
     alias sudo='cygstart --action=runas'
-    alias killnode='taskkill /F /IM node.exe'
     alias oc='code $USERPROFILE/config/config_notes.code-workspace'
     alias sopen="explorer.exe *.sln"
-    alias unixall='find . -type f -print0 | xargs -0 dos2unix'
+    alias unixall='find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" -print0 | xargs -0 dos2unix'
 
     # TELEPORTATION
     alias ccdr='cd $SYSTEMDRIVE'

@@ -210,7 +210,7 @@ else
     #--------------------------------------------------------------------------------------
     # GOAL SERVICE
     #--------------------------------------------------------------------------------------
-    update_branch "goal-service"
+    update_branch "impactReports/goal-service"
     GOAL_UPDATED=$UPDATED
     GOAL_STASH=$STASHED
     UPDATED=
