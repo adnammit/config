@@ -2,6 +2,8 @@
 if [ "${WORK_ENV}" ] ; then
 
     alias cdev='cd $SYSTEMDRIVE/dev'
+
+    #EM
     alias cem='cd $SYSTEMDRIVE/dev/attendanceTracker'
     alias cema='cd $SYSTEMDRIVE/dev/attendanceTrackerApi/api'
     alias caa='cd $SYSTEMDRIVE/dev/authorization-app'
@@ -16,8 +18,19 @@ if [ "${WORK_ENV}" ] ; then
     alias cgs='cd $SYSTEMDRIVE/dev/impactReports/goal-service'
     alias cscr='cd $SYSTEMDRIVE/dev/sqlScripts'
 
-    # obsolete
-    alias cer='cd $SYSTEMDRIVE/dev/employeeReports'
-    alias ccs='cd $SYSTEMDRIVE/dev/chatScoring/CCI.Employee.CustomerServiceScoring'
+    # BILLING
+    alias cmon='cd $SYSTEMDRIVE/dev/CCI.Monster/src/'
+    alias cadmin='cd $SYSTEMDRIVE/dev/CCI.Monster/src/WebUI/Internal/Inventory/Admin'
+    alias crp='cd $SYSTEMDRIVE/dev/CCI.Monster/src/Billing/CCI.Billing.RatePlanService/'
+    alias corq='cd $SYSTEMDRIVE/dev/CCI.Monster/src/CCI.Services/ConsumerCellularOrderReviewService/'
+    alias ccommapi='cd $SYSTEMDRIVE/dev/CCI.Monster/src/PublicV3/CCI.Public_v3'
+    alias cbdapi='cd $SYSTEMDRIVE/dev/CCI.Monster/src/CCI.Billing.Api/'
+
+    alias cbr='cd $SYSTEMDRIVE/dev/CCI.Billing.BillRun/src/'
+    alias cbrapi='cd $SYSTEMDRIVE/dev/CCI.Billing.BillRun/src/CCI.Billing.BillRun.Api/'
+    alias crpp='cd $SYSTEMDRIVE/dev/CCI.Billing.RatePlan'
+    alias cis='cd $SYSTEMDRIVE/dev/internalShopping/src'
+    alias call='cd $SYSTEMDRIVE/dev/allstate'
+
 
 fi

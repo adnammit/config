@@ -14,18 +14,23 @@ STASH_RES=""
 SKIP_APPLY=
 REB_RES=""
 APPLY_RES=""
+DEV_BR="dev"
 
-echo "---> UPDATING DEV"
+if [[ $PWD =~ "CCI.Monster/src" ]] ; then
+    DEV_BR="bcnf_dev"
+fi
+
+echo "---> Updating $DEV_BR"
 
 STASH_RES=$(git stash -u)
-git checkout dev && git pull && git co -
+git checkout $dev && git pull && git co -
 
 if [[ $STASH_RES =~ "No local changes to save" ]] ; then
     SKIP_APPLY=1
 fi
 
 # Regardless of whether there were changes or not we can be lazy and just rebase on our clean tree
-REB_RES=$(git rebase dev)
+REB_RES=$(git rebase $dev)
 echo "===== REBASE RES IS"
 echo "$REB_RES"
 
@@ -51,6 +56,6 @@ fi
 
 # if [[ $OPEN_PROJECT == 1 ]] ; then
 #     code .
-# elif [[ $OPEN_PROJECT == 2 ]] ; then 
+# elif [[ $OPEN_PROJECT == 2 ]] ; then
 #     explorer.exe *.sln
 # fi

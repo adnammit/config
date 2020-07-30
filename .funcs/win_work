@@ -6,7 +6,7 @@ if [[ $OSTYPE == "cygwin" && $WORK_ENV ]] ; then
         # mnt $COL1_X $ROW2_Y
         mnt -967 522
         open_editors
-        dcub
+        # dcub
     }
 
     function dcu()
@@ -29,7 +29,7 @@ if [[ $OSTYPE == "cygwin" && $WORK_ENV ]] ; then
     {
         local a=$PWD
         cd '/cygdrive/c/dev/impactReports/integration'
-        docker-compose down
+        docker-compose down --remove-orphans
         cd ${a}
     }
 
@@ -37,8 +37,54 @@ if [[ $OSTYPE == "cygwin" && $WORK_ENV ]] ; then
     {
         local a=$PWD
         cd '/cygdrive/c/dev/impactReports/integration'
-        docker-compose down -v
+        docker-compose down -v --remove-orphans
         cd ${a}
+    }
+
+    function sopen()
+    {
+        if [[ ${1} ]] ; then
+
+            local a=$PWD
+            local SLN=${1}
+            local MONSTER="C:/dev/CCI.Monster/src/"
+
+            case "$SLN" in
+                cm | intranet)
+                    cd "${MONSTER}"
+                    SLN="WebUI.Intranet.sln"
+                    ;;
+                rp | rateplan)
+                    cd "${MONSTER}Billing/CCI.Billing.RatePlanService/"
+                    SLN="CCI.Billing.RatePlanService.sln"
+                    ;;
+                orq)
+                    cd "${MONSTER}CCI.Services/ConsumerCellularOrderReviewService/"
+                    SLN="ConsumerCellularOrderReviewService.sln"
+                    ;;
+            esac
+
+            if [ -e ${SLN} ] ; then
+                explorer.exe "${SLN}"
+            else
+                echo "Can't find sln file ${SLN}"
+            fi
+
+            cd ${a}
+
+        else
+
+            shopt -s globstar
+            local SLNS=(*.sln)
+
+            if [ "${#SLNS[@]}" -gt 1 ] ; then
+                echo "Found ${#SLNS[@]} sln files -- which one?"
+            elif [ -e ${SLNS[0]} ] ; then
+                explorer.exe ${SLNS[0]}
+            else
+                echo "No sln files found"
+            fi
+        fi
     }
 
 fi

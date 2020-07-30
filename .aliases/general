@@ -53,7 +53,7 @@ alias nfix='npm run lint --fix'
 alias dc='docker-compose'
 # alias dcu='docker-compose up --detach'
 # alias dcub='docker-compose up --detach --build'
-# alias dcd='docker-compose down'
+# alias dcd='docker-compose down --remove-orphans'
 # alias dcdv='docker-compose down -v'
 
 # BOREDOM STUFF
