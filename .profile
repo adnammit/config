@@ -2,6 +2,8 @@
 # Put environment variables and other non-bash variables here.
 # If you had any .profile.d/ scripts to run, you'd do that here as well.
 
+echo 'DOING PROFILES'
+
 HISTTIMEFORMAT="%F %T "
 export HISTTIMEFORMAT
 HISTFILESIZE=1000000
@@ -77,3 +79,7 @@ fi
 
 export PATH
 export TMPDIR
+
+
+echo 'path is set to'
+echo $PATH

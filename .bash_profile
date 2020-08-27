@@ -1,6 +1,8 @@
 # .bash_profile
 # Load .profile and .bashrc if they exist. That's all, folks!
 
+echo 'BASH PROFILE'
+
 if [ -f .work_env ] ; then
     WORK_ENV=1
 fi
