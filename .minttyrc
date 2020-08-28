@@ -1,4 +1,4 @@
-Font=Fira Code
+Font=Fira Code Retina
 FontHeight=8
 FontWeight=450
 FontIsBold=no
@@ -10,3 +10,5 @@ BellType=0
 BellFlash=yes
 Columns=134
 Rows=38
+LigaturesSupport=2
+Ligatures=99

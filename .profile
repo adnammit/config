@@ -2,8 +2,6 @@
 # Put environment variables and other non-bash variables here.
 # If you had any .profile.d/ scripts to run, you'd do that here as well.
 
-echo 'DOING PROFILES'
-
 HISTTIMEFORMAT="%F %T "
 export HISTTIMEFORMAT
 HISTFILESIZE=1000000
@@ -54,7 +52,6 @@ if [[ "$OSTYPE" =~ "darwin" ]]; then
 
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 
-    ATOM="$LOCALAPPDATA/atom/bin/"
     SYSTEM="$SYSTEMROOT/System32/"
     GIT="/cygdrive/c/Program Files/Git/bin/"
     NODE="/cygdrive/c/Program Files/nodejs/:/cygdrive/c/Program Files/nodejs/node_modules/:$APPDATA/npm/"
@@ -67,19 +64,15 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     DOCKER="$PROGRAMFILES/Docker/Docker/resources/bin/"
 
     if [ "${WORK_ENV}" ] ; then
-        CODE="/cygdrive/c/Users/amanda.ryman/AppData/Local/Programs/Microsoft Vs Code/bin"
+        CODE="$PROGRAMFILES/Microsoft VS Code"
     else
         CODE="/cygdrive/c/Users/tardigrade/AppData/Local/Programs/Microsoft Vs Code/bin"
     fi
 
-    PATH="$PATH:$SYSTEMROOT:$ATOM:$SYSTEM:$GIT:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:$CODE:$DOCKER"
-    unset ATOM SYSTEM GIT NODE NVM POSTGRES DOTNET VSBIN MSBUILD SQLSERVE VSIDE CODE DOCKER
+    PATH="$PATH:$SYSTEMROOT:$SYSTEM:$GIT:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:$CODE:$DOCKER"
+    unset SYSTEM GIT NODE NVM POSTGRES DOTNET VSBIN MSBUILD SQLSERVE VSIDE CODE DOCKER
 
 fi
 
 export PATH
 export TMPDIR
-
-
-echo 'path is set to'
-echo $PATH
