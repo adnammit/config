@@ -64,7 +64,7 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     DOCKER="$PROGRAMFILES/Docker/Docker/resources/bin/"
 
     if [ "${WORK_ENV}" ] ; then
-        CODE="$PROGRAMFILES/Microsoft VS Code"
+        CODE="/cygdrive/c/Program Files/Microsoft VS Code/bin"
     else
         CODE="/cygdrive/c/Users/tardigrade/AppData/Local/Programs/Microsoft Vs Code/bin"
     fi
