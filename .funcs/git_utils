@@ -17,6 +17,10 @@ function giff()
                 PARAMS="$PARAMS master..HEAD"
                 shift
                 ;;
+            -bdh | bdh)
+                PARAMS="$PARAMS bcnf_dev..HEAD"
+                shift
+                ;;
             -dh | dh)
                 PARAMS="$PARAMS dev..HEAD"
                 shift
@@ -47,12 +51,12 @@ function new_branch()
     if [[ $BR_NAME ]] ; then
 
         CURR_CHANGES=$(git status -s)
-        if [[ $CURR_CHANGES ]] ; then 
+        if [[ $CURR_CHANGES ]] ; then
             echo "Nah dawg, no new branch for you -- you got changes."
         else
             git co dev && git pull && git co -b $BR_NAME
         fi
-    
+
     else
         echo "Gimme a branch name, yo"
     fi

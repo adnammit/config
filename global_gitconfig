@@ -5,7 +5,7 @@
 
 [core]
 	editor = code --wait
-	pager = C:/cygwin/bin/less.exe
+	pager = C:/cygwin64/bin/less.exe
     autocrlf = input
 
 [pull]
