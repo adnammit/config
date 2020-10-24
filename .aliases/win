@@ -5,6 +5,8 @@ if [[ $OSTYPE == "cygwin" ]] ; then
     alias sudo='cygstart --action=runas'
     alias oc='code $USERPROFILE/config/config_notes.code-workspace'
     alias unixall='find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" -print0 | xargs -0 dos2unix'
+    alias open='cmd /c start'
+    alias sopen="explorer.exe *.sln"
 
     # TELEPORTATION
     alias ccdr='cd $SYSTEMDRIVE'

@@ -62,6 +62,7 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
     VSBIN="$SYSTEMROOT/Microsoft.NET/Framework/v2.0.50727/"
     MSBUILD="$SYSTEMROOT/Microsoft.NET/Framework/v4.0.30319/"
     DOCKER="$PROGRAMFILES/Docker/Docker/resources/bin/"
+    HEROKU="/cygdrive/c/Program Files/heroku/bin/"
 
     if [ "${WORK_ENV}" ] ; then
         CODE="/cygdrive/c/Program Files/Microsoft VS Code/bin"
@@ -71,6 +72,9 @@ elif [[ "$OSTYPE" == "cygwin" ]]; then
 
     PATH="$PATH:$SYSTEMROOT:$SYSTEM:$GIT:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:$CODE:$DOCKER"
     unset SYSTEM GIT NODE NVM POSTGRES DOTNET VSBIN MSBUILD SQLSERVE VSIDE CODE DOCKER
+
+    PATH="$PATH:$SYSTEMROOT:$SYSTEM:$GIT:$NODE:$NVM:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:$CODE:$DOCKER:$HEROKU"
+    unset SYSTEM GIT NODE NVM POSTGRES DOTNET VSBIN MSBUILD SQLSERVE VSIDE CODE DOCKER HEROKU
 
 fi
 
