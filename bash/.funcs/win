@@ -1,0 +1,46 @@
+if [[ $OSTYPE == "cygwin" ]] ; then
+
+    function whos_on()
+    {
+        # to-do: match to commonly used ports or display all
+        local PORT=$1
+        if [[ ! $PORT ]] ; then
+            PORT="8083"
+        fi
+        netstat -ano | findstr :"$PORT"
+    }
+
+    # TODO: make these better
+    function dcu()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/someCodeDir'
+        docker-compose up --detach
+        cd ${a}
+    }
+
+    function dcub()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/someCodeDir'
+        docker-compose up --detach --build
+        cd ${a}
+    }
+
+    function dcd()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/someCodeDir'
+        docker-compose down --remove-orphans
+        cd ${a}
+    }
+
+    function dcdv()
+    {
+        local a=$PWD
+        cd '/cygdrive/c/someCodeDir'
+        docker-compose down -v --remove-orphans
+        cd ${a}
+    }
+
+fi

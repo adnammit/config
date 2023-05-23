@@ -1,0 +1,8 @@
+if [[ $OSTYPE =~ "darwin" ]] ; then
+
+    alias ls='ls -laG'
+    alias ccode='cd ~/code'
+    alias cnotes='cd ~/notes'
+    alias cconfig='cd ~/config'
+
+fi

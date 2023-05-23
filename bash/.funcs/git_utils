@@ -1,0 +1,44 @@
+
+#=========================================
+# FUN WITH FUNCTIONS
+#
+# These functions are aliased here rather
+#  than in the .aliases dir
+#=========================================
+
+function giff()
+{
+    local PARAMS=""
+
+    while [[ $# != 0 ]]
+    do
+        case "$1" in
+            -mh | mh)
+                PARAMS="$PARAMS main..HEAD"
+                shift
+                ;;
+            -mah | mah)
+                PARAMS="$PARAMS master..HEAD"
+                shift
+                ;;
+            -dh | dh)
+                PARAMS="$PARAMS dev..HEAD"
+                shift
+                ;;
+            -hh | hh)
+                PARAMS="$PARAMS HEAD~..HEAD"
+                shift
+                ;;
+            -ns | ns)
+                PARAMS="--name-status $PARAMS"
+                shift
+                ;;
+            *)
+                PARAMS="$PARAMS $1"
+                shift
+                ;;
+        esac
+    done
+
+    git diff -B -w ${PARAMS}
+}

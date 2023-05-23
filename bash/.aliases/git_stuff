@@ -1,0 +1,6 @@
+# git stuff that doesn't work in .gitconfig
+alias grit='git grep -I --untracked --no-exclude-standard '
+alias gish='git show -B -w'
+alias testwc='git whatchanged test..master --name-only -p --author="Amanda Ryman"'
+alias gitstats='git diff -B -w --shortstat'
+alias ggrepall='git rev-list --all | xargs git grep' # search history for an expression

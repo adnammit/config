@@ -1,0 +1,40 @@
+#GENERAL ALIASES:
+alias grep='grep -n --color=auto'
+alias rm='rm -i'
+alias mv='mv -i'
+
+# REFRESH AFTER MAKING CHANGES
+alias rp='. ~/.bash_profile'
+
+# FINDING SHIT
+alias sconfig='grep -r --include "*.config"'
+alias ssln='grep -r --include "*.sln"'
+alias sproj='grep -r --include "*.csproj"'
+alias ssql='grep -r --include "*.sql"'
+alias ffile='find -not -path "*/node_modules/*" -not -path "*/.git/*" -iname'
+alias gr='grep -r -n -I --color=auto --exclude-dir=.git --exclude-dir=node_modules'
+
+# COPY
+# -- recursive copy all the right things
+alias masscp='rsync -av --exclude .git --exclude node_modules --exclude bin --exclude obj'
+
+#C++ SHORTCUTS
+alias ccompile='g++ *.cpp -Wall -g'
+alias cdbg='gdb ./a.out'
+
+# UNIVERSAL NODE STUFF
+alias nls='npm list --depth=0'
+alias ngls='npm list -g --depth=0'
+alias nsd='npm install --save-dev'
+alias killnode='taskkill /F /IM node.exe'
+alias nrd='npm run dev'
+alias kaboom='rm -rf node_modules; npm cache clean --force'
+alias nlint='npm run lint'
+alias nfix='npm run lint --fix'
+
+# DOCKER
+alias dc='docker-compose'
+# alias dcu='docker-compose up --detach'
+# alias dcub='docker-compose up --detach --build'
+# alias dcd='docker-compose down --remove-orphans'
+# alias dcdv='docker-compose down -v'

@@ -1,0 +1,14 @@
+Font=Fira Code Retina
+FontHeight=8
+FontWeight=450
+FontIsBold=no
+Scrollbar=right
+Term=xterm-256color
+BoldAsFont=-1
+ForegroundColour=214,214,214
+BellType=0
+BellFlash=yes
+Columns=134
+Rows=38
+LigaturesSupport=2
+Ligatures=99
