@@ -26,10 +26,11 @@ RemoveSymlink $Home\.gitconfig
 if (-Not(Test-Path $PowershellModulesPath)) {
 	Write-Host "No Module symlink cleanup to perform, \Modules does not exist" -ForegroundColor Yellow
 }
+else {
+	$Modules = Get-ChildItem $PowershellModulesPath
 
-$Modules = Get-ChildItem $PowershellModulesPath
-
-# TODO: foreach, or be explicit? this just removes symlinks so it's probably safe
-foreach ($Module in $Modules) {
-	RemoveSymlink $Module.FullName
+	# TODO: foreach, or be explicit? this just removes symlinks so it's probably safe
+	foreach ($Module in $Modules) {
+		RemoveSymlink $Module.FullName
+	}
 }

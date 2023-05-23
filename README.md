@@ -7,9 +7,6 @@
 * global `.gitconfig`
 * step-by-step list and instructions for installing some apps and other dependencies like pwsh, choco, and git on a fresh OS install
 
-## Config package does NOT include:
-* `.ssh` and other private-y stuff
-
 # Setup
 
 ## Part I: Applications and Packages
@@ -116,17 +113,13 @@ choco install yarn
 * to remove run `./teardown`
 
 ## TODO
-**START HERE**
-	- copy basic bash functionality to pwsh
+* copy basic bash functionality to pwsh
 * maybe separate out the "how to set up a computer" part to another repo and keep the dotfiles pure
 * keep working on powershell
 	- copy bash functionality to pwsh
-	- move powershell stuff to config repo -- rn your working copy of powershell stuff is here: C:\Users\pangolin\Documents\Powershell
 	- [how to source functions](https://stackoverflow.com/a/6040725/7898566)
 	- [do more with modules](https://learn.microsoft.com/en-us/powershell/scripting/developer/module/how-to-write-a-powershell-script-module?view=powershell-7.3)
-* combine these two into one:
-	- clone_all_the_repos.sh
-	- setup.sh
-* convert `setup.sh` to `setup.bat`. yeah this is no longer OS-agnostic
-* completely strip out old stuff
+* combine these two into one, or maybe call them from `setup.ps1`
+	- `clone_all_the_repos.sh`
+	- `setup.sh`
 * bring in c/tools/ and other external powershell scripts or include them here if it makes sense
