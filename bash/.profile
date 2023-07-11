@@ -38,9 +38,9 @@ DOCKER="$PROGRAMFILES/Docker/Docker/resources/bin/"
 INETSRV="$SYSTEM/inetsrv/" #get appcmd.exe to manage iis stuff
 
 # default location:
-# NODE="$CYGDRIVE/Program Files/nodejs/:$CYGDRIVE/Program Files/nodejs/node_modules/:$APPDATA/npm/"
+NODE="$CYGDRIVE/Program Files/nodejs/:$CYGDRIVE/Program Files/nodejs/node_modules/:$APPDATA/npm/"
 # but add in this custom location to avoid having to use admin for everything
-NODE="$CYGDRIVE/Programs/nvm/:$CYGDRIVE/Programs/nodejs/"
+# NODE="$CYGDRIVE/Programs/nvm/:$CYGDRIVE/Programs/nodejs/"
 CODE="$LOCALAPPDATA/Programs/Microsoft Vs Code/"
 
 if [ "${WORK_ENV}" ] ; then

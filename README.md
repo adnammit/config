@@ -25,6 +25,7 @@ winget install --id Microsoft.PowerShell -s winget
 ```
 
 ### Oh My Posh!
+* see `powershell/setup/Install-OhMyPosh.psm1`
 * [reference](https://ohmyposh.dev/docs/installation/windows)
 ```pwsh
 winget install JanDeDobbeleer.OhMyPosh -s winget
@@ -89,6 +90,7 @@ choco install yarn
 * LICEcap
 * teensy
 * [stackify prefix](https://stackify.com/prefix/)
+* Solarwinds Plan Explorer and Redgate SQL Search for doing data-y stuff in SSMS
 
 ### Bonus Round II: Even More Stuff
 * PowerToys: includes a lot of neat stuff like FancyZones (install via MS app store)
@@ -114,6 +116,7 @@ choco install yarn
 
 ## TODO
 * copy basic bash functionality to pwsh
+* can i store [colors](https://i.stack.imgur.com/QOSgM.png) as variables? if not, go through and customize/make all colors consistent
 * maybe separate out the "how to set up a computer" part to another repo and keep the dotfiles pure
 * keep working on powershell
 	- copy bash functionality to pwsh

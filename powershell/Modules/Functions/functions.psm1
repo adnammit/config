@@ -5,6 +5,23 @@ function less() { Get-Content $args }
 function env {	Get-ChildItem -Path Env: }
 # ls is an alias to Get-ChildItem but does not support -la out of the box. make it so
 function ls { Get-ChildItem -Force }
+function sudo() {
+	Start-Process PowerShell -Verb RunAs -Wait -ArgumentList "-NoExit -noProfile -Command $args"
+}
+
+# Teleportation
+function cpf {
+	Set-Location $env:ProgramFiles
+}
+function ccode {
+	Set-Location $HOME\code
+}
+function cnotes {
+	Set-Location $HOME\notes
+}
+function cconfig {
+	Set-Location $HOME\config
+}
 
 # function Run-AsAdmin($command) {
 # 	# https://stackoverflow.com/questions/66362383/how-do-i-run-a-powershell-script-as-administrator-using-a-shortcut
@@ -14,13 +31,10 @@ function ls { Get-ChildItem -Force }
 # 	# powershell.exe -NoExit -Command "& {$wd = Get-Location; Start-Process powershell.exe -Verb RunAs -ArgumentList \"-ExecutionPolicy ByPass -NoExit -Command Set-Location $wd; C:\project\test.ps1\"}"
 # }
 
-function sudo() {
-	Start-Process PowerShell -Verb RunAs -Wait -ArgumentList "-NoExit -noProfile -Command $args"
-}
-
+# TODO: fix this -- i think quotes are messing it up?
 function giff() {
 
-	$Params = "-B -w"
+	$Params = $null
 
 	foreach ($arg in $args) {
 		# Write-Host $item
@@ -47,7 +61,10 @@ function giff() {
 
 	Write-Host "git params are `"$Params`""
 
-	git diff "$($Params)"
+	cmd /c echo $Params
+	# git diff $Params
+	git diff -B -w "$Params"
+	# git diff "$($Params)"
 
 }
 
@@ -67,5 +84,6 @@ function whichDotnet {
 
 	Write-Host "`nNET Framework:"
 	Write-Host ">>--------------------->"
-	Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name version -EA 0 | Where { $_.PSChildName -Match '^(?!S)\p{L}' } | Select-Object PSChildName, version
+	Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name version -EA 0 | Where-Object { $_.PSChildName -Match '^(?!S)\p{L}' } | Select-Object PSChildName, version
+
 }
