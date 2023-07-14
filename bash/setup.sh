@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# TODO move to /bash with teardown and only handle bash stuff (not gitconfig)
-
 # symlink all bash dotfiles to $HOME
 # call with `work` param to customize env:
 # ./setup.sh work
@@ -20,7 +18,6 @@ ln -s $DIR/.git-completion
 ln -s $DIR/.minttyrc
 ln -s $DIR/.profile
 ln -s $DIR/.vimrc
-ln $GLOBAL_DIR/global-gitconfig .gitconfig
 
 if [[ $1 == "work" ]] ; then
 	ln -s $DIR/.work_env #TODO: global work flag or just bash?

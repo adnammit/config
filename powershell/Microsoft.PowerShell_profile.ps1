@@ -1,8 +1,3 @@
-$ps_script_dir = "$HOME\Documents\PowerShell\Scripts"
-Set-Alias bso $ps_script_dir\BuildSOandNotify.ps1
-Set-Alias papercut "C:\Program Files (x86)\Changemaker Studios\Papercut SMTP\Papercut.Service.exe"
-Set-Alias showEnv "Get-ChildItem -Path Env:"
-
 # OH MY POSHNESS
 oh-my-posh init pwsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/montys.omp.json' | Invoke-Expression
 
@@ -16,6 +11,10 @@ if (Test-Path($ChocolateyProfile)) {
 	Import-Module "$ChocolateyProfile"
 }
 
-# TODO make this foreach subdir in Tools
-$env:PATH += ";C:\Tools\azcopy_windows_amd64_10.18.0\"
-$env:PATH += ";C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin"
+# # TODO make this foreach subdir in Tools
+# $env:PATH += ";C:\Tools\azcopy_windows_amd64_10.18.0\"
+# $env:PATH += ";C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin"
+
+# # TODO alias/import scripts
+# $ps_script_dir = "$HOME\Documents\PowerShell\Scripts"
+# Set-Alias bso $ps_script_dir\BuildSOandNotify.ps1

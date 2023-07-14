@@ -1,11 +1,11 @@
 # Bash, I just can't quit you
 function which($name) { Get-Command $name -ErrorAction SilentlyContinue | Select-Object Definition }
 function touch($file) { "" | Out-File $file -Encoding ASCII }
-function less() { Get-Content $args }
+function less { Get-Content $args }
 function env {	Get-ChildItem -Path Env: }
 # ls is an alias to Get-ChildItem but does not support -la out of the box. make it so
 function ls { Get-ChildItem -Force }
-function sudo() {
+function sudo {
 	Start-Process PowerShell -Verb RunAs -Wait -ArgumentList "-NoExit -noProfile -Command $args"
 }
 

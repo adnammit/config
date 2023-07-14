@@ -3,17 +3,20 @@
 	email = amandaryman@gmail.com
 	name = aryman
 
+[init]
+	defaultBranch = main
+
 [core]
-	editor = \"C:\\Users\\pangolin\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
-	# editor = code --wait
-	pager = C:/cygwin64/bin/less.exe
+	# editor = \"C:\\Users\\pangolin\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
+	editor = code --wait # TODO: works for windows?
+	pager = less -FX # TODO: works for windows?
     autocrlf = false
 
 [pull]
     rebase = true
 
 [credential]
-    helper = wincred
+    helper = wincred # TODO: mac?
 
 [color]
     ui = true

@@ -8,7 +8,7 @@ function RemoveSymlink ([string]$path) {
 		return
 	}
 
-	if (-Not((Get-Item $path).LinkType -eq "SymbolicLink")) {
+	if (-Not((Get-Item $path -Force).LinkType -eq "SymbolicLink")) {
 		Write-Host "Could not remove link, $path is not a symlink" -ForegroundColor Magenta
 		return
 	}
@@ -17,10 +17,18 @@ function RemoveSymlink ([string]$path) {
 }
 
 $PowershellDestPath = Join-Path ([Environment]::GetFolderPath('MyDocuments')) \PowerShell
-$PowershellModulesPath = Join-Path $PowershellDestPath \Modules
+# TODO: make sure this works for windows too as opposed to above
+# module location: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_modules?view=powershell-7.3#module-and-dsc-resource-locations-and-psmodulepath
+if ($IsMacOS) {
+	$PowershellModulesPath = Join-Path $Home \.local\share\powershell\Modules
+}
+else {
+	$PowershellModulesPath = Join-Path $Home \Documents\PowerShell\Modules
+}
 
 # Remove Global Symlinks
 RemoveSymlink $Home\.gitconfig
+RemoveSymlink $profile.CurrentUserCurrentHost
 
 # Remove Module Symlinks
 if (-Not(Test-Path $PowershellModulesPath)) {

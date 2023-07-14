@@ -15,7 +15,6 @@ unlink .git-completion
 unlink .minttyrc
 unlink .profile
 unlink .vimrc
-unlink .gitconfig
 
 if [ -f ".work_env" ] ; then
 	unlink .work_env

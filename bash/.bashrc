@@ -1,4 +1,3 @@
-
 #==================================================================================
 # BASHRC
 #==================================================================================
@@ -10,7 +9,8 @@ fi
 bind -s 'set completion-ignore-case on'
 
 #=========================================
-# FUN WITH STYLING AND COLOR
+# PROMPT STYLES
+#   ah yes, the poor man's oh-my-posh
 #=========================================
 
 BLACKONYELLOW='\[\e[43;30m\]'
@@ -64,9 +64,5 @@ if [ -d ~/.funcs ]; then
     done
 fi
 unset FILE
-
-# Load nvm
-export NVM_DIR="/home/tardigrade/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 shopt -s histverify
