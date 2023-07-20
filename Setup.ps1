@@ -13,7 +13,7 @@ function CreateSymlink ([string]$source, [string]$dest) {
 
 $SourcePath = $PWD.Path
 $PowershellSourcePath = Join-Path $PWD.Path \powershell
-# TODO: make sure this works for windows too as opposed to above
+# TODO: make sure this works for windows too
 # module location: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_modules?view=powershell-7.3#module-and-dsc-resource-locations-and-psmodulepath
 if ($IsMacOS) {
 	$PowershellModulesPath = Join-Path $Home \.local\share\powershell\Modules

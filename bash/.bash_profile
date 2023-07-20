@@ -1,7 +1,7 @@
 # .bash_profile
 # Load .profile and .bashrc if they exist. That's all, folks!
 
-if [ -f .work_env ] ; then
+if [ -f ~/.work_env ] ; then
     WORK_ENV=1
 fi
 

@@ -93,12 +93,20 @@
 	brew install git
 	```
 
-### Posh-Git (optional)
+### Posh-Git
 * git add-on: provides git data in powershell prompt, and tab completion for git commands and remote names and branches
 * [reference](https://github.com/dahlbyk/posh-git)
-```pwsh
-choco install poshgit
-```
+* install posh-git:
+	```pwsh
+	# install
+	PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
+	# update
+	PowerShellGet\Update-Module posh-git
+	```
+* then add to profile:
+	```
+	Import-Module posh-git
+	```
 
 ### Node Stuff™️
 * use [nvm](https://github.com/nvm-sh/nvm) to install and manage npm/node
@@ -115,7 +123,6 @@ choco install poshgit
 	# after nvm is installed, install latest LTS node:
 	nvm install --lts
 	```
-
 
 ### LaTeX
 * configure LaTeX development in VSCode
@@ -151,6 +158,16 @@ choco install poshgit
 * VLC
 * NordVPN
 
+### MacOS: Do How PC Do
+* disable voiceover and other conflicting shortcuts in Settings > Keyboard > Accessibility/Applications
+* Rectangle: aero snap behavior
+	- **TODO** add shortcuts
+* [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
+* [Witch](https://manytricks.com/witch/): switch individual tabs
+* set up Synergy modifier keys for mac client
+
+![Synergy modifier keys](</img/Synergy MacOS Modifier keys.png>)
+
 ## Part II: Customize Your Environment (the actual dotfiles part)
 * run setup/clone_all_the_repos
 * everything in `/config` needs to be in `$HOME` -- instead of manually copy/pasting them to `$HOME`, run the setup script:
@@ -158,15 +175,6 @@ choco install poshgit
 	- run `./setup work` to set the work env flag and enable work paths/scripts
 	- that's it!
 * to remove run `./teardown`
-
-## MacOS: Do How PC Do
-* disable voiceover and other conflicting shortcuts in Settings > Keyboard > Accessibility/Applications
-* Rectangle: aero snap behavior
-	- **TODO** add shortcuts
-* [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
-* [Witch](https://manytricks.com/witch/): switch individual tabs
-* set up Synergy modifier keys for mac client
-![Synergy modifier keys](</img/Synergy MacOS Modifier keys.png>)
 
 ## TODO
 * **version control/symlink your VS keybindings already**

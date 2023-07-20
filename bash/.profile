@@ -23,9 +23,11 @@ for PKG in $STANDARD_PKGS ; do
 	fi
 done
 
-BASE_PATH="/usr/bin:/bin" # same as default $PATH
-LOCAL_PATH="/usr/local/bin"
-PATH="$LOCAL_PATH:$BASE_PATH:$HOME/bin"
+## I don't think this block is necessary -- all the paths are already in $PATH
+# echo "Path starts as $PATH"
+# BASE_PATH="/usr/bin:/bin" # same as default $PATH
+# LOCAL_PATH="/usr/local/bin"
+# PATH="$PATH:$LOCAL_PATH:$BASE_PATH:$HOME/bin"
 
 # TODO: wow this is awful, sort this out
 if [[ $OSTYPE =~ "darwin" ]] ; then
@@ -78,7 +80,9 @@ fi
 PATH="$PATH:$SYSTEMROOT:$SYSTEM:$GIT:$NODE:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:$CODE:$DOCKER:$INETSRV"
 unset SYSTEM GIT NODE POSTGRES DOTNET VSBIN MSBUILD SQLSERVE CODE DOCKER INETSRV
 
+export PATH
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-export PATH
+export NODE_OPTIONS=--openssl-legacy-provider

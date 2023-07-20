@@ -22,6 +22,23 @@ function cnotes {
 function cconfig {
 	Set-Location $HOME\config
 }
+function cerp {
+	Set-Location $HOME\code\erp
+}
+
+# Reloading Stuff and Module Management
+function modls {
+	get-module
+}
+function modla {
+	get-module -listavailable
+}
+function modr {
+	Import-Module Functions -Force
+}
+function prof {
+	. $PROFILE
+}
 
 # function Run-AsAdmin($command) {
 # 	# https://stackoverflow.com/questions/66362383/how-do-i-run-a-powershell-script-as-administrator-using-a-shortcut
@@ -31,40 +48,32 @@ function cconfig {
 # 	# powershell.exe -NoExit -Command "& {$wd = Get-Location; Start-Process powershell.exe -Verb RunAs -ArgumentList \"-ExecutionPolicy ByPass -NoExit -Command Set-Location $wd; C:\project\test.ps1\"}"
 # }
 
-# TODO: fix this -- i think quotes are messing it up?
 function giff() {
 
-	$Params = $null
+	$Params = @()
 
 	foreach ($arg in $args) {
-		# Write-Host $item
-		# Write-Host "$($Params) $($item)"
 		Switch ($arg) {
 			"ns" {
-				$Params = "$($Params) --name-status"
+				$Params += "--name-status"
 			}
 			"hh" {
-				$Params = "$($Params) HEAD~..HEAD"
+				$Params += "HEAD~..HEAD"
 			}
 			"mh" {
-				$Params = "$($Params) main..HEAD"
+				$Params += "main..HEAD"
 			}
 			"mah" {
-				$Params = "$($Params) master..HEAD"
+				$Params += "master..HEAD"
 			}
 			default {
 				# pass anything else literally
-				$Params = "$($Params) $($arg)"
+				$Params += $arg
 			}
 		}
 	}
 
-	Write-Host "git params are `"$Params`""
-
-	cmd /c echo $Params
-	# git diff $Params
-	git diff -B -w "$Params"
-	# git diff "$($Params)"
+	& git diff -B -w $Params
 
 }
 
