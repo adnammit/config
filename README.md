@@ -49,8 +49,8 @@
 	```
 
 ### Oh My Posh!
-* see `powershell/setup/Install-OhMyPosh.psm1`
 * [reference](https://ohmyposh.dev/docs/installation/windows)
+* see `powershell/setup/Install-OhMyPosh.psm1`
 * after installing, you will need to [modify your profile to use oh-my-posh](https://ohmyposh.dev/docs/installation/prompt)
 * **Windows**
 	```pwsh
@@ -94,8 +94,8 @@
 	```
 
 ### Posh-Git
-* git add-on: provides git data in powershell prompt, and tab completion for git commands and remote names and branches
-* [reference](https://github.com/dahlbyk/posh-git)
+* [reference](https://github.om/dahlbyk/posh-git)
+* git add-on: provides git data in powershell prompt and tab completion for git commands and remote names and branches
 * install posh-git:
 	```pwsh
 	# install
@@ -162,6 +162,10 @@
 * disable voiceover and other conflicting shortcuts in Settings > Keyboard > Accessibility/Applications
 * Rectangle: aero snap behavior
 	- **TODO** add shortcuts
+* install [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
+	```pwsh
+	brew install --cask karabiner-elements
+	```
 * [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
 * [Witch](https://manytricks.com/witch/): switch individual tabs
 * set up Synergy modifier keys for mac client
