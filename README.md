@@ -160,7 +160,7 @@
 
 ### MacOS: Do How PC Do
 * disable voiceover and other conflicting shortcuts in Settings > Keyboard > Accessibility/Applications
-* Rectangle: aero snap behavior
+* [Rectangle](https://rectangleapp.com/): aero snap behavior
 	- **TODO** add shortcuts
 * install [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
 	```pwsh

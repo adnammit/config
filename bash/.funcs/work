@@ -1,0 +1,54 @@
+if [[ $OSTYPE =~ "darwin" && $WORK_ENV ]] ; then
+
+	function docker-up()
+	{
+		# clean up whatever bad happened last time
+		docker system prune
+
+		local a=$PWD
+		cd '/Users/amanda.ryman/code/ERP/'
+		docker-compose up --detach --build
+		cd ${a}
+	}
+
+	function docker-down()
+	{
+		local a=$PWD
+		cd '/Users/amanda.ryman/code/ERP/'
+		docker-compose down --remove-orphans
+		cd ${a}
+	}
+
+	# function dcu()
+	# {
+	#     local a=$PWD
+	#     cd '/cygdrive/c/someCodeDir'
+	#     docker-compose up --detach
+	#     cd ${a}
+	# }
+
+	# function dcub()
+	# {
+	#     local a=$PWD
+	#     cd '/cygdrive/c/someCodeDir'
+	#     docker-compose up --detach --build
+	#     cd ${a}
+	# }
+
+	# function dcd()
+	# {
+	#     local a=$PWD
+	#     cd '/cygdrive/c/someCodeDir'
+	#     docker-compose down --remove-orphans
+	#     cd ${a}
+	# }
+
+	# function dcdv()
+	# {
+	#     local a=$PWD
+	#     cd '/cygdrive/c/someCodeDir'
+	#     docker-compose down -v --remove-orphans
+	#     cd ${a}
+	# }
+
+fi

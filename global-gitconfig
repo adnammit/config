@@ -1,4 +1,3 @@
-# Note that this cannot by symlinked -- must be directly copied to $HOME
 [user]
 	email = amandaryman@gmail.com
 	name = aryman
@@ -46,7 +45,7 @@
     reb = rebase
     rebc = rebase --continue
     rl = reflog
-    sh = show
+    sh = show -B -w
     s = stash
     su = stash -u
     sl = stash list
