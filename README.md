@@ -159,7 +159,7 @@
 * NordVPN
 
 ### MacOS: Do How PC Do
-* disable voiceover and other conflicting shortcuts in Settings > Keyboard > Accessibility/Applications
+* disable voiceover and other conflicting shortcuts in Settings > Keyboard > Accessibility/Applications. Toggle off Mission Control shortcuts
 * [Rectangle](https://rectangleapp.com/): aero snap behavior
 	- **TODO** add shortcuts
 * install [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
