@@ -93,6 +93,9 @@
 	brew install git
 	```
 
+### Git Credential Manager
+* [install instructions](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md)
+
 ### Posh-Git
 * [reference](https://github.om/dahlbyk/posh-git)
 * git add-on: provides git data in powershell prompt and tab completion for git commands and remote names and branches

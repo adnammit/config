@@ -3,6 +3,7 @@
 # TODO execute bash/setup.sh
 
 function CreateSymlink ([string]$source, [string]$dest) {
+	Write-Host("Creating symlink from $source to $dest");
 	if (-Not(Test-Path $dest)) {
 		New-Item -ItemType SymbolicLink -Path $dest -Target $source
 	}

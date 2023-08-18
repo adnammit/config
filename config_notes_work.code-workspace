@@ -7,6 +7,9 @@
 			"path": "../notes"
 		}
 	],
+	"settings": {
+		"powershell.cwd": "/Users/amanda.ryman/config"
+	},
 	// // TODO: use a variable so this works on any machine
 	// "settings": {
 	// 	"powershell.cwd": "c:\\Users\\pangolin\\config"

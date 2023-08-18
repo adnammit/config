@@ -1,13 +1,37 @@
 if [[ $OSTYPE =~ "darwin" && $WORK_ENV ]] ; then
 
+	function docker-clean()
+	{
+		docker system prune
+	}
+
+	# only bring up data container and volume
+	function ddup()
+	{
+		local a=$PWD
+		cd '/Users/amanda.ryman/code/ERP/'
+		docker compose --file docker-compose.data.yml up --detach
+		cd ${a}
+	}
+
+	# only bring up data container and volume
+	function dddown()
+	{
+		local a=$PWD
+		cd '/Users/amanda.ryman/code/ERP/'
+		docker-compose --file docker-compose.data.yml down
+		cd ${a}
+	}
+
 	function docker-up()
 	{
 		# clean up whatever bad happened last time
-		docker system prune
+		# docker system prune
 
 		local a=$PWD
 		cd '/Users/amanda.ryman/code/ERP/'
-		docker-compose up --detach --build
+		# docker-compose --file docker-compose.yml --file docker-compose.override.yml build
+		docker-compose --file docker-compose.yml --file docker-compose.override.yml up --detach --build
 		cd ${a}
 	}
 
@@ -15,7 +39,7 @@ if [[ $OSTYPE =~ "darwin" && $WORK_ENV ]] ; then
 	{
 		local a=$PWD
 		cd '/Users/amanda.ryman/code/ERP/'
-		docker-compose down --remove-orphans
+		docker-compose --file docker-compose.yml --file docker-compose.override.yml down --remove-orphans
 		cd ${a}
 	}
 
