@@ -15,7 +15,7 @@
     rebase = true
 
 [credential]
-    helper = wincred # TODO: mac?
+	helper = manager
 
 [color]
     ui = true
