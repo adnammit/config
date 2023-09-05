@@ -1,5 +1,5 @@
 # File Explorer, can also be invoked with `ii`
-Set-Alias -Name exp -Value Invoke-Item
+Set-Alias -Name open -Value Invoke-Item
 
 # $ps_script_dir = "$HOME\Documents\PowerShell\Scripts"
 # Set-Alias -Name bso -Value $ps_script_dir\BuildSOandNotify.ps1

@@ -1,7 +1,7 @@
 if [[ $OSTYPE == "cygwin" ]] ; then
 
     alias ls='ls -la --color=always'
-    alias exp='explorer.exe'
+    alias open='explorer.exe'
     alias unixall='find . -type f -not -path "*/node_modules/*" -not -path "*/.git/*" -print0 | xargs -0 dos2unix'
 
     # TELEPORTATION
