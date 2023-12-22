@@ -212,12 +212,12 @@
       "keyCode": 123,
       "modifierFlags": 262144
     },
-    "centerHalf": {
-      "keyCode": 126,
-      "modifierFlags": 262144
-    },
     "lastFourth": {
       "keyCode": 124,
+      "modifierFlags": 262144
+    },
+    "centerHalf": {
+      "keyCode": 126,
       "modifierFlags": 262144
     },
     "leftHalf": {

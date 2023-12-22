@@ -1,23 +1,25 @@
 # Config Your Way To A Happy Command Line Environment
 
-## Assorted dotfiles including the following:
-* scripts to set up command line environment
-* my old bash config as well as some powershell which I'm slowly adopting
-* vim config because even though I use VSCode now, I'm sentimental
-* global `.gitconfig`
-* step-by-step list and instructions for installing some apps and other dependencies you might want to have on a fresh OS install before you even configure your env, such as pwsh, choco/brew, and git
 
-# Setup
+## So you need to set up a new computer, eh?
+* [Part I: Applications and Packages](#part-one)
+	* step-by-step list and instructions for installing some apps and other dependencies you'll want to have on a fresh OS install before you even configure your command line
+* [Part II: Assorted dotfiles including the following](#part-two)
+	* bash and powershell profiles
+	* vim config because even though I use VSCode now, I'm sentimental
+	* global `.gitconfig`
+	* scripts to set it all up, because why spend time doing it manually when you can automate it in twice as much time?
 
-## Part I: Applications and Packages
-* step-by-step guide for how to set things up on a new machine
-* maybe script this if it makes sense someday but it probably won't
 
-### Terminal
+<a id="part-one"></a>
+
+# Part I: Applications and Packages
+
+## Terminal
 * **Windows**: use Terminal
 * **MacOS**: [install iTerm2](https://iterm2.com/)
 
-### Package Manager
+## Package Manager
 * **Windows**: install Chocolatey
 	- **requires admin**
 	- see `powershell/setup/Install-Choco.psm1`
@@ -29,10 +31,10 @@
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	```
 
-### VSCode
+## VSCode
 * [install VSCode](https://code.visualstudio.com/download#)
 
-### Powershell
+## Powershell
 * if you already have powershell 5, this will install powershell 7 (with pwsh) side-by-side
 * [installing powershell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows)
 * [powershell 5 vs 7](https://learn.microsoft.com/en-us/powershell/scripting/whats-new/migrating-from-windows-powershell-51-to-powershell-7?view=powershell-7.3#using-powershell-7-side-by-side-with-windows-powershell-51)
@@ -48,7 +50,7 @@
 	brew upgrade powershell --cask
 	```
 
-### Oh My Posh!
+## Oh My Posh!
 * [reference](https://ohmyposh.dev/docs/installation/windows)
 * see `powershell/setup/Install-OhMyPosh.psm1`
 * after installing, you will need to [modify your profile to use oh-my-posh](https://ohmyposh.dev/docs/installation/prompt)
@@ -61,7 +63,7 @@
 	brew install jandedobbeleer/oh-my-posh/oh-my-posh
 	```
 
-### Fonts
+## Fonts
 * [reference](https://www.nerdfonts.com/font-downloads)
 * once downloaded, settings in the terminal must be updated to use the font
 * fonts downloaded in this manner are available across the system like any other font
@@ -81,7 +83,7 @@
 	brew install --cask font-fira-code-nerd-font
 	```
 
-### Git
+## Git
 * **Windows**
 	- **requires admin**
 	```pwsh
@@ -93,10 +95,10 @@
 	brew install git
 	```
 
-### Git Credential Manager
+## Git Credential Manager
 * [install instructions](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md)
 
-### Posh-Git
+## Posh-Git
 * [reference](https://github.om/dahlbyk/posh-git)
 * git add-on: provides git data in powershell prompt and tab completion for git commands and remote names and branches
 * install posh-git:
@@ -111,7 +113,7 @@
 	Import-Module posh-git
 	```
 
-### Node Stuff™️
+## Node Stuff™️
 * use [nvm](https://github.com/nvm-sh/nvm) to install and manage npm/node
 * **Windows**
 	- **requires admin**
@@ -127,14 +129,14 @@
 	nvm install --lts
 	```
 
-### LaTeX
+## LaTeX
 * configure LaTeX development in VSCode
 * [download texLive](https://www.tug.org/texlive/windows.html) **NOTE**: this takes a *very long* time
 * install LaTeX Workshop VSCode extension
 * configure your VSCode `settings.json`
 * [reference](https://github.com/James-Yu/LaTeX-Workshop/wiki)
 
-### Bonus Round I: More Dev Stuff
+## Bonus Round I: More Dev Stuff
 * Rider
 * Docker
 * [SSMS](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)/Azure Data Studio
@@ -147,11 +149,10 @@
 * teensy
 * [stackify prefix](https://stackify.com/prefix/)
 
-### Bonus Round II: Even More Not-So-Dev Stuff
+## Bonus Round II: Even More Not-So-Dev Stuff
 * PowerToys: includes a lot of neat stuff like FancyZones (install via MS app store)
-* [Synergy](https://symless.com/synergy) -- or logitech flow, or mouse without borders
+* [Synergy](https://symless.com/synergy) software KVM
 * Slack
-* Signal
 * f.lux
 * Spotify
 * Dropbox
@@ -161,29 +162,58 @@
 * VLC
 * NordVPN
 
-### MacOS: Do How PC Do
-* disable voiceover and other conflicting shortcuts in Settings > Keyboard > Accessibility/Applications. Toggle off Mission Control shortcuts
+## MacOS But Make it a PC
+* how to remap a bunch of keybindings/shortcuts on mac bc I love macs, but I also want to keep my muscle memory sane
+* customize native keyboard shortcuts in Settings > Keyboard
+	* copy `misc/DefaultKeyBinding.dict` to `~/Library/KeyBindings/` - so far this just modifies your word jump navigation to match Windows
+	* Accessibility/Applications
+		* disable voiceover and other conflicting shortcuts
+	* Mission Control > emulate Windows Desktop navigation
+		* Mission Control: ctrl+tab
+		* Mission Control > Move to left desktop: ctrl+cmd+left
+		* Mission Control > Move to right desktop: ctrl+cmd+right
+* [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
 * [Rectangle](https://rectangleapp.com/): aero snap behavior
-	- **TODO** add shortcuts
-* install [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
+	* install rectangle and import settings file `misc/RectangleConfig.json`
+* install [Karabiner-Elements](https://karabiner-elements.pqrs.org/). not currently used, but offers powerful keybinding options
 	```pwsh
 	brew install --cask karabiner-elements
 	```
-* [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
-* [Witch](https://manytricks.com/witch/): switch individual tabs
-* set up Synergy modifier keys for mac client
+* [Witch](https://manytricks.com/witch/): switch individual tabs. not currently used.
+* set up Synergy modifier keys for mac client. this will make all your mac modifier keys bind to their equivalent windows location
+	* comparative physical location for default configuration:
+		||1|2|3|
+		|-|-|-|-|
+		|Mac| ⌃ | ⌥ | ⌘ |
+		|Win| ctrl | ⊞ | alt |
+
+	* comparative physical location with Synergy mapping:
+		||1|2|3|
+		|-|-|-|-|
+		|Mac| ⌘ | ^ | ⌥ |
+		|Win| ctrl | ⊞ | alt |
+		
+	* modifier key equivalents:
+		| | PC | Mac |
+		| - | - | - |
+		| Super | ⊞ | ⌘ |
+		| CTRL   | ctrl | ⌃ |
+		| ALT   | alt | ⌥ |
+
 
 ![Synergy modifier keys](</img/Synergy MacOS Modifier keys.png>)
 
-## Part II: Customize Your Environment (the actual dotfiles part)
-* run setup/clone_all_the_repos
-* everything in `/config` needs to be in `$HOME` -- instead of manually copy/pasting them to `$HOME`, run the setup script:
+<a id="part-two"></a>
+
+# Part II: Customize Your Environment (the actual dotfiles part)
+* run `setup/clone_all_the_repos`
+* alias everything in `/config` to `$HOME` by running the setup script:
 	- run `./setup` to create symlinks to the actual version-controlled files here in the repo
 	- run `./setup work` to set the work env flag and enable work paths/scripts
 	- that's it!
 * to remove run `./teardown`
 
-## TODO
+# TODO
 * **version control/symlink your VS keybindings already**
 * organize your setup scripts -- maybe call everything from `setup.ps1`, or make one "global setup" script
 	- `clone_all_the_repos.sh`

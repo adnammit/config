@@ -1,5 +1,7 @@
 if [[ $OSTYPE =~ "darwin" && $WORK_ENV ]] ; then
 
-    alias cerp='cd ~/code/ERP'
+    alias cerpold='cd ~/code/ERP'
+    alias cerp='cd ~/code/BroadlumeX/Services/ERP'
+    alias cbl='cd ~/code/BroadlumeX'
 
 fi

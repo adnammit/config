@@ -22,8 +22,16 @@ function cnotes {
 function cconfig {
 	Set-Location $HOME\config
 }
-function cerp {
+function cerpold {
 	Set-Location $HOME\code\erp
+}
+
+function cerp {
+	Set-Location $HOME\code\BroadlumeX\Services\ERP
+}
+
+function cbl {
+	Set-Location $HOME\code\BroadlumeX
 }
 
 # Reloading Stuff and Module Management
