@@ -114,6 +114,7 @@
 	```
 
 ## Node Stuff™️
+* **TODO** look in to using Bun instead
 * use [nvm](https://github.com/nvm-sh/nvm) to install and manage npm/node
 * **Windows**
 	- **requires admin**
@@ -212,9 +213,11 @@
 	- run `./setup work` to set the work env flag and enable work paths/scripts
 	- that's it!
 * to remove run `./teardown`
+* ssh config is not included here -- look at `sshConfigTemplate` to create `~/.ssh/config`
 
 # TODO
 * **version control/symlink your VS keybindings already**
+* [check out githooks](https://apple.stackexchange.com/a/224074)
 * organize your setup scripts -- maybe call everything from `setup.ps1`, or make one "global setup" script
 	- `clone_all_the_repos.sh`
 	- `Setup.ps1` -- handles powershell and calls bash `setup.sh`

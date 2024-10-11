@@ -6,9 +6,8 @@
 	defaultBranch = main
 
 [core]
-	# editor = \"C:\\Users\\pangolin\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
-	editor = code --wait # TODO: works for windows?
-	pager = less -FX # TODO: works for windows?
+	editor = code --wait
+	pager = less -FX
     autocrlf = false
 
 [pull]
@@ -75,4 +74,3 @@
     lg4 = log --graph --abbrev-commit --decorate --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
     lg5 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
     lg6 = log --graph --date=format:'%a %F %T' --pretty=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset)%n %C(bold cyan)%ad%C(reset) %C(bold red)%an%C(reset)  %n  %s:'
-

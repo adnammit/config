@@ -1,0 +1,16 @@
+# example of nice stuff for an ssh config
+Host *
+# put global config here
+
+Host mywebsite.com
+  HostName www.mywebsite.com
+  User testuser
+  Port 22
+  IdentityFile ~/.ssh/mywebsite_keypair.pem
+  # use a custom bash config if you have to log on using a shared service account: https://stackoverflow.com/a/62891591
+  LocalCommand scp /Users/amanda.ryman/config/bash/mywebsite_bashrc %r@%n:/home/aryman/.bashrc
+  RemoteCommand bash --rcfile "/home/aryman/.bashrc"
+  PermitLocalCommand yes
+  # prevent getting disconnected
+  ServerAliveInterval 240
+
