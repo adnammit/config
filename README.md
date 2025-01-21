@@ -174,6 +174,7 @@
 		* Mission Control > Move to left desktop: ctrl+cmd+left
 		* Mission Control > Move to right desktop: ctrl+cmd+right
 * [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
+	* note with altTab: macOS security settings will nag you constantly about how its recording your screen - use [nag remover](https://github.com/luckman212/screencapture-nag-remover/tree/main) to suppress warnings for this and other apps
 * [Rectangle](https://rectangleapp.com/): aero snap behavior
 	* install rectangle and import settings file `misc/RectangleConfig.json`
 * install [Karabiner-Elements](https://karabiner-elements.pqrs.org/). not currently used, but offers powerful keybinding options
