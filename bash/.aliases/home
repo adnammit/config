@@ -1,0 +1,33 @@
+# if [[ $OSTYPE == "cygwin" && ! $WORK_ENV ]] ; then
+
+#     # TELEPORTATION
+#     CODES='$USERPROFILE/codes/'
+#     WEBSITE="${CODES}amandaryman.com/"
+#     CHECKBOOK="${CODES}checkbookv2.0/"
+#     VUE3="${CODES}vue3boilerplate/"
+#     MOVIEAPP="${CODES}movieApp/"
+#     MOVIEAPI="${CODES}movieApi/"
+
+#     alias cary="cd ${WEBSITE}"
+#     alias ccb="cd ${CHECKBOOK}"
+#     alias cma="cd ${MOVIEAPP}"
+#     alias cms="cd ${MOVIEAPI}"
+
+#     alias cres="cd ~/tardigrade/Dropbox/resume/latexRes/"
+
+#     # WEBSITE STUFF:
+#     ### change these to functions that cd to the folder, rsync the correct files then cd back -- rsync needs to be on remote server :(
+#     REMOTE='amandary@amandaryman.com'
+#     REMOTE_WWW="${REMOTE}:/home/amandary/public_html/"
+
+#     alias scpcb="scp -r -P 18765 ${CHECKBOOK}dist/* ${REMOTE_WWW}checkbook/"
+#     alias scpVueApp="scp -r -P 18765 ${VUE3}dist/* ${REMOTE_WWW}vue3/"
+#     # alias scpcb='scp -P 18765 ${@} amandary@amandaryman.com:/home/amandary/www/checkbook/'
+#     alias scpary="scp -r -P 18765 ${WEBSITE}contact.html ${WEBSITE}index.html ${WEBSITE}work.html ${WEBSITE}css/ ${WEBSITE}js/ ${WEBSITE}img/ ${WEBSITE}resume/ ${REMOTE_WWW}"
+#     alias sshary="ssh ${REMOTE} -p 18765"
+
+#     unset CODES WEBSITE CHECKBOOK MOVIEAPP MOVIEAPI REMOTE REMOTE_WWW
+
+#     # host a php website, like that login sample
+#     alias sphp='php -S localhost:8000'
+# fi

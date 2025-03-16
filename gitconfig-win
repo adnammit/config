@@ -1,0 +1,80 @@
+# Note that this cannot by symlinked -- must be directly copied to $HOME
+[user]
+	email = amandaryman@gmail.com
+	name = aryman
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = code --wait
+	# editor = \"C:\\Users\\pangolin\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
+	# pager = less -FX
+	pager = C:/cygwin64/bin/less.exe
+    autocrlf = false
+
+[pull]
+    rebase = true
+
+[credential]
+	helper = wincred
+	# helper = manager
+
+[color]
+    ui = true
+
+[color "branch"]
+    current = yellow reverse bold
+    local = yellow
+    remote = yellow dim
+
+[color "diff"]
+    meta = yellow bold
+    old = cyan bold
+    new = magenta bold
+
+[color "status"]
+    added = cyan
+    changed = magenta
+    untracked = yellow
+
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    cm = commit -m
+    aa = add -A
+    reb = rebase
+    rebc = rebase --continue
+    rl = reflog
+    sh = show -B -w
+    s = stash
+    su = stash -u
+    sl = stash list
+    slp = stash list -p
+    sp = stash pop
+    sa = stash apply
+    res = reset
+    resh = reset --hard
+    cp = cherry-pick
+    amend = commit --amend --no-edit # add staged changes to previous commit
+    cme = commit --allow-empty -m 'trigger checks'
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+
+    # temporarily ignore files, unignore them, and see what's ignored
+    assume = update-index --assume-unchanged
+    noassume = update-index --no-assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+
+    # ==== LOG STUFF ====
+    lgname = log --name-only --oneline # show names of files that changed
+    lg = !"git lg1"
+    lga = !"git lg1 --all"
+
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
+    lg4 = log --graph --abbrev-commit --decorate --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
+    lg5 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg6 = log --graph --date=format:'%a %F %T' --pretty=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(bold yellow)%d%C(reset)%n %C(bold cyan)%ad%C(reset) %C(bold red)%an%C(reset)  %n  %s:'

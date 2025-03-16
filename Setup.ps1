@@ -24,7 +24,8 @@ else {
 }
 
 # Symlink Global Stuff
-CreateSymlink $SourcePath\global-gitconfig $Home\.gitconfig
+# TODO this just does mac - handle windows too, but it has to be copied, not symlinked (maybe)
+CreateSymlink $SourcePath\gitconfig-mac $Home\.gitconfig
 CreateSymlink $PowershellSourcePath\Microsoft.PowerShell_profile.ps1 $profile.CurrentUserCurrentHost
 
 # Symlink Modules

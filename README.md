@@ -218,6 +218,7 @@
 
 # TODO
 * **version control/symlink your VS keybindings already**
+* gitconfig: windows gitconfig needs help. why can't it be symlinked? also maintain a different version for windows
 * [check out githooks](https://apple.stackexchange.com/a/224074)
 * organize your setup scripts -- maybe call everything from `setup.ps1`, or make one "global setup" script
 	- `clone_all_the_repos.sh`
