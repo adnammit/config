@@ -10,6 +10,10 @@ if [[ $OSTYPE == "cygwin" ]] ; then
     alias ccode='cd $USERPROFILE/code'
     alias cnotes='cd $USERPROFILE/notes'
     alias cconfig='cd $USERPROFILE/config'
+    alias cdata='cd $USERPROFILE/data'
     alias cpf='cd "$PROGRAMFILES"'
 
+
+    alias rmpostgres='rm -rf $USERPROFILE/data/pgdata'
+    # alias rmpostgres='rm -rf $USERPROFILE/data/*'
 fi

@@ -5,10 +5,18 @@ if [ -f ~/.work_env ] ; then
     WORK_ENV=1
 fi
 
-if [ -f ~/.profile ]; then
-    . ~/.profile
+if [ -f "$HOME/.profile" ]; then
+. "$HOME/.profile"
 fi
 
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+
+    if [ -f "$HOME/.bashrc_linux" ]; then
+        . "$HOME/.bashrc_linux"
+    fi
 fi
+

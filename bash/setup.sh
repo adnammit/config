@@ -18,6 +18,7 @@ ln -s $DIR/.git-completion
 ln -s $DIR/.minttyrc
 ln -s $DIR/.profile
 ln -s $DIR/.vimrc
+ln -s $DIR/.ssh
 
 if [[ $1 == "work" ]] ; then
 	ln -s $DIR/.work_env #TODO: global work flag or just bash?

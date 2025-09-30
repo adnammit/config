@@ -5,8 +5,11 @@ HISTTIMEFORMAT="%F %T "
 export HISTTIMEFORMAT
 HISTFILESIZE=1000000
 HISTSIZE=1000000
+HISTCONTROL=ignoreboth
 # immediately log commands to history so they're recorded in case of a crash:
 PROMPT_COMMAND='history -a'
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 #=========================================
 # KNOW YR PATHWAYS
@@ -51,7 +54,7 @@ elif [[ $OSTYPE == "cygwin" ]] ; then
 	CYGDRIVE="/cygdrive/c"
 	SYSTEM="$SYSTEMROOT/System32/"
 	GIT="$CYGDRIVE/Program Files/Git/bin/"
-	POSTGRES="$PROGRAMFILES/PostgreSQL/15/bin/"
+	POSTGRES="$PROGRAMFILES/PostgreSQL/16/bin/"
 	DOTNET="$PROGRAMFILES/dotnet/"
 	SQLSERVE="$CYGDRIVE/Program Files (x86)/Microsoft SQL Server/140/DAC/bin/"
 	MSBUILD="$SYSTEMROOT/Microsoft.NET/Framework/v4.0.30319/"
@@ -76,6 +79,9 @@ elif [[ $OSTYPE == "cygwin" ]] ; then
 		PATH="$PATH:$d"
 	done
 
+elif [[ $OSTYPE == "linux-gnu" ]] ; then
+	DOTNET="/root/.dotnet/tools"
+	CODE="/mnt/c/Users/pangolin/AppData/Local/Programs/Microsoft VS Code/bin"
 fi
 
 PATH="$PATH:$SYSTEMROOT:$SYSTEM:$GIT:$NODE:$POSTGRES:$DOTNET:$VSBIN:$MSBUILD:$SQLSERVE:$CODE:$DOCKER:$INETSRV"
