@@ -56,33 +56,28 @@
 * [reference](https://ohmyposh.dev/docs/installation/windows)
 * see `powershell/setup/Install-OhMyPosh.psm1`
 * after installing, you will need to [modify your profile to use oh-my-posh](https://ohmyposh.dev/docs/installation/prompt)
+	* check that oh-my-posh is installed by running `which oh-my-posh` - if that doesn't return anything, you may need to restart
 * **Windows**
 	```pwsh
 	winget install JanDeDobbeleer.OhMyPosh -s winget
+	# update
+	winget upgrade JanDeDobbeleer.OhMyPosh --source winget --scope user --force
 	```
 * **MacOS**
 	```pwsh
 	brew install jandedobbeleer/oh-my-posh/oh-my-posh
+	# update 
+	brew update && brew upgrade oh-my-posh
 	```
 
 ## Fonts
 * [reference](https://www.nerdfonts.com/font-downloads)
+* use the `oh-my-post` cli to install a nerd font of your choice
 * once downloaded, settings in the terminal must be updated to use the font
 * fonts downloaded in this manner are available across the system like any other font
 * ligatured fonts I like: jetbrainsmono, firacode, operatormono
-* **Windows**
-	* **requires admin**
 	```pwsh
 	oh-my-posh font install
-	```
-* **MacOS**
-	```pwsh
-	# tap the fonts repo; only do this once
-	brew tap homebrew/cask-fonts
-	# search for/view all fonts
-	brew search nerd-font
-	# install a font
-	brew install --cask font-fira-code-nerd-font
 	```
 
 ## Git
@@ -101,7 +96,7 @@
 * [install instructions](https://github.com/git-ecosystem/git-credential-manager/blob/release/docs/install.md)
 
 ## Posh-Git
-* [reference](https://github.om/dahlbyk/posh-git)
+* [reference](https://github.com/dahlbyk/posh-git)
 * git add-on: provides git data in powershell prompt and tab completion for git commands and remote names and branches
 * install posh-git:
 	```pwsh
@@ -186,10 +181,12 @@ appendWindowsPath=false
 		* see [this reference](https://github.com/ttscoff/KeyBindings) for all possible values
 	* Accessibility/Applications
 		* disable voiceover and other conflicting shortcuts
-	* Mission Control > emulate Windows Desktop navigation
-		* Mission Control: ctrl+tab
-		* Mission Control > Move to left desktop: ctrl+cmd+left
-		* Mission Control > Move to right desktop: ctrl+cmd+right
+	* you'll need to edit some stuff in `Keyboard > Keyboard Shortcuts...`
+		* customize emoji picker as explained [here](https://apple.stackexchange.com/a/230387)
+		* Mission Control > emulate Windows Desktop navigation
+			* Mission Control: ctrl+tab
+			* Mission Control > Move to left desktop: ctrl+cmd+left
+			* Mission Control > Move to right desktop: ctrl+cmd+right
 * [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
 	* note with altTab: macOS security settings will nag you constantly about how its recording your screen - use [nag remover](https://github.com/luckman212/screencapture-nag-remover/tree/main) to suppress warnings for this and other apps
 * [Rectangle](https://rectangleapp.com/): aero snap behavior
@@ -225,16 +222,18 @@ appendWindowsPath=false
 <a id="part-two"></a>
 
 # Part II: Customize Your Environment (the actual dotfiles part)
-* run `setup/clone_all_the_repos`
-* alias everything in `/config` to `$HOME` by running the setup script:
-	* run `./setup` to create symlinks to the actual version-controlled files here in the repo
-	* run `./setup work` to set the work env flag and enable work paths/scripts
-	* that's it!
-* to remove run `./teardown`
+* run `bash/bin/clone_all_the_repos`
+* `powershell`:
+	* run `Setup.ps1` to symlink your profile and modules
+* `bash`:
+	* alias everything in `/config` to `$HOME` by running the setup script:
+		* run `./setup` to create symlinks to the actual version-controlled files here in the repo
+		* run `./setup work` to set the work env flag and enable work paths/scripts
+		* that's it!
+	* to remove run `./teardown`
 * ssh config is not included here -- look at `sshConfigTemplate` to create `~/.ssh/config`
 
 # TODO
-* **version control/symlink your VS keybindings already**
 * gitconfig: windows gitconfig needs help. why can't it be symlinked? also maintain a different version for windows
 * [check out githooks](https://apple.stackexchange.com/a/224074)
 * organize your setup scripts -- maybe call everything from `setup.ps1`, or make one "global setup" script

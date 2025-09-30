@@ -14,6 +14,7 @@ ln -s $DIR/.funcs
 ln -s $DIR/bin
 ln -s $DIR/.bash_profile
 ln -s $DIR/.bashrc
+ln -s $DIR/.zprofile
 ln -s $DIR/.git-completion
 ln -s $DIR/.minttyrc
 ln -s $DIR/.profile
