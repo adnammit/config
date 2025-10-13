@@ -15,8 +15,10 @@ if [ -n "$BASH_VERSION" ]; then
 	. "$HOME/.bashrc"
     fi
 
-    if [ -f "$HOME/.bashrc_linux" ]; then
-        . "$HOME/.bashrc_linux"
+    if [[ $OSTYPE =~ "darwin" ]] ; then
+        if [ -f "$HOME/.bashrc.darwin" ]; then
+            . "$HOME/.bashrc.darwin"
+        fi
     fi
 fi
 
