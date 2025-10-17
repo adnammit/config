@@ -7,11 +7,6 @@ git_completion="$git_core/git-completion.bash"
 
 if [ -x "$(which git)" ] ; then
     if [ -f "$git_completion" ] ; then
-		echo "Loading git completion from $git_completion"
         source "$git_completion"
-	else
-		echo "Git completion not found in $git_completion, skipping"
-    fi
-else 
-	echo "Git not found, skipping git completion"
+	fi
 fi
