@@ -174,6 +174,13 @@ appendWindowsPath=false
 * Parsec for remote desktop
 
 ## MacOS But Make it a PC
+* **WELL ACTUALLY...**
+  * just change the modifier keys in "Settings > Keyboard > Keyboard Shortcuts..." to match what's in "comparative physical location with Synergy mapping"
+  * altTab: 				⌥-tab
+  * mission control:		⌃-tab
+  * Mission Control > Move to left desktop: ctrl-cmd-left
+  * Mission Control > Move to right desktop: ctrl-cmd-right	
+
 * how to remap a bunch of keybindings/shortcuts on mac bc I love macs, but I also want to keep my muscle memory sane
 * customize native keyboard shortcuts in Settings > Keyboard
 	* copy `misc/DefaultKeyBinding.dict` to `~/Library/KeyBindings/` - so far this just modifies your word jump navigation to match Windows
