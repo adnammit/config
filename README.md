@@ -174,36 +174,9 @@ appendWindowsPath=false
 * Parsec for remote desktop
 
 ## MacOS But Make it a PC
-* **WELL ACTUALLY...**
-  * just change the modifier keys in "Settings > Keyboard > Keyboard Shortcuts..." to match what's in "comparative physical location with Synergy mapping"
-  * altTab: 				⌥-tab
-  * mission control:		⌃-tab
-  * Mission Control > Move to left desktop: ctrl-cmd-left
-  * Mission Control > Move to right desktop: ctrl-cmd-right	
-
-* how to remap a bunch of keybindings/shortcuts on mac bc I love macs, but I also want to keep my muscle memory sane
-* customize native keyboard shortcuts in Settings > Keyboard
-	* copy `misc/DefaultKeyBinding.dict` to `~/Library/KeyBindings/` - so far this just modifies your word jump navigation to match Windows
-		* you may need to create the `KeyBindings` directory
-		* see [this reference](https://github.com/ttscoff/KeyBindings) for all possible values
-	* Accessibility/Applications
-		* disable voiceover and other conflicting shortcuts
-	* you'll need to edit some stuff in `Keyboard > Keyboard Shortcuts...`
-		* customize emoji picker as explained [here](https://apple.stackexchange.com/a/230387)
-		* Mission Control > emulate Windows Desktop navigation
-			* Mission Control: ctrl+tab
-			* Mission Control > Move to left desktop: ctrl+cmd+left
-			* Mission Control > Move to right desktop: ctrl+cmd+right
-* [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
-	* note with altTab: macOS security settings will nag you constantly about how its recording your screen - use [nag remover](https://github.com/luckman212/screencapture-nag-remover/tree/main) to suppress warnings for this and other apps
-* [Rectangle](https://rectangleapp.com/): aero snap behavior
-	* install rectangle and import settings file `misc/RectangleConfig.json`
-* install [Karabiner-Elements](https://karabiner-elements.pqrs.org/). not currently used, but offers powerful keybinding options
-	```pwsh
-	brew install --cask karabiner-elements
-	```
-* [Witch](https://manytricks.com/witch/): switch individual tabs. not currently used.
-* set up [Synergy](https://symless.com/synergy) modifier keys for mac client. this will make all your mac modifier keys bind to their equivalent windows location
+* to mimic windows keybindings on mac, you'll either keep your mac keeb native and map synergy to transform keys, or modify your mac keeb modifier keys to match windows:
+  * change native mapping: change the modifier keys in "Settings > Keyboard > Keyboard Shortcuts..." to match what's in "comparative physical location with Synergy mapping" below
+  * [Synergy](https://symless.com/synergy) modifier keys for mac client:
 	* comparative physical location for default configuration:
 		||1|2|3|
 		|-|-|-|-|
@@ -223,8 +196,28 @@ appendWindowsPath=false
 		| CTRL   | ctrl | ⌃ |
 		| ALT   | alt | ⌥ |
 
-
 ![Synergy modifier keys](</img/Synergy MacOS Modifier keys.png>)
+* whichever approach you take, you'll need to make the following changes as well:
+  * copy `misc/DefaultKeyBinding.dict` to `~/Library/KeyBindings/` - this just modifies your word jump navigation to match Windows
+	* you may need to create the `KeyBindings` directory
+	* see [this reference](https://github.com/ttscoff/KeyBindings) for all possible values
+  * Accessibility/Applications
+	* disable voiceover and other conflicting shortcuts
+  * change Mission Control shortcuts to emulate Windows Desktop navigation
+  	* mission control:		⌃-tab
+  	* Mission Control > Move to left desktop: ^-cmd-left
+  	* Mission Control > Move to right desktop: ^-cmd-right
+  * customize emoji picker as explained [here](https://apple.stackexchange.com/a/230387)
+* [altTab](https://alt-tab-macos.netlify.app/): in iOS, app switching is cmd-tab -- change it to the more comfortable alt-tab
+  * altTab shortcut:		⌥-tab
+  * macOS security settings will nag you constantly about how its recording your screen - use [nag remover](https://github.com/luckman212/screencapture-nag-remover/tree/main) to suppress warnings for this and other apps
+* [Rectangle](https://rectangleapp.com/): aero snap behavior
+	* install rectangle and import settings file `misc/RectangleConfig.json`
+* install [Karabiner-Elements](https://karabiner-elements.pqrs.org/). not currently used, but offers powerful keybinding options
+	```pwsh
+	brew install --cask karabiner-elements
+	```
+* [Witch](https://manytricks.com/witch/): switch individual tabs. not currently used.
 
 <a id="part-two"></a>
 
